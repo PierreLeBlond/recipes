@@ -70,11 +70,23 @@ export namespace $Enums {
 
 export type Units = (typeof Units)[keyof typeof Units]
 
+
+export const Role: {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
 }
 
 export type Units = $Enums.Units
 
 export const Units: typeof $Enums.Units
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1532,11 +1544,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     accounts: number
     sessions: number
+    Recipe: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    Recipe?: boolean | UserCountOutputTypeCountRecipeArgs
   }
 
   // Custom InputTypes
@@ -1568,6 +1582,14 @@ export namespace Prisma {
   }
 
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRecipeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeWhereInput
+  }
+
+
 
   /**
    * Models
@@ -1586,31 +1608,31 @@ export namespace Prisma {
   }
 
   export type RecipeAvgAggregateOutputType = {
-    id: number | null
     plateCount: number | null
   }
 
   export type RecipeSumAggregateOutputType = {
-    id: number | null
     plateCount: number | null
   }
 
   export type RecipeMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     name: string | null
-    description: string | null
     plateCount: number | null
     image: string | null
+    imageName: string | null
+    createdById: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type RecipeMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     name: string | null
-    description: string | null
     plateCount: number | null
     image: string | null
+    imageName: string | null
+    createdById: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1618,9 +1640,10 @@ export namespace Prisma {
   export type RecipeCountAggregateOutputType = {
     id: number
     name: number
-    description: number
     plateCount: number
     image: number
+    imageName: number
+    createdById: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1628,21 +1651,20 @@ export namespace Prisma {
 
 
   export type RecipeAvgAggregateInputType = {
-    id?: true
     plateCount?: true
   }
 
   export type RecipeSumAggregateInputType = {
-    id?: true
     plateCount?: true
   }
 
   export type RecipeMinAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     plateCount?: true
     image?: true
+    imageName?: true
+    createdById?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1650,9 +1672,10 @@ export namespace Prisma {
   export type RecipeMaxAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     plateCount?: true
     image?: true
+    imageName?: true
+    createdById?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1660,9 +1683,10 @@ export namespace Prisma {
   export type RecipeCountAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     plateCount?: true
     image?: true
+    imageName?: true
+    createdById?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1755,11 +1779,12 @@ export namespace Prisma {
   }
 
   export type RecipeGroupByOutputType = {
-    id: number
+    id: string
     name: string
-    description: string | null
     plateCount: number
-    image: string
+    image: string | null
+    imageName: string | null
+    createdById: string
     createdAt: Date
     updatedAt: Date
     _count: RecipeCountAggregateOutputType | null
@@ -1786,11 +1811,13 @@ export namespace Prisma {
   export type RecipeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
     plateCount?: boolean
     image?: boolean
+    imageName?: boolean
+    createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
     steps?: boolean | Recipe$stepsArgs<ExtArgs>
     ingredients?: boolean | Recipe$ingredientsArgs<ExtArgs>
     _count?: boolean | RecipeCountOutputTypeDefaultArgs<ExtArgs>
@@ -1799,14 +1826,16 @@ export namespace Prisma {
   export type RecipeSelectScalar = {
     id?: boolean
     name?: boolean
-    description?: boolean
     plateCount?: boolean
     image?: boolean
+    imageName?: boolean
+    createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
   export type RecipeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
     steps?: boolean | Recipe$stepsArgs<ExtArgs>
     ingredients?: boolean | Recipe$ingredientsArgs<ExtArgs>
     _count?: boolean | RecipeCountOutputTypeDefaultArgs<ExtArgs>
@@ -1816,15 +1845,17 @@ export namespace Prisma {
   export type $RecipePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Recipe"
     objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
       steps: Prisma.$StepPayload<ExtArgs>[]
       ingredients: Prisma.$IngredientPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       name: string
-      description: string | null
       plateCount: number
-      image: string
+      image: string | null
+      imageName: string | null
+      createdById: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["recipe"]>
@@ -2192,6 +2223,8 @@ export namespace Prisma {
   export interface Prisma__RecipeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
     steps<T extends Recipe$stepsArgs<ExtArgs> = {}>(args?: Subset<T, Recipe$stepsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StepPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     ingredients<T extends Recipe$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, Recipe$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IngredientPayload<ExtArgs>, T, 'findMany'> | Null>;
@@ -2224,11 +2257,12 @@ export namespace Prisma {
    * Fields of the Recipe model
    */ 
   interface RecipeFieldRefs {
-    readonly id: FieldRef<"Recipe", 'Int'>
+    readonly id: FieldRef<"Recipe", 'String'>
     readonly name: FieldRef<"Recipe", 'String'>
-    readonly description: FieldRef<"Recipe", 'String'>
     readonly plateCount: FieldRef<"Recipe", 'Int'>
     readonly image: FieldRef<"Recipe", 'String'>
+    readonly imageName: FieldRef<"Recipe", 'String'>
+    readonly createdById: FieldRef<"Recipe", 'String'>
     readonly createdAt: FieldRef<"Recipe", 'DateTime'>
     readonly updatedAt: FieldRef<"Recipe", 'DateTime'>
   }
@@ -2613,33 +2647,29 @@ export namespace Prisma {
   }
 
   export type StepAvgAggregateOutputType = {
-    id: number | null
     index: number | null
-    recipeId: number | null
   }
 
   export type StepSumAggregateOutputType = {
-    id: number | null
     index: number | null
-    recipeId: number | null
   }
 
   export type StepMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     description: string | null
     index: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    recipeId: number | null
+    recipeId: string | null
   }
 
   export type StepMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     description: string | null
     index: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    recipeId: number | null
+    recipeId: string | null
   }
 
   export type StepCountAggregateOutputType = {
@@ -2654,15 +2684,11 @@ export namespace Prisma {
 
 
   export type StepAvgAggregateInputType = {
-    id?: true
     index?: true
-    recipeId?: true
   }
 
   export type StepSumAggregateInputType = {
-    id?: true
     index?: true
-    recipeId?: true
   }
 
   export type StepMinAggregateInputType = {
@@ -2780,12 +2806,12 @@ export namespace Prisma {
   }
 
   export type StepGroupByOutputType = {
-    id: number
+    id: string
     description: string
     index: number
     createdAt: Date
     updatedAt: Date
-    recipeId: number
+    recipeId: string
     _count: StepCountAggregateOutputType | null
     _avg: StepAvgAggregateOutputType | null
     _sum: StepSumAggregateOutputType | null
@@ -2837,12 +2863,12 @@ export namespace Prisma {
       recipe: Prisma.$RecipePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       description: string
       index: number
       createdAt: Date
       updatedAt: Date
-      recipeId: number
+      recipeId: string
     }, ExtArgs["result"]["step"]>
     composites: {}
   }
@@ -3238,12 +3264,12 @@ export namespace Prisma {
    * Fields of the Step model
    */ 
   interface StepFieldRefs {
-    readonly id: FieldRef<"Step", 'Int'>
+    readonly id: FieldRef<"Step", 'String'>
     readonly description: FieldRef<"Step", 'String'>
     readonly index: FieldRef<"Step", 'Int'>
     readonly createdAt: FieldRef<"Step", 'DateTime'>
     readonly updatedAt: FieldRef<"Step", 'DateTime'>
-    readonly recipeId: FieldRef<"Step", 'Int'>
+    readonly recipeId: FieldRef<"Step", 'String'>
   }
     
 
@@ -3584,19 +3610,17 @@ export namespace Prisma {
   }
 
   export type FoodAvgAggregateOutputType = {
-    id: number | null
     density: number | null
     massPerPiece: number | null
   }
 
   export type FoodSumAggregateOutputType = {
-    id: number | null
     density: number | null
     massPerPiece: number | null
   }
 
   export type FoodMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     name: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3607,7 +3631,7 @@ export namespace Prisma {
   }
 
   export type FoodMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     name: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3631,13 +3655,11 @@ export namespace Prisma {
 
 
   export type FoodAvgAggregateInputType = {
-    id?: true
     density?: true
     massPerPiece?: true
   }
 
   export type FoodSumAggregateInputType = {
-    id?: true
     density?: true
     massPerPiece?: true
   }
@@ -3763,7 +3785,7 @@ export namespace Prisma {
   }
 
   export type FoodGroupByOutputType = {
-    id: number
+    id: string
     name: string
     createdAt: Date
     updatedAt: Date
@@ -3828,7 +3850,7 @@ export namespace Prisma {
       ingredients: Prisma.$IngredientPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       name: string
       createdAt: Date
       updatedAt: Date
@@ -4231,7 +4253,7 @@ export namespace Prisma {
    * Fields of the Food model
    */ 
   interface FoodFieldRefs {
-    readonly id: FieldRef<"Food", 'Int'>
+    readonly id: FieldRef<"Food", 'String'>
     readonly name: FieldRef<"Food", 'String'>
     readonly createdAt: FieldRef<"Food", 'DateTime'>
     readonly updatedAt: FieldRef<"Food", 'DateTime'>
@@ -4600,33 +4622,33 @@ export namespace Prisma {
   }
 
   export type IngredientAvgAggregateOutputType = {
-    id: number | null
     quantity: number | null
-    recipeId: number | null
+    index: number | null
   }
 
   export type IngredientSumAggregateOutputType = {
-    id: number | null
     quantity: number | null
-    recipeId: number | null
+    index: number | null
   }
 
   export type IngredientMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     createdAt: Date | null
     updatedAt: Date | null
     quantity: number | null
+    index: number | null
     foodName: string | null
-    recipeId: number | null
+    recipeId: string | null
   }
 
   export type IngredientMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     createdAt: Date | null
     updatedAt: Date | null
     quantity: number | null
+    index: number | null
     foodName: string | null
-    recipeId: number | null
+    recipeId: string | null
   }
 
   export type IngredientCountAggregateOutputType = {
@@ -4634,6 +4656,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     quantity: number
+    index: number
     foodName: number
     recipeId: number
     _all: number
@@ -4641,15 +4664,13 @@ export namespace Prisma {
 
 
   export type IngredientAvgAggregateInputType = {
-    id?: true
     quantity?: true
-    recipeId?: true
+    index?: true
   }
 
   export type IngredientSumAggregateInputType = {
-    id?: true
     quantity?: true
-    recipeId?: true
+    index?: true
   }
 
   export type IngredientMinAggregateInputType = {
@@ -4657,6 +4678,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     quantity?: true
+    index?: true
     foodName?: true
     recipeId?: true
   }
@@ -4666,6 +4688,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     quantity?: true
+    index?: true
     foodName?: true
     recipeId?: true
   }
@@ -4675,6 +4698,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     quantity?: true
+    index?: true
     foodName?: true
     recipeId?: true
     _all?: true
@@ -4767,12 +4791,13 @@ export namespace Prisma {
   }
 
   export type IngredientGroupByOutputType = {
-    id: number
+    id: string
     createdAt: Date
     updatedAt: Date
     quantity: number
+    index: number
     foodName: string
-    recipeId: number
+    recipeId: string
     _count: IngredientCountAggregateOutputType | null
     _avg: IngredientAvgAggregateOutputType | null
     _sum: IngredientSumAggregateOutputType | null
@@ -4799,6 +4824,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     quantity?: boolean
+    index?: boolean
     foodName?: boolean
     recipeId?: boolean
     food?: boolean | FoodDefaultArgs<ExtArgs>
@@ -4810,6 +4836,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     quantity?: boolean
+    index?: boolean
     foodName?: boolean
     recipeId?: boolean
   }
@@ -4827,12 +4854,13 @@ export namespace Prisma {
       recipe: Prisma.$RecipePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       createdAt: Date
       updatedAt: Date
       quantity: number
+      index: number
       foodName: string
-      recipeId: number
+      recipeId: string
     }, ExtArgs["result"]["ingredient"]>
     composites: {}
   }
@@ -5230,12 +5258,13 @@ export namespace Prisma {
    * Fields of the Ingredient model
    */ 
   interface IngredientFieldRefs {
-    readonly id: FieldRef<"Ingredient", 'Int'>
+    readonly id: FieldRef<"Ingredient", 'String'>
     readonly createdAt: FieldRef<"Ingredient", 'DateTime'>
     readonly updatedAt: FieldRef<"Ingredient", 'DateTime'>
     readonly quantity: FieldRef<"Ingredient", 'Float'>
+    readonly index: FieldRef<"Ingredient", 'Int'>
     readonly foodName: FieldRef<"Ingredient", 'String'>
-    readonly recipeId: FieldRef<"Ingredient", 'Int'>
+    readonly recipeId: FieldRef<"Ingredient", 'String'>
   }
     
 
@@ -7530,6 +7559,7 @@ export namespace Prisma {
     email: string | null
     emailVerified: Date | null
     image: string | null
+    role: $Enums.Role | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -7538,6 +7568,7 @@ export namespace Prisma {
     email: string | null
     emailVerified: Date | null
     image: string | null
+    role: $Enums.Role | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -7546,6 +7577,7 @@ export namespace Prisma {
     email: number
     emailVerified: number
     image: number
+    role: number
     _all: number
   }
 
@@ -7556,6 +7588,7 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    role?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -7564,6 +7597,7 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    role?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -7572,6 +7606,7 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
+    role?: true
     _all?: true
   }
 
@@ -7653,6 +7688,7 @@ export namespace Prisma {
     email: string | null
     emailVerified: Date | null
     image: string | null
+    role: $Enums.Role
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -7678,8 +7714,10 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    role?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    Recipe?: boolean | User$RecipeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -7689,11 +7727,13 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
+    role?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    Recipe?: boolean | User$RecipeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -7703,6 +7743,7 @@ export namespace Prisma {
     objects: {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
+      Recipe: Prisma.$RecipePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7710,6 +7751,7 @@ export namespace Prisma {
       email: string | null
       emailVerified: Date | null
       image: string | null
+      role: $Enums.Role
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -8079,6 +8121,8 @@ export namespace Prisma {
 
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    Recipe<T extends User$RecipeArgs<ExtArgs> = {}>(args?: Subset<T, User$RecipeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8112,6 +8156,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly emailVerified: FieldRef<"User", 'DateTime'>
     readonly image: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
   }
     
 
@@ -8462,6 +8507,27 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+
+  /**
+   * User.Recipe
+   */
+  export type User$RecipeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipe
+     */
+    select?: RecipeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RecipeInclude<ExtArgs> | null
+    where?: RecipeWhereInput
+    orderBy?: RecipeOrderByWithRelationInput | RecipeOrderByWithRelationInput[]
+    cursor?: RecipeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
   }
 
 
@@ -9346,9 +9412,10 @@ export namespace Prisma {
   export const RecipeScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    description: 'description',
     plateCount: 'plateCount',
     image: 'image',
+    imageName: 'imageName',
+    createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9387,6 +9454,7 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     quantity: 'quantity',
+    index: 'index',
     foodName: 'foodName',
     recipeId: 'recipeId'
   };
@@ -9428,7 +9496,8 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     emailVerified: 'emailVerified',
-    image: 'image'
+    image: 'image',
+    role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -9473,20 +9542,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -9497,6 +9552,20 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -9540,6 +9609,20 @@ export namespace Prisma {
    */
   export type ListEnumUnitsFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Units[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
   /**
    * Deep Input Types
    */
@@ -9549,13 +9632,15 @@ export namespace Prisma {
     AND?: RecipeWhereInput | RecipeWhereInput[]
     OR?: RecipeWhereInput[]
     NOT?: RecipeWhereInput | RecipeWhereInput[]
-    id?: IntFilter<"Recipe"> | number
+    id?: StringFilter<"Recipe"> | string
     name?: StringFilter<"Recipe"> | string
-    description?: StringNullableFilter<"Recipe"> | string | null
     plateCount?: IntFilter<"Recipe"> | number
-    image?: StringFilter<"Recipe"> | string
+    image?: StringNullableFilter<"Recipe"> | string | null
+    imageName?: StringNullableFilter<"Recipe"> | string | null
+    createdById?: StringFilter<"Recipe"> | string
     createdAt?: DateTimeFilter<"Recipe"> | Date | string
     updatedAt?: DateTimeFilter<"Recipe"> | Date | string
+    createdBy?: XOR<UserRelationFilter, UserWhereInput>
     steps?: StepListRelationFilter
     ingredients?: IngredientListRelationFilter
   }
@@ -9563,26 +9648,30 @@ export namespace Prisma {
   export type RecipeOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
     plateCount?: SortOrder
-    image?: SortOrder
+    image?: SortOrderInput | SortOrder
+    imageName?: SortOrderInput | SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
     steps?: StepOrderByRelationAggregateInput
     ingredients?: IngredientOrderByRelationAggregateInput
   }
 
   export type RecipeWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: RecipeWhereInput | RecipeWhereInput[]
     OR?: RecipeWhereInput[]
     NOT?: RecipeWhereInput | RecipeWhereInput[]
     name?: StringFilter<"Recipe"> | string
-    description?: StringNullableFilter<"Recipe"> | string | null
     plateCount?: IntFilter<"Recipe"> | number
-    image?: StringFilter<"Recipe"> | string
+    image?: StringNullableFilter<"Recipe"> | string | null
+    imageName?: StringNullableFilter<"Recipe"> | string | null
+    createdById?: StringFilter<"Recipe"> | string
     createdAt?: DateTimeFilter<"Recipe"> | Date | string
     updatedAt?: DateTimeFilter<"Recipe"> | Date | string
+    createdBy?: XOR<UserRelationFilter, UserWhereInput>
     steps?: StepListRelationFilter
     ingredients?: IngredientListRelationFilter
   }, "id">
@@ -9590,9 +9679,10 @@ export namespace Prisma {
   export type RecipeOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
     plateCount?: SortOrder
-    image?: SortOrder
+    image?: SortOrderInput | SortOrder
+    imageName?: SortOrderInput | SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: RecipeCountOrderByAggregateInput
@@ -9606,11 +9696,12 @@ export namespace Prisma {
     AND?: RecipeScalarWhereWithAggregatesInput | RecipeScalarWhereWithAggregatesInput[]
     OR?: RecipeScalarWhereWithAggregatesInput[]
     NOT?: RecipeScalarWhereWithAggregatesInput | RecipeScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Recipe"> | number
+    id?: StringWithAggregatesFilter<"Recipe"> | string
     name?: StringWithAggregatesFilter<"Recipe"> | string
-    description?: StringNullableWithAggregatesFilter<"Recipe"> | string | null
     plateCount?: IntWithAggregatesFilter<"Recipe"> | number
-    image?: StringWithAggregatesFilter<"Recipe"> | string
+    image?: StringNullableWithAggregatesFilter<"Recipe"> | string | null
+    imageName?: StringNullableWithAggregatesFilter<"Recipe"> | string | null
+    createdById?: StringWithAggregatesFilter<"Recipe"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Recipe"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Recipe"> | Date | string
   }
@@ -9619,12 +9710,12 @@ export namespace Prisma {
     AND?: StepWhereInput | StepWhereInput[]
     OR?: StepWhereInput[]
     NOT?: StepWhereInput | StepWhereInput[]
-    id?: IntFilter<"Step"> | number
+    id?: StringFilter<"Step"> | string
     description?: StringFilter<"Step"> | string
     index?: IntFilter<"Step"> | number
     createdAt?: DateTimeFilter<"Step"> | Date | string
     updatedAt?: DateTimeFilter<"Step"> | Date | string
-    recipeId?: IntFilter<"Step"> | number
+    recipeId?: StringFilter<"Step"> | string
     recipe?: XOR<RecipeRelationFilter, RecipeWhereInput>
   }
 
@@ -9639,7 +9730,7 @@ export namespace Prisma {
   }
 
   export type StepWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: StepWhereInput | StepWhereInput[]
     OR?: StepWhereInput[]
     NOT?: StepWhereInput | StepWhereInput[]
@@ -9647,7 +9738,7 @@ export namespace Prisma {
     index?: IntFilter<"Step"> | number
     createdAt?: DateTimeFilter<"Step"> | Date | string
     updatedAt?: DateTimeFilter<"Step"> | Date | string
-    recipeId?: IntFilter<"Step"> | number
+    recipeId?: StringFilter<"Step"> | string
     recipe?: XOR<RecipeRelationFilter, RecipeWhereInput>
   }, "id">
 
@@ -9669,19 +9760,19 @@ export namespace Prisma {
     AND?: StepScalarWhereWithAggregatesInput | StepScalarWhereWithAggregatesInput[]
     OR?: StepScalarWhereWithAggregatesInput[]
     NOT?: StepScalarWhereWithAggregatesInput | StepScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Step"> | number
+    id?: StringWithAggregatesFilter<"Step"> | string
     description?: StringWithAggregatesFilter<"Step"> | string
     index?: IntWithAggregatesFilter<"Step"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Step"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Step"> | Date | string
-    recipeId?: IntWithAggregatesFilter<"Step"> | number
+    recipeId?: StringWithAggregatesFilter<"Step"> | string
   }
 
   export type FoodWhereInput = {
     AND?: FoodWhereInput | FoodWhereInput[]
     OR?: FoodWhereInput[]
     NOT?: FoodWhereInput | FoodWhereInput[]
-    id?: IntFilter<"Food"> | number
+    id?: StringFilter<"Food"> | string
     name?: StringFilter<"Food"> | string
     createdAt?: DateTimeFilter<"Food"> | Date | string
     updatedAt?: DateTimeFilter<"Food"> | Date | string
@@ -9705,7 +9796,7 @@ export namespace Prisma {
   }
 
   export type FoodWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     name?: string
     AND?: FoodWhereInput | FoodWhereInput[]
     OR?: FoodWhereInput[]
@@ -9739,7 +9830,7 @@ export namespace Prisma {
     AND?: FoodScalarWhereWithAggregatesInput | FoodScalarWhereWithAggregatesInput[]
     OR?: FoodScalarWhereWithAggregatesInput[]
     NOT?: FoodScalarWhereWithAggregatesInput | FoodScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Food"> | number
+    id?: StringWithAggregatesFilter<"Food"> | string
     name?: StringWithAggregatesFilter<"Food"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Food"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Food"> | Date | string
@@ -9753,12 +9844,13 @@ export namespace Prisma {
     AND?: IngredientWhereInput | IngredientWhereInput[]
     OR?: IngredientWhereInput[]
     NOT?: IngredientWhereInput | IngredientWhereInput[]
-    id?: IntFilter<"Ingredient"> | number
+    id?: StringFilter<"Ingredient"> | string
     createdAt?: DateTimeFilter<"Ingredient"> | Date | string
     updatedAt?: DateTimeFilter<"Ingredient"> | Date | string
     quantity?: FloatFilter<"Ingredient"> | number
+    index?: IntFilter<"Ingredient"> | number
     foodName?: StringFilter<"Ingredient"> | string
-    recipeId?: IntFilter<"Ingredient"> | number
+    recipeId?: StringFilter<"Ingredient"> | string
     food?: XOR<FoodRelationFilter, FoodWhereInput>
     recipe?: XOR<RecipeRelationFilter, RecipeWhereInput>
   }
@@ -9768,6 +9860,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     quantity?: SortOrder
+    index?: SortOrder
     foodName?: SortOrder
     recipeId?: SortOrder
     food?: FoodOrderByWithRelationInput
@@ -9775,24 +9868,28 @@ export namespace Prisma {
   }
 
   export type IngredientWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
+    recipeId_index?: IngredientRecipeIdIndexCompoundUniqueInput
+    recipeId_foodName?: IngredientRecipeIdFoodNameCompoundUniqueInput
     AND?: IngredientWhereInput | IngredientWhereInput[]
     OR?: IngredientWhereInput[]
     NOT?: IngredientWhereInput | IngredientWhereInput[]
     createdAt?: DateTimeFilter<"Ingredient"> | Date | string
     updatedAt?: DateTimeFilter<"Ingredient"> | Date | string
     quantity?: FloatFilter<"Ingredient"> | number
+    index?: IntFilter<"Ingredient"> | number
     foodName?: StringFilter<"Ingredient"> | string
-    recipeId?: IntFilter<"Ingredient"> | number
+    recipeId?: StringFilter<"Ingredient"> | string
     food?: XOR<FoodRelationFilter, FoodWhereInput>
     recipe?: XOR<RecipeRelationFilter, RecipeWhereInput>
-  }, "id">
+  }, "id" | "recipeId_index" | "recipeId_foodName">
 
   export type IngredientOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     quantity?: SortOrder
+    index?: SortOrder
     foodName?: SortOrder
     recipeId?: SortOrder
     _count?: IngredientCountOrderByAggregateInput
@@ -9806,12 +9903,13 @@ export namespace Prisma {
     AND?: IngredientScalarWhereWithAggregatesInput | IngredientScalarWhereWithAggregatesInput[]
     OR?: IngredientScalarWhereWithAggregatesInput[]
     NOT?: IngredientScalarWhereWithAggregatesInput | IngredientScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Ingredient"> | number
+    id?: StringWithAggregatesFilter<"Ingredient"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Ingredient"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Ingredient"> | Date | string
     quantity?: FloatWithAggregatesFilter<"Ingredient"> | number
+    index?: IntWithAggregatesFilter<"Ingredient"> | number
     foodName?: StringWithAggregatesFilter<"Ingredient"> | string
-    recipeId?: IntWithAggregatesFilter<"Ingredient"> | number
+    recipeId?: StringWithAggregatesFilter<"Ingredient"> | string
   }
 
   export type AccountWhereInput = {
@@ -9971,8 +10069,10 @@ export namespace Prisma {
     email?: StringNullableFilter<"User"> | string | null
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
+    Recipe?: RecipeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9981,8 +10081,10 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     emailVerified?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    role?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
+    Recipe?: RecipeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -9994,8 +10096,10 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
+    Recipe?: RecipeListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -10004,6 +10108,7 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     emailVerified?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
+    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -10018,6 +10123,7 @@ export namespace Prisma {
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   }
 
   export type VerificationTokenWhereInput = {
@@ -10064,22 +10170,25 @@ export namespace Prisma {
   }
 
   export type RecipeCreateInput = {
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutRecipeInput
     steps?: StepCreateNestedManyWithoutRecipeInput
     ingredients?: IngredientCreateNestedManyWithoutRecipeInput
   }
 
   export type RecipeUncheckedCreateInput = {
-    id?: number
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
     steps?: StepUncheckedCreateNestedManyWithoutRecipeInput
@@ -10087,22 +10196,25 @@ export namespace Prisma {
   }
 
   export type RecipeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutRecipeNestedInput
     steps?: StepUpdateManyWithoutRecipeNestedInput
     ingredients?: IngredientUpdateManyWithoutRecipeNestedInput
   }
 
   export type RecipeUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     steps?: StepUncheckedUpdateManyWithoutRecipeNestedInput
@@ -10110,35 +10222,39 @@ export namespace Prisma {
   }
 
   export type RecipeCreateManyInput = {
-    id?: number
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type RecipeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RecipeUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StepCreateInput = {
+    id?: string
     description: string
     index: number
     createdAt?: Date | string
@@ -10147,15 +10263,16 @@ export namespace Prisma {
   }
 
   export type StepUncheckedCreateInput = {
-    id?: number
+    id?: string
     description: string
     index: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    recipeId: number
+    recipeId: string
   }
 
   export type StepUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10164,24 +10281,25 @@ export namespace Prisma {
   }
 
   export type StepUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipeId?: IntFieldUpdateOperationsInput | number
+    recipeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StepCreateManyInput = {
-    id?: number
+    id?: string
     description: string
     index: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    recipeId: number
+    recipeId: string
   }
 
   export type StepUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10189,15 +10307,16 @@ export namespace Prisma {
   }
 
   export type StepUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipeId?: IntFieldUpdateOperationsInput | number
+    recipeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type FoodCreateInput = {
+    id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10209,7 +10328,7 @@ export namespace Prisma {
   }
 
   export type FoodUncheckedCreateInput = {
-    id?: number
+    id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10221,6 +10340,7 @@ export namespace Prisma {
   }
 
   export type FoodUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10232,7 +10352,7 @@ export namespace Prisma {
   }
 
   export type FoodUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10244,7 +10364,7 @@ export namespace Prisma {
   }
 
   export type FoodCreateManyInput = {
-    id?: number
+    id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10255,6 +10375,7 @@ export namespace Prisma {
   }
 
   export type FoodUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10265,7 +10386,7 @@ export namespace Prisma {
   }
 
   export type FoodUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10276,61 +10397,71 @@ export namespace Prisma {
   }
 
   export type IngredientCreateInput = {
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     food: FoodCreateNestedOneWithoutIngredientsInput
     recipe: RecipeCreateNestedOneWithoutIngredientsInput
   }
 
   export type IngredientUncheckedCreateInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     foodName: string
-    recipeId: number
+    recipeId: string
   }
 
   export type IngredientUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     food?: FoodUpdateOneRequiredWithoutIngredientsNestedInput
     recipe?: RecipeUpdateOneRequiredWithoutIngredientsNestedInput
   }
 
   export type IngredientUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     foodName?: StringFieldUpdateOperationsInput | string
-    recipeId?: IntFieldUpdateOperationsInput | number
+    recipeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type IngredientCreateManyInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     foodName: string
-    recipeId: number
+    recipeId: string
   }
 
   export type IngredientUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
   }
 
   export type IngredientUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     foodName?: StringFieldUpdateOperationsInput | string
-    recipeId?: IntFieldUpdateOperationsInput | number
+    recipeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateInput = {
@@ -10498,8 +10629,10 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    Recipe?: RecipeCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10508,8 +10641,10 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    Recipe?: RecipeUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -10518,8 +10653,10 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    Recipe?: RecipeUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10528,8 +10665,10 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    Recipe?: RecipeUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10538,6 +10677,7 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
   }
 
   export type UserUpdateManyMutationInput = {
@@ -10546,6 +10686,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -10554,6 +10695,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type VerificationTokenCreateInput = {
@@ -10598,17 +10740,6 @@ export namespace Prisma {
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -10622,6 +10753,17 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -10648,6 +10790,11 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type StepListRelationFilter = {
@@ -10678,24 +10825,25 @@ export namespace Prisma {
   export type RecipeCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     plateCount?: SortOrder
     image?: SortOrder
+    imageName?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type RecipeAvgOrderByAggregateInput = {
-    id?: SortOrder
     plateCount?: SortOrder
   }
 
   export type RecipeMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     plateCount?: SortOrder
     image?: SortOrder
+    imageName?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -10703,32 +10851,16 @@ export namespace Prisma {
   export type RecipeMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     plateCount?: SortOrder
     image?: SortOrder
+    imageName?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type RecipeSumOrderByAggregateInput = {
-    id?: SortOrder
     plateCount?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -10747,6 +10879,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -10796,9 +10944,7 @@ export namespace Prisma {
   }
 
   export type StepAvgOrderByAggregateInput = {
-    id?: SortOrder
     index?: SortOrder
-    recipeId?: SortOrder
   }
 
   export type StepMaxOrderByAggregateInput = {
@@ -10820,9 +10966,7 @@ export namespace Prisma {
   }
 
   export type StepSumOrderByAggregateInput = {
-    id?: SortOrder
     index?: SortOrder
-    recipeId?: SortOrder
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -10855,7 +10999,6 @@ export namespace Prisma {
   }
 
   export type FoodAvgOrderByAggregateInput = {
-    id?: SortOrder
     density?: SortOrder
     massPerPiece?: SortOrder
   }
@@ -10883,7 +11026,6 @@ export namespace Prisma {
   }
 
   export type FoodSumOrderByAggregateInput = {
-    id?: SortOrder
     density?: SortOrder
     massPerPiece?: SortOrder
   }
@@ -10930,19 +11072,29 @@ export namespace Prisma {
     isNot?: FoodWhereInput
   }
 
+  export type IngredientRecipeIdIndexCompoundUniqueInput = {
+    recipeId: string
+    index: number
+  }
+
+  export type IngredientRecipeIdFoodNameCompoundUniqueInput = {
+    recipeId: string
+    foodName: string
+  }
+
   export type IngredientCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     quantity?: SortOrder
+    index?: SortOrder
     foodName?: SortOrder
     recipeId?: SortOrder
   }
 
   export type IngredientAvgOrderByAggregateInput = {
-    id?: SortOrder
     quantity?: SortOrder
-    recipeId?: SortOrder
+    index?: SortOrder
   }
 
   export type IngredientMaxOrderByAggregateInput = {
@@ -10950,6 +11102,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     quantity?: SortOrder
+    index?: SortOrder
     foodName?: SortOrder
     recipeId?: SortOrder
   }
@@ -10959,14 +11112,14 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     quantity?: SortOrder
+    index?: SortOrder
     foodName?: SortOrder
     recipeId?: SortOrder
   }
 
   export type IngredientSumOrderByAggregateInput = {
-    id?: SortOrder
     quantity?: SortOrder
-    recipeId?: SortOrder
+    index?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -10994,11 +11147,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UserRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type AccountProviderProviderAccountIdCompoundUniqueInput = {
@@ -11112,6 +11260,13 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
@@ -11124,11 +11279,21 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
+  export type RecipeListRelationFilter = {
+    every?: RecipeWhereInput
+    some?: RecipeWhereInput
+    none?: RecipeWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RecipeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11138,6 +11303,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -11146,6 +11312,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -11154,6 +11321,7 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
+    role?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11168,6 +11336,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type VerificationTokenIdentifierTokenCompoundUniqueInput = {
@@ -11191,6 +11369,12 @@ export namespace Prisma {
     identifier?: SortOrder
     token?: SortOrder
     expires?: SortOrder
+  }
+
+  export type UserCreateNestedOneWithoutRecipeInput = {
+    create?: XOR<UserCreateWithoutRecipeInput, UserUncheckedCreateWithoutRecipeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRecipeInput
+    connect?: UserWhereUniqueInput
   }
 
   export type StepCreateNestedManyWithoutRecipeInput = {
@@ -11225,10 +11409,6 @@ export namespace Prisma {
     set?: string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -11237,8 +11417,20 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type UserUpdateOneRequiredWithoutRecipeNestedInput = {
+    create?: XOR<UserCreateWithoutRecipeInput, UserUncheckedCreateWithoutRecipeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRecipeInput
+    upsert?: UserUpsertWithoutRecipeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRecipeInput, UserUpdateWithoutRecipeInput>, UserUncheckedUpdateWithoutRecipeInput>
   }
 
   export type StepUpdateManyWithoutRecipeNestedInput = {
@@ -11451,6 +11643,13 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type RecipeCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<RecipeCreateWithoutCreatedByInput, RecipeUncheckedCreateWithoutCreatedByInput> | RecipeCreateWithoutCreatedByInput[] | RecipeUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutCreatedByInput | RecipeCreateOrConnectWithoutCreatedByInput[]
+    createMany?: RecipeCreateManyCreatedByInputEnvelope
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -11465,8 +11664,19 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type RecipeUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<RecipeCreateWithoutCreatedByInput, RecipeUncheckedCreateWithoutCreatedByInput> | RecipeCreateWithoutCreatedByInput[] | RecipeUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutCreatedByInput | RecipeCreateOrConnectWithoutCreatedByInput[]
+    createMany?: RecipeCreateManyCreatedByInputEnvelope
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -11497,6 +11707,20 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type RecipeUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<RecipeCreateWithoutCreatedByInput, RecipeUncheckedCreateWithoutCreatedByInput> | RecipeCreateWithoutCreatedByInput[] | RecipeUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutCreatedByInput | RecipeCreateOrConnectWithoutCreatedByInput[]
+    upsert?: RecipeUpsertWithWhereUniqueWithoutCreatedByInput | RecipeUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: RecipeCreateManyCreatedByInputEnvelope
+    set?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    disconnect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    delete?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    update?: RecipeUpdateWithWhereUniqueWithoutCreatedByInput | RecipeUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: RecipeUpdateManyWithWhereWithoutCreatedByInput | RecipeUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -11525,15 +11749,18 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type RecipeUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<RecipeCreateWithoutCreatedByInput, RecipeUncheckedCreateWithoutCreatedByInput> | RecipeCreateWithoutCreatedByInput[] | RecipeUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RecipeCreateOrConnectWithoutCreatedByInput | RecipeCreateOrConnectWithoutCreatedByInput[]
+    upsert?: RecipeUpsertWithWhereUniqueWithoutCreatedByInput | RecipeUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: RecipeCreateManyCreatedByInputEnvelope
+    set?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    disconnect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    delete?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    connect?: RecipeWhereUniqueInput | RecipeWhereUniqueInput[]
+    update?: RecipeUpdateWithWhereUniqueWithoutCreatedByInput | RecipeUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: RecipeUpdateManyWithWhereWithoutCreatedByInput | RecipeUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11548,6 +11775,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -11575,6 +11813,23 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11600,23 +11855,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11748,6 +11986,13 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -11762,7 +12007,45 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type UserCreateWithoutRecipeInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.Role
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRecipeInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.Role
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRecipeInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRecipeInput, UserUncheckedCreateWithoutRecipeInput>
+  }
+
   export type StepCreateWithoutRecipeInput = {
+    id?: string
     description: string
     index: number
     createdAt?: Date | string
@@ -11770,7 +12053,7 @@ export namespace Prisma {
   }
 
   export type StepUncheckedCreateWithoutRecipeInput = {
-    id?: number
+    id?: string
     description: string
     index: number
     createdAt?: Date | string
@@ -11788,17 +12071,20 @@ export namespace Prisma {
   }
 
   export type IngredientCreateWithoutRecipeInput = {
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     food: FoodCreateNestedOneWithoutIngredientsInput
   }
 
   export type IngredientUncheckedCreateWithoutRecipeInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     foodName: string
   }
 
@@ -11810,6 +12096,39 @@ export namespace Prisma {
   export type IngredientCreateManyRecipeInputEnvelope = {
     data: IngredientCreateManyRecipeInput | IngredientCreateManyRecipeInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutRecipeInput = {
+    update: XOR<UserUpdateWithoutRecipeInput, UserUncheckedUpdateWithoutRecipeInput>
+    create: XOR<UserCreateWithoutRecipeInput, UserUncheckedCreateWithoutRecipeInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRecipeInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRecipeInput, UserUncheckedUpdateWithoutRecipeInput>
+  }
+
+  export type UserUpdateWithoutRecipeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRecipeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StepUpsertWithWhereUniqueWithoutRecipeInput = {
@@ -11832,12 +12151,12 @@ export namespace Prisma {
     AND?: StepScalarWhereInput | StepScalarWhereInput[]
     OR?: StepScalarWhereInput[]
     NOT?: StepScalarWhereInput | StepScalarWhereInput[]
-    id?: IntFilter<"Step"> | number
+    id?: StringFilter<"Step"> | string
     description?: StringFilter<"Step"> | string
     index?: IntFilter<"Step"> | number
     createdAt?: DateTimeFilter<"Step"> | Date | string
     updatedAt?: DateTimeFilter<"Step"> | Date | string
-    recipeId?: IntFilter<"Step"> | number
+    recipeId?: StringFilter<"Step"> | string
   }
 
   export type IngredientUpsertWithWhereUniqueWithoutRecipeInput = {
@@ -11860,30 +12179,34 @@ export namespace Prisma {
     AND?: IngredientScalarWhereInput | IngredientScalarWhereInput[]
     OR?: IngredientScalarWhereInput[]
     NOT?: IngredientScalarWhereInput | IngredientScalarWhereInput[]
-    id?: IntFilter<"Ingredient"> | number
+    id?: StringFilter<"Ingredient"> | string
     createdAt?: DateTimeFilter<"Ingredient"> | Date | string
     updatedAt?: DateTimeFilter<"Ingredient"> | Date | string
     quantity?: FloatFilter<"Ingredient"> | number
+    index?: IntFilter<"Ingredient"> | number
     foodName?: StringFilter<"Ingredient"> | string
-    recipeId?: IntFilter<"Ingredient"> | number
+    recipeId?: StringFilter<"Ingredient"> | string
   }
 
   export type RecipeCreateWithoutStepsInput = {
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutRecipeInput
     ingredients?: IngredientCreateNestedManyWithoutRecipeInput
   }
 
   export type RecipeUncheckedCreateWithoutStepsInput = {
-    id?: number
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
     ingredients?: IngredientUncheckedCreateNestedManyWithoutRecipeInput
@@ -11906,39 +12229,45 @@ export namespace Prisma {
   }
 
   export type RecipeUpdateWithoutStepsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutRecipeNestedInput
     ingredients?: IngredientUpdateManyWithoutRecipeNestedInput
   }
 
   export type RecipeUncheckedUpdateWithoutStepsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ingredients?: IngredientUncheckedUpdateManyWithoutRecipeNestedInput
   }
 
   export type IngredientCreateWithoutFoodInput = {
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     recipe: RecipeCreateNestedOneWithoutIngredientsInput
   }
 
   export type IngredientUncheckedCreateWithoutFoodInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
-    recipeId: number
+    index: number
+    recipeId: string
   }
 
   export type IngredientCreateOrConnectWithoutFoodInput = {
@@ -11968,6 +12297,7 @@ export namespace Prisma {
   }
 
   export type FoodCreateWithoutIngredientsInput = {
+    id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11978,7 +12308,7 @@ export namespace Prisma {
   }
 
   export type FoodUncheckedCreateWithoutIngredientsInput = {
-    id?: number
+    id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11994,21 +12324,24 @@ export namespace Prisma {
   }
 
   export type RecipeCreateWithoutIngredientsInput = {
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutRecipeInput
     steps?: StepCreateNestedManyWithoutRecipeInput
   }
 
   export type RecipeUncheckedCreateWithoutIngredientsInput = {
-    id?: number
+    id?: string
     name: string
-    description?: string | null
-    plateCount: number
-    image?: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
     steps?: StepUncheckedCreateNestedManyWithoutRecipeInput
@@ -12031,6 +12364,7 @@ export namespace Prisma {
   }
 
   export type FoodUpdateWithoutIngredientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12041,7 +12375,7 @@ export namespace Prisma {
   }
 
   export type FoodUncheckedUpdateWithoutIngredientsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12063,21 +12397,24 @@ export namespace Prisma {
   }
 
   export type RecipeUpdateWithoutIngredientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutRecipeNestedInput
     steps?: StepUpdateManyWithoutRecipeNestedInput
   }
 
   export type RecipeUncheckedUpdateWithoutIngredientsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     plateCount?: IntFieldUpdateOperationsInput | number
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     steps?: StepUncheckedUpdateManyWithoutRecipeNestedInput
@@ -12089,7 +12426,9 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
     sessions?: SessionCreateNestedManyWithoutUserInput
+    Recipe?: RecipeCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -12098,7 +12437,9 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    Recipe?: RecipeUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -12123,7 +12464,9 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    Recipe?: RecipeUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -12132,7 +12475,9 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    Recipe?: RecipeUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -12141,7 +12486,9 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
     accounts?: AccountCreateNestedManyWithoutUserInput
+    Recipe?: RecipeCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -12150,7 +12497,9 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
+    role?: $Enums.Role
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Recipe?: RecipeUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -12175,7 +12524,9 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    Recipe?: RecipeUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -12184,7 +12535,9 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Recipe?: RecipeUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -12249,6 +12602,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RecipeCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    steps?: StepCreateNestedManyWithoutRecipeInput
+    ingredients?: IngredientCreateNestedManyWithoutRecipeInput
+  }
+
+  export type RecipeUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    steps?: StepUncheckedCreateNestedManyWithoutRecipeInput
+    ingredients?: IngredientUncheckedCreateNestedManyWithoutRecipeInput
+  }
+
+  export type RecipeCreateOrConnectWithoutCreatedByInput = {
+    where: RecipeWhereUniqueInput
+    create: XOR<RecipeCreateWithoutCreatedByInput, RecipeUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type RecipeCreateManyCreatedByInputEnvelope = {
+    data: RecipeCreateManyCreatedByInput | RecipeCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -12310,8 +12697,38 @@ export namespace Prisma {
     expires?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type RecipeUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: RecipeWhereUniqueInput
+    update: XOR<RecipeUpdateWithoutCreatedByInput, RecipeUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<RecipeCreateWithoutCreatedByInput, RecipeUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type RecipeUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: RecipeWhereUniqueInput
+    data: XOR<RecipeUpdateWithoutCreatedByInput, RecipeUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type RecipeUpdateManyWithWhereWithoutCreatedByInput = {
+    where: RecipeScalarWhereInput
+    data: XOR<RecipeUpdateManyMutationInput, RecipeUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type RecipeScalarWhereInput = {
+    AND?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+    OR?: RecipeScalarWhereInput[]
+    NOT?: RecipeScalarWhereInput | RecipeScalarWhereInput[]
+    id?: StringFilter<"Recipe"> | string
+    name?: StringFilter<"Recipe"> | string
+    plateCount?: IntFilter<"Recipe"> | number
+    image?: StringNullableFilter<"Recipe"> | string | null
+    imageName?: StringNullableFilter<"Recipe"> | string | null
+    createdById?: StringFilter<"Recipe"> | string
+    createdAt?: DateTimeFilter<"Recipe"> | Date | string
+    updatedAt?: DateTimeFilter<"Recipe"> | Date | string
+  }
+
   export type StepCreateManyRecipeInput = {
-    id?: number
+    id?: string
     description: string
     index: number
     createdAt?: Date | string
@@ -12319,14 +12736,16 @@ export namespace Prisma {
   }
 
   export type IngredientCreateManyRecipeInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
+    index: number
     foodName: string
   }
 
   export type StepUpdateWithoutRecipeInput = {
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12334,7 +12753,7 @@ export namespace Prisma {
   }
 
   export type StepUncheckedUpdateWithoutRecipeInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12342,7 +12761,7 @@ export namespace Prisma {
   }
 
   export type StepUncheckedUpdateManyWithoutRecipeInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     index?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12350,57 +12769,66 @@ export namespace Prisma {
   }
 
   export type IngredientUpdateWithoutRecipeInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     food?: FoodUpdateOneRequiredWithoutIngredientsNestedInput
   }
 
   export type IngredientUncheckedUpdateWithoutRecipeInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     foodName?: StringFieldUpdateOperationsInput | string
   }
 
   export type IngredientUncheckedUpdateManyWithoutRecipeInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     foodName?: StringFieldUpdateOperationsInput | string
   }
 
   export type IngredientCreateManyFoodInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     quantity: number
-    recipeId: number
+    index: number
+    recipeId: string
   }
 
   export type IngredientUpdateWithoutFoodInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
     recipe?: RecipeUpdateOneRequiredWithoutIngredientsNestedInput
   }
 
   export type IngredientUncheckedUpdateWithoutFoodInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
-    recipeId?: IntFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
+    recipeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type IngredientUncheckedUpdateManyWithoutFoodInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quantity?: FloatFieldUpdateOperationsInput | number
-    recipeId?: IntFieldUpdateOperationsInput | number
+    index?: IntFieldUpdateOperationsInput | number
+    recipeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateManyUserInput = {
@@ -12422,6 +12850,16 @@ export namespace Prisma {
     id?: string
     sessionToken: string
     expires: Date | string
+  }
+
+  export type RecipeCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    plateCount?: number
+    image?: string | null
+    imageName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -12485,6 +12923,40 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     sessionToken?: StringFieldUpdateOperationsInput | string
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecipeUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    plateCount?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    steps?: StepUpdateManyWithoutRecipeNestedInput
+    ingredients?: IngredientUpdateManyWithoutRecipeNestedInput
+  }
+
+  export type RecipeUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    plateCount?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    steps?: StepUncheckedUpdateManyWithoutRecipeNestedInput
+    ingredients?: IngredientUncheckedUpdateManyWithoutRecipeNestedInput
+  }
+
+  export type RecipeUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    plateCount?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    imageName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

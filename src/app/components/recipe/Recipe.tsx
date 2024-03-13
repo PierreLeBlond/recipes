@@ -1,10 +1,18 @@
 "use client";
 
-import { Quantity } from "@/src/app/components/ingredient/Quantity";
-import { StepView } from "@/src/app/components/recipe/StepView";
-import { PlateCount } from "@/src/app/components/recipe/PlateCount";
-import { Food, Ingredient, Recipe, Step } from "@/prisma/generated/client";
-import { useEffect, useState } from "react";
+import { RecipeStep } from "@/src/app/components/recipe/step/RecipeStep";
+import { RecipePlateCount } from "@/src/app/components/recipe/RecipePlateCount";
+import {
+  Food,
+  Ingredient,
+  Recipe,
+  Step,
+  Units,
+} from "@/prisma/generated/client";
+import { useState } from "react";
+import { RecipeIngredient } from "./ingredient/RecipeIngredient";
+import { UtensilsCrossed } from "lucide-react";
+import { Title } from "../utils/Title";
 
 type RecipeProps = {
   recipe: Recipe & {
@@ -13,55 +21,87 @@ type RecipeProps = {
   };
 };
 
-export function Recipe({ props }: { props: RecipeProps }) {
-  const [plateCount, setPlateCount] = useState(props.recipe.plateCount);
+export function Recipe({ props: { recipe } }: { props: RecipeProps }) {
+  const [plateCount, setPlateCount] = useState(recipe.plateCount);
+  const [units, setUnits] = useState(
+    Object.fromEntries(
+      recipe.ingredients.map((ingredient) => [
+        ingredient.id,
+        ingredient.food.unit,
+      ]),
+    ),
+  );
 
-  const ingredients = props.recipe.ingredients.map((ingredient) => ({
-    ...ingredient,
-    quantity: (ingredient.quantity * plateCount) / props.recipe.plateCount,
-  }));
+  const handleUnitChange = (unit: Units, ingredient: Ingredient) => {
+    setUnits({ ...units, [ingredient.id]: unit });
+  };
+
+  const handlePlateCountChange = (count: number) => {
+    setPlateCount(plateCount + count);
+  };
+
+  const recipeIngredients = recipe.ingredients.map((ingredient) => {
+    const unit = units[ingredient.id];
+
+    if (!unit) {
+      throw new Error("Unit not found");
+    }
+
+    return {
+      ingredient,
+      localData: {
+        plateRatio: plateCount / recipe.plateCount,
+        unit,
+      },
+    };
+  });
 
   return (
     <>
-      <div className="py-16">
-        <PlateCount
+      <Title props={{ title: recipe.name }}></Title>
+      <div className="pb-4 lg:pb-16">
+        <RecipePlateCount
           props={{
             plateCount,
-            setPlateCount,
+            handlePlateCountChange,
           }}
-        ></PlateCount>
+        ></RecipePlateCount>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 gap-y-16 lg:grid-cols-3">
         <div className="flex flex-col gap-4">
-          <h2 className="text-4xl font-bold tracking-tighter">INGRÉDIENTS</h2>
+          <h2 className="text-4xl font-bold tracking-tighter text-gray-800">
+            INGRÉDIENTS
+          </h2>
           <ul className="flex list-inside flex-col gap-4">
-            {ingredients.map((ingredient) => (
-              <li
-                className="shadow-fly flex justify-between rounded-md p-2"
-                key={ingredient.id}
-              >
-                <span className="">{ingredient.food.name}</span>
-                <Quantity
-                  props={{
-                    quantity: Number(ingredient.quantity),
-                    unit: ingredient.food.unit,
-                    density: ingredient.food.density,
-                    massPerPiece: ingredient.food.massPerPiece,
-                  }}
-                ></Quantity>
+            {recipeIngredients.map((recipeIngredient) => (
+              <li key={recipeIngredient.ingredient.id}>
+                <RecipeIngredient
+                  onUnitChange={(unit) =>
+                    handleUnitChange(unit, recipeIngredient.ingredient)
+                  }
+                  props={{ ...recipeIngredient }}
+                ></RecipeIngredient>
               </li>
             ))}
           </ul>
         </div>
         <div className="flex flex-col gap-4 md:col-span-2">
-          <h2 className="text-4xl font-bold tracking-tighter">ÉTAPES</h2>
-          <ol className="flex list-inside flex-col gap-4">
-            {props.recipe.steps.map((step) => (
-              <li className="shadow-fly rounded-md p-4" key={step.id}>
-                <StepView props={{ step, ingredients }}></StepView>
+          <h2 className="text-4xl font-bold tracking-tighter text-gray-800">
+            ÉTAPES
+          </h2>
+          <ol className="flex list-inside flex-col">
+            {recipe.steps.map((step, index) => (
+              <li
+                className={`${index < recipe.steps.length - 1 && "border-b"} border-gray-700 p-4`}
+                key={step.id}
+              >
+                <RecipeStep props={{ step, recipeIngredients }}></RecipeStep>
               </li>
             ))}
           </ol>
+          <div className="flex w-full justify-center">
+            <UtensilsCrossed></UtensilsCrossed>
+          </div>
         </div>
       </div>
     </>

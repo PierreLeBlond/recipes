@@ -4,14 +4,14 @@ const prisma = new PrismaClient();
 
 async function seedRecipes() {
   try {
+    const user = await prisma.user.findUniqueOrThrow({
+      where: {
+        email: "pierre.lespingal@gmail.com",
+      },
+    });
+
     await prisma.recipe.deleteMany();
     await prisma.food.deleteMany();
-
-    await prisma.$queryRaw`ALTER SEQUENCE "Food_id_seq" RESTART WITH 1`;
-    console.log("reset food auto increment to 1");
-
-    await prisma.$queryRaw`ALTER SEQUENCE "Recipe_id_seq" RESTART WITH 1`;
-    console.log("reset recipe auto increment to 1");
 
     const foods = [
       {
@@ -65,25 +65,33 @@ async function seedRecipes() {
       {
         name: "cheesecake au citron",
         image: "/images/cheesecake.jpg",
-        description: "Un cheesecake au citron, c'est bon.",
         plateCount: 8,
+        createdBy: {
+          connect: {
+            id: user.id,
+          },
+        },
         ingredients: {
           create: [
             {
               foodName: "biscuits",
               quantity: 200,
+              index: 1,
             },
             {
               foodName: "beurre",
               quantity: 80,
+              index: 2,
             },
             {
               foodName: "œufs",
               quantity: 3,
+              index: 3,
             },
             {
               foodName: "sucre",
               quantity: 100,
+              index: 4,
             },
           ],
         },
@@ -103,25 +111,33 @@ async function seedRecipes() {
       {
         name: "galette des rois",
         image: "/images/galette.jpg",
-        description: "Qui aura la fève ?",
         plateCount: 8,
+        createdBy: {
+          connect: {
+            id: user.id,
+          },
+        },
         ingredients: {
           create: [
             {
               foodName: "pâte feuilletée",
               quantity: 2,
+              index: 1,
             },
             {
               foodName: "crème d'amande",
               quantity: 200,
+              index: 2,
             },
             {
               foodName: "œufs",
               quantity: 1,
+              index: 3,
             },
             {
               foodName: "sucre",
               quantity: 50,
+              index: 4,
             },
           ],
         },
@@ -141,33 +157,43 @@ async function seedRecipes() {
       {
         name: "brownie au chocolat",
         image: "/images/brownie.jpg",
-        description: "Le brownie, c'est la vie.",
         plateCount: 8,
+        createdBy: {
+          connect: {
+            id: user.id,
+          },
+        },
         ingredients: {
           create: [
             {
               foodName: "chocolat noir",
               quantity: 200,
+              index: 1,
             },
             {
               foodName: "beurre",
               quantity: 250,
+              index: 2,
             },
             {
               foodName: "sucre",
               quantity: 250,
+              index: 3,
             },
             {
               foodName: "farine",
               quantity: 200,
+              index: 4,
             },
             {
               foodName: "œufs",
               quantity: 4,
+              index: 5,
             },
             {
               foodName: "sel",
               quantity: 1,
+              index: 6,
             },
           ],
         },
@@ -179,7 +205,7 @@ async function seedRecipes() {
             },
             {
               description:
-                "Prendre la tablette de chocolat noir encore emballée et lancez la sur le sol pour la casser en morceaux.",
+                "Prendre la tablette de chocolat noir encore emballée et la lancer au sol ou sur une table pour la casser en morceaux.",
               index: 1,
             },
             {
@@ -207,7 +233,7 @@ async function seedRecipes() {
             },
             {
               description:
-                "Enfourner pendant 20 à 30 minutes, suivant la consistance souhaitée. Bien sûr tout dépend du four, surveiller la cuisson, et se louper les premières fois.",
+                "Enfourner pendant 20 à 30 minutes, suivant la consistance souhaitée.",
               index: 7,
             },
           ],

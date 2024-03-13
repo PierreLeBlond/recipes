@@ -5,6 +5,10 @@ import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/src/trpc/react";
 
+import { ThemeProvider } from "@/src/lib/material";
+import { theme } from "@/src/styles/theme";
+import { Header } from "./components/Header";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -22,14 +26,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-gray-50 to-gray-300 text-gray-700">
-          <TRPCReactProvider cookies={cookies().toString()}>
-            {children}
-          </TRPCReactProvider>
-        </main>
-      </body>
-    </html>
+    <ThemeProvider value={theme}>
+      <html lang="en" className="relative">
+        <body
+          className={`font-sans ${inter.variable} flex h-full justify-center bg-gray-100 text-gray-700`}
+        >
+          <main className="flex min-h-screen w-full max-w-5xl flex-col items-center">
+            <TRPCReactProvider cookies={cookies().toString()}>
+              <Header></Header>
+              {children}
+            </TRPCReactProvider>
+          </main>
+        </body>
+      </html>
+    </ThemeProvider>
   );
 }

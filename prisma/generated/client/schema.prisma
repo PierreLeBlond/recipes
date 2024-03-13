@@ -25,12 +25,19 @@ enum Units {
     DROP
 }
 
+enum Role {
+    USER
+    ADMIN
+}
+
 model Recipe {
-    id          Int      @id @default(autoincrement())
+    id          String   @id @default(cuid())
     name        String
-    description String?
-    plateCount  Int
-    image       String   @default("https://via.placeholder.com/150")
+    plateCount  Int      @default(8)
+    image       String?
+    imageName   String?
+    createdBy   User     @relation(fields: [createdById], references: [id])
+    createdById String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
@@ -41,18 +48,18 @@ model Recipe {
 }
 
 model Step {
-    id          Int      @id @default(autoincrement())
+    id          String   @id @default(cuid())
     description String
     index       Int
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
     recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-    recipeId Int
+    recipeId String
 }
 
 model Food {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     name      String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -67,17 +74,22 @@ model Food {
 }
 
 model Ingredient {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     quantity Float
 
+    index Int
+
     food     Food   @relation(fields: [foodName], references: [name], onDelete: Cascade)
     foodName String
 
     recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-    recipeId Int
+    recipeId String
+
+    @@unique([recipeId, index])
+    @@unique([recipeId, foodName])
 }
 
 // Necessary for Next auth
@@ -114,8 +126,10 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    role          Role      @default(USER)
     accounts      Account[]
     sessions      Session[]
+    Recipe        Recipe[]
 }
 
 model VerificationToken {

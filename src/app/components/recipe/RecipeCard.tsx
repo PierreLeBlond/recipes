@@ -1,32 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CookingPot } from "lucide-react";
 
 type RecipeCardProps = {
-  image: string;
+  image: string | null;
   name: string;
-  description: string | null;
-  id: number;
+  id: string;
 };
 
-export function RecipeCard({ props }: { props: RecipeCardProps }) {
+export function RecipeCard({
+  props: { image, name, id },
+}: {
+  props: RecipeCardProps;
+}) {
   return (
     <Link
-      className="h-full w-full rounded-3xl bg-gradient-to-br from-white to-gray-300 text-start text-gray-900 shadow-pop"
-      href={`recipe/${props.id}`}
+      className="relative h-full w-full rounded-3xl border border-gray-900 text-start shadow-fly transition-all duration-75 hover:-translate-y-1 hover:shadow-high"
+      href={`recipes/${id}`}
     >
-      <div className="relative h-4/6 overflow-hidden">
-        <Image
-          src={props.image}
-          alt={props.name}
-          fill={true}
-          className="rounded-t-3xl object-cover shadow-inner"
-        />
+      <div className="relative flex h-4/6 items-center justify-center overflow-hidden border-b border-gray-900 shadow-inner">
+        {image ? (
+          <Image
+            src={image}
+            alt={name || "Image de la recette"}
+            fill={true}
+            className="rounded-t-3xl object-cover"
+          />
+        ) : (
+          <CookingPot size={96} className="text-gray-500"></CookingPot>
+        )}
       </div>
       <div className="flex flex-col p-4">
-        <h3 className="text-lg font-bold">{props.name}</h3>
-        {props.description && (
-          <p className="text-xs text-gray-800">{props.description}</p>
-        )}
+        <h3 className="text-lg font-bold">{name}</h3>
       </div>
     </Link>
   );

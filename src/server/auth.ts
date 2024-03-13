@@ -7,6 +7,7 @@ import {
 import GithubProvider from "next-auth/providers/github";
 
 import { db } from "@/src/server/db";
+import { Role } from "@/prisma/generated/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -19,7 +20,7 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: Role;
     } & DefaultSession["user"];
   }
 
@@ -35,6 +36,12 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+    brandColor: "", // Hex color code
+    logo: "", // Absolute URL to image
+    buttonText: "", // Hex color code
+  },
   callbacks: {
     session: ({ session, user }) => ({
       ...session,

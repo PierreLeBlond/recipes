@@ -1,0 +1,19 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  db-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - if: ${{ env.ACT }}
+        run: flyctl deploy --build-only --remote-only .
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - if: ${{ !env.ACT }}
+        run: flyctl deploy --remote-only .
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
