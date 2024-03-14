@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@/src/server/auth";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "./utils/Badge";
-import { CircleUserRound, DoorOpen, LogIn, LogOut } from "lucide-react";
+import { CircleUserRound, DoorOpen, LogIn } from "lucide-react";
 
 export async function Header() {
   const session = await getServerAuthSession();
