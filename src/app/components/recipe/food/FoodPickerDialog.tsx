@@ -26,7 +26,12 @@ export const FoodPickerDialog = ({
   const handleOpen = () => setOpen(!open);
 
   return (
-    <Dialog open={open} handler={handleOpen}>
+    <Dialog
+      open={open}
+      handler={handleOpen}
+      color="blue-gray"
+      className="h-full"
+    >
       <DialogHeader className="w-full justify-center text-sm">
         Ajout d'ingrédients
       </DialogHeader>
@@ -35,16 +40,26 @@ export const FoodPickerDialog = ({
           props={{ pickedFoods, setPickedFoods, disabledFoods }}
         ></FoodPicker>
       </DialogBody>
-      <DialogFooter>
+      <DialogFooter className="grid grid-cols-2 gap-2">
         <Button
+          onClick={() => {
+            setOpen(false);
+          }}
+          variant={"text"}
           className="w-full"
+        >
+          Quitter
+        </Button>
+        <Button
           disabled={pickedFoods.length === 0}
           onClick={() => {
             handlePickedFoods(pickedFoods);
             setOpen(false);
             setPickedFoods([]);
           }}
-          variant="gradient"
+          className="w-full"
+          variant={"filled"}
+          color="blue-gray"
         >
           Ajouter ces ingrédients
         </Button>

@@ -1,10 +1,10 @@
-import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { getFormatedUnit } from "@/src/lib/quantity/getFormatedUnit";
 import { cn } from "@/src/lib/utils";
 import { Grip, X } from "lucide-react";
 import { FieldArrayWithId } from "react-hook-form";
-import { FormInputs } from "./FormInputs";
+import { FormInputs } from "@/src/lib/types/FormInputs";
 import { PointerEvent } from "react";
+import { Input } from "@/src/lib/material";
 
 type RecipeIngredientEditProps = {
   ingredient: FieldArrayWithId<FormInputs, "ingredients", "id">;
@@ -31,7 +31,7 @@ export function RecipeIngredientEdit({
     <>
       <div
         className={cn(
-          "flex h-12 w-full rounded-t-md rounded-bl-md border border-gray-900 bg-gray-50 shadow-fly",
+          "flex h-12 w-full rounded-t-md rounded-bl-md border border-blue-gray-500 bg-gray-50 shadow-md",
           {
             "absolute cursor-grabbing": grabbed,
           },
@@ -40,7 +40,7 @@ export function RecipeIngredientEdit({
       >
         <div
           className={cn(
-            "group flex cursor-grab items-center border-r border-gray-900 px-4 py-2",
+            "group flex cursor-grab items-center border-r px-4 py-2",
             {
               "cursor-grabbing": grabbed,
             },
@@ -55,25 +55,28 @@ export function RecipeIngredientEdit({
         </div>
         <div className="flex w-full items-center justify-between text-ellipsis text-nowrap p-2">
           {ingredient.food.name}
-          <span className="relative flex w-1/2 justify-end rounded-md border-2 border-dashed border-gray-500 font-bold hover:cursor-pointer has-[:focus]:border-0 sm:w-64">
-            <input
-              className="peer absolute mr-1 w-full cursor-pointer rounded-md border-gray-900 bg-gray-50 pr-1 text-right opacity-0 [appearance:textfield] focus:relative focus:cursor-vertical-text focus:border-2 focus:opacity-100 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          <span className="relative flex w-1/2 items-center justify-end rounded-md font-bold sm:w-64">
+            <Input
+              crossOrigin={""}
+              className="peer w-full cursor-pointer rounded-md bg-gray-50 pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               value={ingredient.quantity}
               type="number"
+              label="Quantité"
+              color="blue-gray"
               step="0.1"
+              containerProps={{
+                className: "h-8",
+              }}
               onChange={(e) => handleUpdatedQuantity(Number(e.target.value))}
               onFocus={(e) => e.target.select()}
-            ></input>
-            <span className="pr-2 peer-focus:hidden">
-              {getFormatedQuantity(ingredient.food.unit, ingredient.quantity)}
-            </span>
-            <span className="hidden pr-2 peer-focus:block">
+            ></Input>
+            <span className="p-2 peer-focus:block">
               {getFormatedUnit(ingredient.food.unit, ingredient.quantity)}
             </span>
           </span>
         </div>
         <div
-          className="group flex items-center border-l border-gray-900 px-4 py-2 hover:cursor-pointer"
+          className="group flex items-center border-l px-4 py-2 hover:cursor-pointer"
           onClick={handleRemovedIngredient}
         >
           <X

@@ -1,11 +1,10 @@
-import { Food, Ingredient, Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client";
+import { IngredientInput } from "../types/IngredientInput";
 
 type ConvertInput = {
-  ingredient: Ingredient & { food: Food };
-  localData: {
-    plateRatio: number;
-    unit: Units;
-  };
+  ingredient: IngredientInput;
+  plateRatio: number;
+  unit: Units;
 };
 
 const convertMap: {
@@ -115,15 +114,16 @@ const convertMap: {
 
 export const getQuantityFromPlateAndUnit = ({
   ingredient,
-  localData,
+  plateRatio,
+  unit,
 }: ConvertInput) => {
-  if (ingredient.food.unit === localData.unit) {
-    return ingredient.quantity * localData.plateRatio;
+  if (ingredient.food.unit === unit) {
+    return ingredient.quantity * plateRatio;
   }
 
   return convertMap[ingredient.food.unit]({
-    quantity: ingredient.quantity * localData.plateRatio,
+    quantity: ingredient.quantity * plateRatio,
     density: ingredient.food.density,
     massPerPiece: ingredient.food.massPerPiece,
-  })(localData.unit);
+  })(unit);
 };

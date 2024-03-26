@@ -14,7 +14,7 @@ export const FoodCard = ({
   children: ReactNode;
 }) => {
   return (
-    <div className="flex rounded-t-md rounded-bl-md border border-gray-900 shadow-fly">
+    <div className="flex rounded-t-md rounded-bl-md border border-blue-gray-500 shadow-md">
       <div className="flex w-full items-center justify-between p-2">
         {food.name}
         {children}

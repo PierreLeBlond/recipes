@@ -61,15 +61,17 @@ export const recipeRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string().min(3).max(33),
-        image: z.string().nullable(),
+        image: z.string().nullable().default(null),
         plateCount: z.number().min(1).max(100).default(8),
-        ingredients: z.array(
-          z.object({
-            foodName: z.string(),
-            quantity: z.number(),
-          }),
-        ),
-        steps: z.array(z.object({ description: z.string() })),
+        ingredients: z
+          .array(
+            z.object({
+              foodName: z.string(),
+              quantity: z.number(),
+            }),
+          )
+          .default([]),
+        steps: z.array(z.object({ description: z.string() })).default([]),
       }),
     )
     .mutation(async ({ ctx, input }) => {

@@ -1,6 +1,6 @@
 import "@/src/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/src/trpc/react";
@@ -12,6 +12,12 @@ import { Header } from "./components/Header";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto-mono",
 });
 
 export const metadata = {
@@ -29,14 +35,14 @@ export default function RootLayout({
     <ThemeProvider value={theme}>
       <html lang="en" className="relative">
         <body
-          className={`font-sans ${inter.variable} flex h-full justify-center bg-gray-100 text-gray-700`}
+          className={`font-sans ${inter.variable} flex h-full justify-center border-gray-500 bg-gray-50 text-gray-900`}
         >
-          <main className="flex min-h-screen w-full max-w-5xl flex-col items-center">
-            <TRPCReactProvider cookies={cookies().toString()}>
-              <Header></Header>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            <Header></Header>
+            <main className="relative w-full max-w-72 pb-16 pt-24 sm:max-w-lg lg:max-w-4xl">
               {children}
-            </TRPCReactProvider>
-          </main>
+            </main>
+          </TRPCReactProvider>
         </body>
       </html>
     </ThemeProvider>

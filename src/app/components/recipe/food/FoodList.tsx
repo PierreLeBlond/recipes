@@ -91,7 +91,7 @@ export const FoodList = ({
         onClick={() => !isFetchingNextPage && fetchNextPage()}
         disabled={isFetchingNextPage || !hasNextPage}
         className="w-full"
-        color="white"
+        variant="filled"
       >
         {isFetchingNextPage
           ? "Chargement..."

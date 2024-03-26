@@ -1,25 +1,17 @@
+import { Typography } from "@/src/lib/material";
+
 type TitleProps = {
   title: string;
 };
 
-export function Title({ props }: { props: TitleProps }) {
-  const width = 1024;
-  const length = props.title.length;
-  const fontSize = Math.min(7, 70 / length);
+export function Title({ props: { title } }: { props: TitleProps }) {
   return (
-    <>
-      <svg viewBox="0 0 800 120" className="w-full">
-        <text
-          className="fill-gray-100 stroke-gray-900 stroke-1 font-extrabold [text-shadow:0px_4px_0px_rgba(0,0,0,0.2)]"
-          x="50%"
-          y="50%"
-          fontSize={`${fontSize}vw`}
-          dominantBaseline="middle"
-          textAnchor="middle"
-        >
-          {props.title}
-        </text>
-      </svg>
-    </>
+    <Typography
+      variant="h1"
+      color="blue-gray"
+      className="overflow-hidden font-mono shadow-blue-gray-500/20 [text-shadow:0px_1px_3px_var(--tw-shadow-color),_0px_1px_2px_var(--tw-shadow-color)]"
+    >
+      {title}
+    </Typography>
   );
 }

@@ -11,25 +11,23 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-4 px-4 py-4 lg:px-8">
-      <Title props={{ title: "R-CP" }}></Title>
-      <h3 className="border border-gray-900 p-2 shadow-fly">
-        Des recettes de cuisine. Claires. Concises. Pratiques.
-      </h3>
+    <div className="flex flex-col gap-16">
+      <Title
+        props={{
+          title: "R-CP",
+        }}
+      ></Title>
 
-      <form className="flex w-full justify-center pt-4 lg:pt-16">
+      <form>
         <Input
           crossOrigin={""}
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher une recette"
-          className="w-full rounded-full"
           containerProps={{
-            className: "max-w-xs md:max-w-full",
+            className: "!min-w-auto w-full",
           }}
-          icon={
-            <Search className="-translate-x-1 -translate-y-0.5 text-orange-500"></Search>
-          }
+          icon={<Search className="-translate-x-1 -translate-y-0.5"></Search>}
         />
       </form>
       <SessionProvider>

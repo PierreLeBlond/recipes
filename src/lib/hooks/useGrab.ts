@@ -18,8 +18,11 @@ export const useGrab = (
     const positionY =
       event.clientY - scrollAreaRef.current.offsetTop + window.scrollY;
 
-    if (positionY < 0 || positionY > scrollAreaRef.current.offsetHeight) {
-      return grabbedPosition;
+    if (
+      positionY < grabbedOffset ||
+      positionY > scrollAreaRef.current.offsetHeight - (height - grabbedOffset)
+    ) {
+      return grabbedPosition + grabbedOffset;
     }
 
     const scrolledPosition = positionY + scrollAreaRef.current.scrollTop;

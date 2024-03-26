@@ -127,12 +127,12 @@ export function ReorderArea({
       }
       onPointerUp={(event) => event.isPrimary && release()}
       onContextMenu={(event) => event.preventDefault()}
-      className="mb-4 w-full touch-none select-none overflow-y-auto"
+      className="w-full touch-none select-none overflow-y-auto"
       ref={scrollAreaRef}
     >
       {children}
     </div>
   ) : (
-    <div className="mb-4 flex w-full overflow-y-auto">{children}</div>
+    <div className="flex w-full overflow-y-auto">{children}</div>
   );
 }

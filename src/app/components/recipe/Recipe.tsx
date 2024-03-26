@@ -1,18 +1,17 @@
 "use client";
 
-import { RecipeStep } from "@/src/app/components/recipe/step/RecipeStep";
-import { RecipePlateCount } from "@/src/app/components/recipe/RecipePlateCount";
-import {
-  Food,
-  Ingredient,
-  Recipe,
-  Step,
-  Units,
-} from "@/prisma/generated/client";
-import { useState } from "react";
-import { RecipeIngredient } from "./ingredient/RecipeIngredient";
-import { UtensilsCrossed } from "lucide-react";
-import { Title } from "../utils/Title";
+import { RecipePlateCount } from "@/src/app/components/recipe/plateCount/RecipePlateCount";
+import { Food, Ingredient, Recipe, Step } from "@/prisma/generated/client";
+import { RecipeImage } from "./image/RecipeImage";
+import { RecipeName } from "./name/RecipeName";
+import { RecipeSteps } from "./steps/RecipeSteps";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormInputs } from "@/src/lib/types/FormInputs";
+import { api } from "@/src/trpc/react";
+import { RecipeIngredients } from "./ingredients/RecipeIngredients";
+import { SessionProvider } from "next-auth/react";
+import { EditSwitch } from "./EditSwitch";
+import { RecipeSubmitButton } from "./RecipeSubmitButton";
 
 type RecipeProps = {
   recipe: Recipe & {
@@ -22,88 +21,50 @@ type RecipeProps = {
 };
 
 export function Recipe({ props: { recipe } }: { props: RecipeProps }) {
-  const [plateCount, setPlateCount] = useState(recipe.plateCount);
-  const [units, setUnits] = useState(
-    Object.fromEntries(
-      recipe.ingredients.map((ingredient) => [
-        ingredient.id,
-        ingredient.food.unit,
-      ]),
-    ),
-  );
+  const updateMutation = api.recipe.update.useMutation();
 
-  const handleUnitChange = (unit: Units, ingredient: Ingredient) => {
-    setUnits({ ...units, [ingredient.id]: unit });
-  };
-
-  const handlePlateCountChange = (count: number) => {
-    setPlateCount(plateCount + count);
-  };
-
-  const recipeIngredients = recipe.ingredients.map((ingredient) => {
-    const unit = units[ingredient.id];
-
-    if (!unit) {
-      throw new Error("Unit not found");
-    }
-
-    return {
-      ingredient,
-      localData: {
-        plateRatio: plateCount / recipe.plateCount,
-        unit,
-      },
-    };
+  const methods = useForm<FormInputs>({
+    defaultValues: recipe,
   });
 
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    updateMutation.mutate({ id: recipe.id, ...data });
+  };
+
   return (
-    <>
-      <Title props={{ title: recipe.name }}></Title>
-      <div className="pb-4 lg:pb-16">
-        <RecipePlateCount
-          props={{
-            plateCount,
-            handlePlateCountChange,
-          }}
-        ></RecipePlateCount>
-      </div>
-      <div className="grid grid-cols-1 gap-4 gap-y-16 lg:grid-cols-3">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-4xl font-bold tracking-tighter text-gray-800">
-            INGRÉDIENTS
-          </h2>
-          <ul className="flex list-inside flex-col gap-4">
-            {recipeIngredients.map((recipeIngredient) => (
-              <li key={recipeIngredient.ingredient.id}>
-                <RecipeIngredient
-                  onUnitChange={(unit) =>
-                    handleUnitChange(unit, recipeIngredient.ingredient)
-                  }
-                  props={{ ...recipeIngredient }}
-                ></RecipeIngredient>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4 md:col-span-2">
-          <h2 className="text-4xl font-bold tracking-tighter text-gray-800">
-            ÉTAPES
-          </h2>
-          <ol className="flex list-inside flex-col">
-            {recipe.steps.map((step, index) => (
-              <li
-                className={`${index < recipe.steps.length - 1 && "border-b"} border-gray-700 p-4`}
-                key={step.id}
-              >
-                <RecipeStep props={{ step, recipeIngredients }}></RecipeStep>
-              </li>
-            ))}
-          </ol>
-          <div className="flex w-full justify-center">
-            <UtensilsCrossed></UtensilsCrossed>
+    <SessionProvider>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="grid gap-8 lg:grid-cols-3"
+        >
+          <div className="lg:col-span-3">
+            <EditSwitch></EditSwitch>
           </div>
-        </div>
-      </div>
-    </>
+          <div className="aspect-square h-72">
+            <RecipeImage></RecipeImage>
+          </div>
+          <div className="lg:col-span-2">
+            <RecipeName></RecipeName>
+          </div>
+
+          <div className="lg:col-span-3">
+            <RecipePlateCount></RecipePlateCount>
+          </div>
+
+          <div className="lg:col-span-3">
+            <RecipeIngredients></RecipeIngredients>
+          </div>
+
+          <div className="lg:col-span-3">
+            <RecipeSteps></RecipeSteps>
+          </div>
+
+          <div className="lg:col-start-3">
+            <RecipeSubmitButton></RecipeSubmitButton>
+          </div>
+        </form>
+      </FormProvider>
+    </SessionProvider>
   );
 }

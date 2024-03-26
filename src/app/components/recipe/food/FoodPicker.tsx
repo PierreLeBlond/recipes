@@ -28,7 +28,7 @@ export const FoodPicker = ({
           pickedFoods.filter((pickedFood) => pickedFood.id !== food.id),
         );
       }}
-      className="group hover:cursor-pointer hover:text-gray-900"
+      className="group hover:cursor-pointer hover:text-blue-gray-900"
     >
       <FoodCard props={{ food }}>
         <X size={24} className="invisible text-red-500 group-hover:visible"></X>
@@ -44,12 +44,12 @@ export const FoodPicker = ({
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher un ingredient"
-          className="w-full rounded-full"
+          color="blue-gray"
           containerProps={{
             className: "max-w-xs md:max-w-full",
           }}
           icon={
-            <Search className="-translate-x-1 -translate-y-0.5 text-orange-500"></Search>
+            <Search className="-translate-x-1 -translate-y-0.5 text-blue-gray-500"></Search>
           }
         />
       </form>
@@ -59,14 +59,14 @@ export const FoodPicker = ({
           strokeWidth={0.5}
           className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-10 fill-gray-200 text-gray-900"
         ></ArrowBigDown>
-        <div className="h-1/2 overflow-hidden rounded-md border border-gray-900 p-2">
+        <div className="h-1/2 overflow-hidden rounded-md border border-blue-gray-500 p-2">
           <div className="h-full overflow-y-scroll p-2">
             <FoodList
               props={{ search, pickedFoods, setPickedFoods, disabledFoods }}
             ></FoodList>
           </div>
         </div>
-        <div className="h-1/2 overflow-y-scroll rounded-md border border-gray-900 p-2">
+        <div className="h-1/2 overflow-y-scroll rounded-md border border-blue-gray-500 p-2">
           <ul className="flex flex-col gap-y-2">{pickedFoodList}</ul>
         </div>
       </div>

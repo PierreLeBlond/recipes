@@ -5,6 +5,9 @@ const config = withMT({
   prefix: "",
   theme: {
     extend: {
+      fontFamily: {
+        mono: ["var(--font-roboto-mono)"],
+      },
       boxShadow: {
         pressed:
           "inset 4px 4px 0px rgba(0, 0, 0, 0.1), inset -4px -4px 0px rgba(255, 255, 255, 0.6)",
