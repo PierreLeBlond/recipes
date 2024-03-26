@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library';
+import * as runtime from './runtime/library.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -346,7 +346,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.8.1
+   * Prisma Client JS version: 5.11.0
    * Query Engine version: efd2449663b3d73d637ea1fd226bafbcf45b3102
    */
   export type PrismaVersion = {
@@ -1372,6 +1372,16 @@ export namespace Prisma {
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
     log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
   }
 
   /* Types for Logging */
