@@ -19,7 +19,7 @@ export function RecipeCard({
           floated={false}
           shadow={false}
           color="transparent"
-          className={`absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center`}
+          className="absolute inset-0 m-0 h-full w-full rounded-none bg-cover bg-center"
           style={{ backgroundImage: `url('${image}')` }}
         >
           <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50 to-black/10" />

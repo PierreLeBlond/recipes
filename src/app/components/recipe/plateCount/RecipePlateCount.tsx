@@ -4,9 +4,9 @@ import { Typography } from "@/src/lib/material";
 import { Minus, Plus } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
-import { PlateCountButton } from "./PlateCountButton";
 import { cn } from "@/src/lib/utils";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
+import { PlateCountButton } from "./PlateCountButton";
 
 export function RecipePlateCount() {
   const { control } = useFormContext<FormInputs>();
@@ -26,7 +26,7 @@ export function RecipePlateCount() {
               <div className="flex -translate-x-1 items-end gap-2">
                 <Typography>Pour</Typography>
                 <PlateCountButton props={{ value: 1, field, plateCount }}>
-                  <Plus strokeWidth={6} size={16}></Plus>
+                  <Plus strokeWidth={6} size={16} />
                 </PlateCountButton>
               </div>
               <Typography
@@ -38,7 +38,7 @@ export function RecipePlateCount() {
               </Typography>
               <div className="flex translate-x-7 items-start gap-2">
                 <PlateCountButton props={{ value: -1, field, plateCount }}>
-                  <Minus strokeWidth={6} size={16}></Minus>
+                  <Minus strokeWidth={6} size={16} />
                 </PlateCountButton>
                 <Typography>personne{plateCount > 1 ? "s" : ""}</Typography>
               </div>
@@ -46,6 +46,6 @@ export function RecipePlateCount() {
           </div>
         );
       }}
-    ></Controller>
+     />
   );
 }

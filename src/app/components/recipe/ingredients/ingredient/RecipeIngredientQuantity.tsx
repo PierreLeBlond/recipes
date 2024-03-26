@@ -1,6 +1,6 @@
 "use client";
 
-import { Recipe, Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client";
 import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { Menu, MenuHandler, MenuItem, MenuList } from "@/src/lib/material";
 import { ArrowDownUp, ChevronDown } from "lucide-react";
@@ -8,13 +8,10 @@ import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromP
 import { IngredientInput } from "@/src/lib/types/IngredientInput";
 import { cn } from "@/src/lib/utils";
 import { useState } from "react";
-import { QueryState } from "@/src/lib/queryState/QueryState";
-import Link from "next/link";
-import { serializeQueryState } from "@/src/lib/queryState/serializeQueryState";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { useWatch } from "react-hook-form";
-import { QueryParamsLink } from "../../../utils/QueryParamsLink";
 import { FormInputs } from "@/src/lib/types/FormInputs";
+import { QueryParamsLink } from "../../../utils/QueryParamsLink";
 
 type RecipeIngredientQuantityProps = {
   ingredient: IngredientInput;
@@ -47,18 +44,22 @@ const alternativeUnitsMap: {
 
     return [Units.GRAM];
   },
-  [Units.TEASPOON]: ({ density }) => {
-    return [Units.LITER, ...(density !== null ? [Units.GRAM] : [])];
-  },
-  [Units.TABLESPOON]: ({ density }) => {
-    return [Units.LITER, ...(density !== null ? [Units.GRAM] : [])];
-  },
-  [Units.PINCH]: ({ density }) => {
-    return [Units.LITER, ...(density !== null ? [Units.GRAM] : [])];
-  },
-  [Units.DROP]: ({ density }) => {
-    return [Units.LITER, ...(density !== null ? [Units.GRAM] : [])];
-  },
+  [Units.TEASPOON]: ({ density }) => [
+    Units.LITER,
+    ...(density !== null ? [Units.GRAM] : []),
+  ],
+  [Units.TABLESPOON]: ({ density }) => [
+    Units.LITER,
+    ...(density !== null ? [Units.GRAM] : []),
+  ],
+  [Units.PINCH]: ({ density }) => [
+    Units.LITER,
+    ...(density !== null ? [Units.GRAM] : []),
+  ],
+  [Units.DROP]: ({ density }) => [
+    Units.LITER,
+    ...(density !== null ? [Units.GRAM] : []),
+  ],
 };
 
 export function RecipeIngredientQuantity({
@@ -95,7 +96,7 @@ export function RecipeIngredientQuantity({
             }),
           )}
         </span>
-        <ChevronDown className="text-gray-400"></ChevronDown>
+        <ChevronDown className="text-gray-400" />
       </div>
     );
   }
@@ -109,76 +110,74 @@ export function RecipeIngredientQuantity({
   }
 
   return (
-    <>
-      <Menu
-        open={open}
-        handler={setOpen}
-        placement="bottom-end"
-        offset={{ mainAxis: 11, crossAxis: 9 }}
-        animate={{
-          mount: {
-            transform: "scaleY(1)",
-            transition: { duration: 0.1, times: [0.4, 0, 0.2, 1] },
-          },
-          unmount: {
-            opacity: 1,
-            transform: "scaleY(0)",
-            transition: { duration: 0.1, times: [0.4, 0, 0.2, 1] },
-          },
-        }}
-      >
-        <MenuHandler>
-          <div className="flex min-w-40 cursor-pointer justify-end gap-4 justify-self-end">
-            <span className="font-bold">
-              {getFormatedQuantity(
+    <Menu
+      open={open}
+      handler={setOpen}
+      placement="bottom-end"
+      offset={{ mainAxis: 11, crossAxis: 9 }}
+      animate={{
+        mount: {
+          transform: "scaleY(1)",
+          transition: { duration: 0.1, times: [0.4, 0, 0.2, 1] },
+        },
+        unmount: {
+          opacity: 1,
+          transform: "scaleY(0)",
+          transition: { duration: 0.1, times: [0.4, 0, 0.2, 1] },
+        },
+      }}
+    >
+      <MenuHandler>
+        <div className="flex min-w-40 cursor-pointer justify-end gap-4 justify-self-end">
+          <span className="font-bold">
+            {getFormatedQuantity(
+              unit,
+              getQuantityFromPlateAndUnit({
+                ingredient,
+                plateRatio,
                 unit,
-                getQuantityFromPlateAndUnit({
-                  ingredient: ingredient,
-                  plateRatio,
-                  unit,
-                }),
-              )}
-            </span>
-            <ChevronDown
-              className={cn("text-gray-900 transition-transform", {
-                "rotate-180": open,
-              })}
-              strokeWidth={4}
-            ></ChevronDown>
-          </div>
-        </MenuHandler>
-        <MenuList className="relative rounded-b rounded-t-none border-b border-l border-r border-t-0 border-gray-500 p-2">
-          {alternativeUnits.map((alternativeUnit, index) => (
-            <MenuItem key={index} className="p-0">
-              <QueryParamsLink
-                className="group flex justify-end gap-4 text-center text-base"
-                props={{
-                  partialQueryState: {
-                    units: {
-                      ...queryState.units,
-                      [ingredient.food.name]: alternativeUnit,
-                    },
+              }),
+            )}
+          </span>
+          <ChevronDown
+            className={cn("text-gray-900 transition-transform", {
+              "rotate-180": open,
+            })}
+            strokeWidth={4}
+          />
+        </div>
+      </MenuHandler>
+      <MenuList className="relative rounded-b rounded-t-none border-b border-l border-r border-t-0 border-gray-500 p-2">
+        {alternativeUnits.map((alternativeUnit) => (
+          <MenuItem key={alternativeUnit} className="p-0">
+            <QueryParamsLink
+              className="group flex justify-end gap-4 text-center text-base"
+              props={{
+                partialQueryState: {
+                  units: {
+                    ...queryState.units,
+                    [ingredient.food.name]: alternativeUnit,
                   },
-                }}
-              >
-                <span className="font-bold">
-                  {getFormatedQuantity(
-                    alternativeUnit,
-                    getQuantityFromPlateAndUnit({
-                      ingredient: ingredient,
-                      plateRatio,
-                      unit: alternativeUnit,
-                    }),
-                  )}
-                </span>
-                <div className="invisible flex size-6 items-center justify-center group-hover:visible">
-                  <ArrowDownUp strokeWidth={4} size={18}></ArrowDownUp>
-                </div>
-              </QueryParamsLink>
-            </MenuItem>
-          ))}
-        </MenuList>
-      </Menu>
-    </>
+                },
+              }}
+            >
+              <span className="font-bold">
+                {getFormatedQuantity(
+                  alternativeUnit,
+                  getQuantityFromPlateAndUnit({
+                    ingredient,
+                    plateRatio,
+                    unit: alternativeUnit,
+                  }),
+                )}
+              </span>
+              <div className="invisible flex size-6 items-center justify-center group-hover:visible">
+                <ArrowDownUp strokeWidth={4} size={18} />
+              </div>
+            </QueryParamsLink>
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
   );
 }

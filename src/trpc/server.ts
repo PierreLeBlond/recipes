@@ -19,14 +19,12 @@ import { transformer } from "./shared";
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a tRPC call from a React Server Component.
  */
-const createContext = cache(() => {
-  return createTRPCContext({
+const createContext = cache(() => createTRPCContext({
     headers: new Headers({
       cookie: cookies().toString(),
       "x-trpc-source": "rsc",
     }),
-  });
-});
+  }));
 
 export const api = createTRPCProxyClient<AppRouter>({
   transformer,
@@ -44,15 +42,13 @@ export const api = createTRPCProxyClient<AppRouter>({
       ({ op }) =>
         observable((observer) => {
           createContext()
-            .then((ctx) => {
-              return callProcedure({
+            .then((ctx) => callProcedure({
                 procedures: appRouter._def.procedures,
                 path: op.path,
                 rawInput: op.input,
                 ctx,
                 type: op.type,
-              });
-            })
+              }))
             .then((data) => {
               observer.next({ result: { data } });
               observer.complete();

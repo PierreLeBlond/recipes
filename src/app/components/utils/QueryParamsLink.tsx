@@ -8,7 +8,7 @@ type QueryParamsLinkProps = {
   partialQueryState: Partial<QueryState>;
 };
 
-export const QueryParamsLink = ({
+export function QueryParamsLink({
   props: { partialQueryState },
   children,
   className,
@@ -16,7 +16,7 @@ export const QueryParamsLink = ({
   props: QueryParamsLinkProps;
   children: React.ReactNode;
   className: string;
-}) => {
+}) {
   const pathname = usePathname();
   const queryState = useQueryState();
 
@@ -36,4 +36,4 @@ export const QueryParamsLink = ({
       {children}
     </Link>
   );
-};
+}

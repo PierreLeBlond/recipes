@@ -36,6 +36,4 @@ const formatedQuantityMap: { [Unit in Units]: (quantity: number) => string } = {
     `${getRoundedQuantity(quantity, 1)} ${quantity > 1 ? "gouttes" : "goutte"}`,
 };
 
-export const getFormatedQuantity = (unit: Units, quantity: number) => {
-  return formatedQuantityMap[unit](quantity);
-};
+export const getFormatedQuantity = (unit: Units, quantity: number) => formatedQuantityMap[unit](quantity);

@@ -7,7 +7,7 @@ import { cn } from "@/src/lib/utils";
 import { convertToBase64 } from "@/src/lib/s3/convertToBase64";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 
-export const RecipeImage = () => {
+export function RecipeImage() {
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   const [preview, setPreview] = useState<string>();
@@ -41,7 +41,7 @@ export const RecipeImage = () => {
         className="hidden"
         ref={hiddenInputRef}
         onChange={handleFileChange}
-      ></input>
+       />
       <Button
         type="button"
         color="white"
@@ -62,7 +62,7 @@ export const RecipeImage = () => {
         >
           {edit && (
             <>
-              <Plus strokeWidth={4}></Plus>
+              <Plus strokeWidth={4} />
               <p>{image ? "Changer l'image" : "Ajouter une image"}</p>
             </>
           )}
@@ -70,4 +70,4 @@ export const RecipeImage = () => {
       </Button>
     </div>
   );
-};
+}

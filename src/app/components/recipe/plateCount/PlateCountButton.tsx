@@ -1,10 +1,6 @@
-import { Recipe } from "@/prisma/generated/client";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { Button } from "@/src/lib/material";
-import { QueryState } from "@/src/lib/queryState/QueryState";
-import { serializeQueryState } from "@/src/lib/queryState/serializeQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
-import Link from "next/link";
 import { ControllerRenderProps } from "react-hook-form";
 import { QueryParamsLink } from "../../utils/QueryParamsLink";
 
@@ -14,13 +10,13 @@ type PlateCountButtonProps = {
   field: ControllerRenderProps<FormInputs, "plateCount">;
 };
 
-export const PlateCountButton = ({
+export function PlateCountButton({
   props: { value, field, plateCount },
   children,
 }: {
   props: PlateCountButtonProps;
   children: React.ReactNode;
-}) => {
+}) {
   const queryState = useQueryState();
 
   return (
@@ -31,14 +27,15 @@ export const PlateCountButton = ({
       variant="filled"
     >
       {queryState.edit ? (
-        <div
+        <button
+          type="button"
           className="flex h-full w-full items-center justify-center p-2"
           onClick={() => {
             field.onChange(field.value + value);
           }}
         >
           {children}
-        </div>
+        </button>
       ) : (
         <QueryParamsLink
           className="flex h-full w-full items-center justify-center p-2"
@@ -53,4 +50,4 @@ export const PlateCountButton = ({
       )}
     </Button>
   );
-};
+}

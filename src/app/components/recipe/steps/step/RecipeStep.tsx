@@ -1,11 +1,11 @@
 import { Units } from "@/prisma/generated/client";
-import { getFormatedQuantity } from "../../../../../lib/quantity/getFormatedQuantity";
 import parse from "html-react-parser";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { StepInput } from "@/src/lib/types/StepInput";
+import { getFormatedQuantity } from "../../../../../lib/quantity/getFormatedQuantity";
 
 type RecipeStepProps = {
   step: StepInput;
@@ -38,7 +38,7 @@ export function RecipeStep({ props: { step } }: { props: RecipeStepProps }) {
   const description = step.description.replace(
     /#([0-9]+)/g,
     (match: string) => {
-      const index = parseInt(match.replace("#", ""));
+      const index = parseInt(match.replace("#", ""), 10);
       const ingredient = ingredients[index - 1];
 
       if (!ingredient) {

@@ -12,6 +12,4 @@ const formatedUnitMap: { [Unit in Units]: (quantity: number) => string } = {
   [Units.DROP]: (quantity: number) => `${quantity > 1 ? "gouttes" : "goutte"}`,
 };
 
-export const getFormatedUnit = (unit: Units, quantity: number) => {
-  return formatedUnitMap[unit](quantity);
-};
+export const getFormatedUnit = (unit: Units, quantity: number) => formatedUnitMap[unit](quantity);

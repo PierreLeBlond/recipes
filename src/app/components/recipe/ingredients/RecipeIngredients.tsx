@@ -1,16 +1,16 @@
-import { Control, useFieldArray } from "react-hook-form";
-import { RecipeIngredientEdit } from "./ingredient/RecipeIngredientEdit";
+import { useFieldArray } from "react-hook-form";
 import { Button, Typography } from "@/src/lib/material";
-import { FoodPickerDialog } from "../food/FoodPickerDialog";
 import { useState } from "react";
-import { Food, Recipe } from "@/prisma/generated/client";
+import { Food } from "@/prisma/generated/client";
 import { useGrab } from "@/src/lib/hooks/useGrab";
-import { RecipeIngredient } from "./ingredient/RecipeIngredient";
 import { cn } from "@/src/lib/utils";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
+import { RecipeIngredient } from "./ingredient/RecipeIngredient";
+import { FoodPickerDialog } from "../food/FoodPickerDialog";
+import { RecipeIngredientEdit } from "./ingredient/RecipeIngredientEdit";
 
-export const RecipeIngredients = () => {
+export function RecipeIngredients() {
   const { fields, append, update, remove, move } = useFieldArray<
     FormInputs,
     "ingredients"
@@ -71,7 +71,7 @@ export const RecipeIngredients = () => {
         >
           <ul className="relative flex list-inside flex-col gap-4">
             {fields.map((field, index) => (
-              <li key={index}>
+              <li key={field.id}>
                 {queryState.edit ? (
                   <RecipeIngredientEdit
                     props={{
@@ -84,13 +84,13 @@ export const RecipeIngredients = () => {
                       grabbedPosition,
                     }}
                     onGrab={(event, id: string) => handleGrab(event, id)}
-                  ></RecipeIngredientEdit>
+                  />
                 ) : (
                   <RecipeIngredient
                     props={{
                       ingredient: field,
                     }}
-                  ></RecipeIngredient>
+                  />
                 )}
               </li>
             ))}
@@ -126,7 +126,7 @@ export const RecipeIngredients = () => {
           handlePickedFoods,
           disabledFoods: fields.map((field) => field.food),
         }}
-      ></FoodPickerDialog>
+      />
     </div>
   );
-};
+}

@@ -1,16 +1,8 @@
 import { api } from "@/src/trpc/react";
-import { RecipeCard } from "./RecipeCard";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Spinner,
-  Typography,
-} from "@/src/lib/material";
+import { Button, Spinner } from "@/src/lib/material";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { PlusCircle, ServerCrash } from "lucide-react";
+import { ServerCrash } from "lucide-react";
+import { RecipeCard } from "./RecipeCard";
 import { CreateRecipeCard } from "./create/CreateRecipeCard";
 
 type RecipeListProps = {
@@ -31,7 +23,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
   if (status === "loading") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
-        <Spinner color="blue-gray"></Spinner>
+        <Spinner color="blue-gray" />
       </div>
     );
   }
@@ -39,7 +31,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
   if (status === "error") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
-        <ServerCrash className="text-red-500"></ServerCrash>
+        <ServerCrash className="text-red-500" />
       </div>
     );
   }
@@ -59,7 +51,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {isAdmin && (
-        <li className="flex aspect-square justify-center" key={"createCard"}>
+        <li className="flex aspect-square justify-center" key="createCard">
           <CreateRecipeCard />
         </li>
       )}

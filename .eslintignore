@@ -1,0 +1,8 @@
+/node_modules/
+
+/**/*.d.ts
+/**/.next/
+/**/dist/
+/**/public/
+
+/**/generated/

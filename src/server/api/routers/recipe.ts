@@ -48,15 +48,13 @@ export const recipeRouter = createTRPCRouter({
         id: z.string(),
       }),
     )
-    .query(({ ctx, input }) => {
-      return ctx.db.recipe.findUniqueOrThrow({
+    .query(({ ctx, input }) => ctx.db.recipe.findUniqueOrThrow({
         where: { id: input.id },
         include: {
           ingredients: { include: { food: true }, orderBy: { index: "asc" } },
           steps: true,
         },
-      });
-    }),
+      })),
   create: adminProcedure
     .input(
       z.object({
@@ -83,7 +81,7 @@ export const recipeRouter = createTRPCRouter({
         await uploadImage(uuid, input.image);
       }
 
-      return await ctx.db.recipe.create({
+      return ctx.db.recipe.create({
         data: {
           name: input.name,
           image,
@@ -128,7 +126,7 @@ export const recipeRouter = createTRPCRouter({
         include: { ingredients: { include: { food: true } }, steps: true },
       });
 
-      let image = recipe.image;
+      let {image} = recipe;
       let uuid = recipe.imageName;
       if (input.image) {
         uuid = recipe.imageName || randomUUID();

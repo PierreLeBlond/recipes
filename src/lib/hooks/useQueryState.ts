@@ -23,7 +23,7 @@ export const useQueryState = (): QueryState => {
   return {
     edit,
     plateCount: plateCountSearchParams
-      ? parseInt(plateCountSearchParams)
+      ? parseInt(plateCountSearchParams, 10)
       : plateCount,
     units: ingredients.reduce(
       (accu, ingredient) => ({

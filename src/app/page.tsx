@@ -1,11 +1,11 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { useState } from "react";
+import { SessionProvider } from "next-auth/react";
 import { Input } from "../lib/material";
 import { Title } from "./components/utils/Title";
-import { useState } from "react";
 import { RecipeList } from "./components/recipe/RecipeList";
-import { SessionProvider } from "next-auth/react";
 
 export default function HomePage() {
   const [search, setSearch] = useState("");
@@ -16,22 +16,22 @@ export default function HomePage() {
         props={{
           title: "R-CP",
         }}
-      ></Title>
+       />
 
       <form>
         <Input
-          crossOrigin={""}
+          crossOrigin=""
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher une recette"
           containerProps={{
             className: "!min-w-auto w-full",
           }}
-          icon={<Search className="-translate-x-1 -translate-y-0.5"></Search>}
+          icon={<Search className="-translate-x-1 -translate-y-0.5" />}
         />
       </form>
       <SessionProvider>
-        <RecipeList props={{ search }}></RecipeList>
+        <RecipeList props={{ search }} />
       </SessionProvider>
     </div>
   );

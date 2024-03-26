@@ -1,10 +1,10 @@
 "use client";
 
 import { Input } from "@/src/lib/material";
-import { ArrowBigDown, ArrowBigDownDash, Search, X } from "lucide-react";
+import { ArrowBigDown, Search, X } from "lucide-react";
 import { useState } from "react";
-import { FoodCard } from "./FoodCard";
 import { Food } from "@/prisma/generated/client";
+import { FoodCard } from "./FoodCard";
 import { FoodList } from "./FoodList";
 
 type FoodPickerProps = {
@@ -13,26 +13,29 @@ type FoodPickerProps = {
   disabledFoods: Food[];
 };
 
-export const FoodPicker = ({
+export function FoodPicker({
   props: { pickedFoods, setPickedFoods, disabledFoods },
 }: {
   props: FoodPickerProps;
-}) => {
+}) {
   const [search, setSearch] = useState("");
 
   const pickedFoodList = pickedFoods.map((food: Food) => (
-    <li
-      key={`picked_${food.id}`}
-      onClick={() => {
-        setPickedFoods(
-          pickedFoods.filter((pickedFood) => pickedFood.id !== food.id),
-        );
-      }}
-      className="group hover:cursor-pointer hover:text-blue-gray-900"
-    >
-      <FoodCard props={{ food }}>
-        <X size={24} className="invisible text-red-500 group-hover:visible"></X>
-      </FoodCard>
+    <li key={`picked_${food.id}`}>
+      <button
+        aria-label="retirer l'ingrédient"
+        type="button"
+        onClick={() => {
+          setPickedFoods(
+            pickedFoods.filter((pickedFood) => pickedFood.id !== food.id),
+          );
+        }}
+        className="group w-full hover:text-blue-gray-900"
+      >
+        <FoodCard props={{ food }}>
+          <X size={24} className="invisible text-red-500 group-hover:visible" />
+        </FoodCard>
+      </button>
     </li>
   ));
 
@@ -40,7 +43,7 @@ export const FoodPicker = ({
     <div className="relative flex h-full flex-col gap-y-4">
       <form className="w-full">
         <Input
-          crossOrigin={""}
+          crossOrigin=""
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher un ingredient"
@@ -49,7 +52,7 @@ export const FoodPicker = ({
             className: "max-w-xs md:max-w-full",
           }}
           icon={
-            <Search className="-translate-x-1 -translate-y-0.5 text-blue-gray-500"></Search>
+            <Search className="-translate-x-1 -translate-y-0.5 text-blue-gray-500" />
           }
         />
       </form>
@@ -58,12 +61,12 @@ export const FoodPicker = ({
           size={80}
           strokeWidth={0.5}
           className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-10 fill-gray-200 text-gray-900"
-        ></ArrowBigDown>
+        />
         <div className="h-1/2 overflow-hidden rounded-md border border-blue-gray-500 p-2">
           <div className="h-full overflow-y-scroll p-2">
             <FoodList
               props={{ search, pickedFoods, setPickedFoods, disabledFoods }}
-            ></FoodList>
+            />
           </div>
         </div>
         <div className="h-1/2 overflow-y-scroll rounded-md border border-blue-gray-500 p-2">
@@ -72,4 +75,4 @@ export const FoodPicker = ({
       </div>
     </div>
   );
-};
+}

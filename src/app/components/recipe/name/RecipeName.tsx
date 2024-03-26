@@ -5,7 +5,7 @@ import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 
-export const RecipeName = () => {
+export function RecipeName() {
   const { edit } = useQueryState();
   const name = useWatch({
     name: "name",
@@ -17,10 +17,10 @@ export const RecipeName = () => {
 
   return (
     <div className="flex h-full max-w-full flex-col justify-between gap-2 overflow-hidden">
-      <Title props={{ title: name }}></Title>
+      <Title props={{ title: name }} />
 
       <Input
-        crossOrigin={""}
+        crossOrigin=""
         disabled={!edit}
         label={
           errors.name?.message || "Nom de la recette, entre 3 et 33 caractères"
@@ -45,7 +45,7 @@ export const RecipeName = () => {
               !edit,
           }),
         }}
-      ></Input>
+       />
     </div>
   );
-};
+}

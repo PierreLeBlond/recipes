@@ -7,7 +7,6 @@ import {
   Input,
 } from "@/src/lib/material";
 import { api } from "@/src/trpc/react";
-import { create } from "domain";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -20,11 +19,11 @@ type CreateRecipeFormInputs = {
   name: string;
 };
 
-export const CreateRecipeDialog = ({
+export function CreateRecipeDialog({
   props: { open, setOpen },
 }: {
   props: CreateRecipeDialogProps;
-}) => {
+}) {
   const createMutation = api.recipe.create.useMutation();
   const {
     register,
@@ -51,7 +50,7 @@ export const CreateRecipeDialog = ({
         {createMutation.isIdle && (
           <form id="createRecipeForm" onSubmit={handleSubmit(onSubmit)}>
             <Input
-              crossOrigin={""}
+              crossOrigin=""
               label="Nom de la recette"
               {...register("name", {
                 required:
@@ -67,7 +66,7 @@ export const CreateRecipeDialog = ({
                     "Le nom de la recette doit faire au plus 33 caractères",
                 },
               })}
-            ></Input>
+            />
           </form>
         )}
         {createMutation.isLoading && <div>Création de la recette...</div>}
@@ -76,7 +75,7 @@ export const CreateRecipeDialog = ({
         )}
         {createMutation.isSuccess && (
           <div>
-            La recette a bien été créée, vous pouvez maintenant l'éditer
+            La recette a bien été créée, vous pouvez maintenant l&apos;éditer
           </div>
         )}
       </DialogBody>
@@ -115,4 +114,4 @@ export const CreateRecipeDialog = ({
       </DialogFooter>
     </Dialog>
   );
-};
+}

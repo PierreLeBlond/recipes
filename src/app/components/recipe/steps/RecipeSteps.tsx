@@ -1,13 +1,13 @@
 import { Button, Typography } from "@/src/lib/material";
-import { RecipeStep } from "./step/RecipeStep";
 import { UtensilsCrossed } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
-import { RecipeStepEdit } from "./step/RecipeStepEdit";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
+import { RecipeStepEdit } from "./step/RecipeStepEdit";
+import { RecipeStep } from "./step/RecipeStep";
 
-export const RecipeSteps = () => {
+export function RecipeSteps() {
   const { fields, append, update, remove } = useFieldArray<FormInputs, "steps">(
     {
       name: "steps",
@@ -37,7 +37,7 @@ export const RecipeSteps = () => {
       {fields.length !== 0 ? (
         <ul className="relative flex list-inside flex-col gap-4">
           {fields.map((field, index) => (
-            <li key={index}>
+            <li key={field.id}>
               {queryState.edit ? (
                 <RecipeStepEdit
                   props={{
@@ -47,13 +47,13 @@ export const RecipeSteps = () => {
                     handleUpdatedDescription: (description: string) =>
                       handleUpdatedDescription(index, description),
                   }}
-                ></RecipeStepEdit>
+                />
               ) : (
                 <RecipeStep
                   props={{
                     step: field,
                   }}
-                ></RecipeStep>
+                />
               )}
             </li>
           ))}
@@ -70,7 +70,7 @@ export const RecipeSteps = () => {
         </Typography>
       )}
       <div className="flex w-full justify-center lg:col-span-3">
-        <UtensilsCrossed></UtensilsCrossed>
+        <UtensilsCrossed />
       </div>
       <Button
         onClick={() => handleAddStep()}
@@ -86,4 +86,4 @@ export const RecipeSteps = () => {
       </Button>
     </div>
   );
-};
+}

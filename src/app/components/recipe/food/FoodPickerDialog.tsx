@@ -6,8 +6,8 @@ import {
   DialogHeader,
 } from "@/src/lib/material";
 import { useState } from "react";
-import { FoodPicker } from "./FoodPicker";
 import { Food } from "@/prisma/generated/client";
+import { FoodPicker } from "./FoodPicker";
 
 type FoodPickerDialogProps = {
   open: boolean;
@@ -16,11 +16,11 @@ type FoodPickerDialogProps = {
   disabledFoods: Food[];
 };
 
-export const FoodPickerDialog = ({
+export function FoodPickerDialog({
   props: { open, setOpen, handlePickedFoods, disabledFoods },
 }: {
   props: FoodPickerDialogProps;
-}) => {
+}) {
   const [pickedFoods, setPickedFoods] = useState<Food[]>([]);
 
   const handleOpen = () => setOpen(!open);
@@ -33,19 +33,17 @@ export const FoodPickerDialog = ({
       className="h-full"
     >
       <DialogHeader className="w-full justify-center text-sm">
-        Ajout d'ingrédients
+        Ajout d&apos;ingrédients
       </DialogHeader>
       <DialogBody>
-        <FoodPicker
-          props={{ pickedFoods, setPickedFoods, disabledFoods }}
-        ></FoodPicker>
+        <FoodPicker props={{ pickedFoods, setPickedFoods, disabledFoods }} />
       </DialogBody>
       <DialogFooter className="grid grid-cols-2 gap-2">
         <Button
           onClick={() => {
             setOpen(false);
           }}
-          variant={"text"}
+          variant="text"
           className="w-full"
         >
           Quitter
@@ -58,7 +56,7 @@ export const FoodPickerDialog = ({
             setPickedFoods([]);
           }}
           className="w-full"
-          variant={"filled"}
+          variant="filled"
           color="blue-gray"
         >
           Ajouter ces ingrédients
@@ -66,4 +64,4 @@ export const FoodPickerDialog = ({
       </DialogFooter>
     </Dialog>
   );
-};
+}

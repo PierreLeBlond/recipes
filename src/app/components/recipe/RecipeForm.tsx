@@ -2,14 +2,14 @@
 
 import { RecipePlateCount } from "@/src/app/components/recipe/plateCount/RecipePlateCount";
 import { Food, Ingredient, Recipe, Step } from "@/prisma/generated/client";
-import { RecipeImage } from "./image/RecipeImage";
-import { RecipeName } from "./name/RecipeName";
-import { RecipeSteps } from "./steps/RecipeSteps";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { api } from "@/src/trpc/react";
-import { RecipeIngredients } from "./ingredients/RecipeIngredients";
 import { SessionProvider } from "next-auth/react";
+import { RecipeImage } from "./image/RecipeImage";
+import { RecipeName } from "./name/RecipeName";
+import { RecipeSteps } from "./steps/RecipeSteps";
+import { RecipeIngredients } from "./ingredients/RecipeIngredients";
 import { EditSwitch } from "./EditSwitch";
 import { RecipeSubmitButton } from "./RecipeSubmitButton";
 
@@ -20,7 +20,7 @@ type RecipeProps = {
   };
 };
 
-export function Recipe({ props: { recipe } }: { props: RecipeProps }) {
+export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
   const updateMutation = api.recipe.update.useMutation();
 
   const methods = useForm<FormInputs>({
@@ -39,29 +39,29 @@ export function Recipe({ props: { recipe } }: { props: RecipeProps }) {
           className="grid gap-8 lg:grid-cols-3"
         >
           <div className="lg:col-span-3">
-            <EditSwitch></EditSwitch>
+            <EditSwitch />
           </div>
           <div className="aspect-square h-72">
-            <RecipeImage></RecipeImage>
+            <RecipeImage />
           </div>
           <div className="lg:col-span-2">
-            <RecipeName></RecipeName>
+            <RecipeName />
           </div>
 
           <div className="lg:col-span-3">
-            <RecipePlateCount></RecipePlateCount>
+            <RecipePlateCount />
           </div>
 
           <div className="lg:col-span-3">
-            <RecipeIngredients></RecipeIngredients>
+            <RecipeIngredients />
           </div>
 
           <div className="lg:col-span-3">
-            <RecipeSteps></RecipeSteps>
+            <RecipeSteps />
           </div>
 
           <div className="lg:col-start-3">
-            <RecipeSubmitButton></RecipeSubmitButton>
+            <RecipeSubmitButton />
           </div>
         </form>
       </FormProvider>

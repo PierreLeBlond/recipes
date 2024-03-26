@@ -2,14 +2,13 @@ import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { Button } from "@/src/lib/material";
 import { useFormContext } from "react-hook-form";
 
-export const RecipeSubmitButton = () => {
+export function RecipeSubmitButton() {
   const queryState = useQueryState();
+  const { formState } = useFormContext();
 
   if (!queryState.edit) {
     return null;
   }
-
-  const { formState } = useFormContext();
 
   return (
     <Button
@@ -22,4 +21,4 @@ export const RecipeSubmitButton = () => {
       Sauvegarder
     </Button>
   );
-};
+}
