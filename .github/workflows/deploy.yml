@@ -7,7 +7,7 @@ jobs:
   db-push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - if: ${{ env.ACT }}
         run: flyctl deploy --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-only --remote-only .
