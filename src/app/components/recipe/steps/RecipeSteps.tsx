@@ -1,18 +1,23 @@
 import { Button, Typography } from "@/src/lib/material";
 import { UtensilsCrossed } from "lucide-react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
 import { RecipeStepEdit } from "./step/RecipeStepEdit";
 import { RecipeStep } from "./step/RecipeStep";
 
-export function RecipeSteps() {
-  const { fields, append, update, remove } = useFieldArray<FormInputs, "steps">(
+export const RecipeSteps = () => {
+  const { fields, append, remove, update } = useFieldArray<FormInputs, "steps">(
     {
       name: "steps",
     },
   );
+  const ingredients = useWatch<FormInputs, "ingredients">({
+    name: "ingredients",
+    defaultValue: [],
+  });
+  const { setValue } = useFormContext<FormInputs>();
   const queryState = useQueryState();
 
   const handleAddStep = () => {
@@ -28,7 +33,8 @@ export function RecipeSteps() {
     if (!field) {
       return;
     }
-    update(index, { ...field, description });
+
+    update(index, { description });
   };
 
   return (
@@ -37,16 +43,19 @@ export function RecipeSteps() {
       {fields.length !== 0 ? (
         <ul className="relative flex list-inside flex-col gap-4">
           {fields.map((field, index) => (
-            <li key={field.id}>
+            // Uses index as key cause react-hook-form changes the field id each time its updated, resulting in focus lost
+            <li key={index}>
               {queryState.edit ? (
                 <RecipeStepEdit
                   props={{
                     step: field,
                     index,
-                    handleRemovedStep: () => handleRemovedStep(index),
-                    handleUpdatedDescription: (description: string) =>
-                      handleUpdatedDescription(index, description),
+                    foods: ingredients.map((ingredient) => ingredient.food),
                   }}
+                  onChangedDescription={(description) =>
+                    handleUpdatedDescription(index, description)
+                  }
+                  onDeleteStep={() => handleRemovedStep(index)}
                 />
               ) : (
                 <RecipeStep
@@ -86,4 +95,4 @@ export function RecipeSteps() {
       </Button>
     </div>
   );
-}
+};

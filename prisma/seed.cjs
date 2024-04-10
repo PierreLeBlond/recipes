@@ -246,10 +246,8 @@ async function seedRecipes() {
         data: recipe,
       });
     }
-
-    console.log("Database seeding completed!");
   } catch (error) {
-    console.error("Error seeding database:", error);
+    throw new Error("Error seeding database:" + error);
   } finally {
     await prisma.$disconnect();
   }

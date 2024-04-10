@@ -1,0 +1,33 @@
+import { getFormatedDescription } from "@/src/app/components/recipe/steps/step/description/getFormatedDescription";
+import { test, expect } from "vitest";
+
+test("method exists", () => {
+  expect(getFormatedDescription).toBeDefined();
+});
+
+test("Should return the same content if no references are found", () => {
+  const content = "Hello World";
+
+  const result = getFormatedDescription(content);
+
+  expect(result).toEqual(content);
+});
+
+test("Should add bold tag to words starting with #", () => {
+  const content = "Hello #World";
+
+  const result = getFormatedDescription(content);
+
+  expect(result).toEqual("Hello <b>#World</b>");
+});
+
+test("Should add colorized p tag to words starting with # included in given references", () => {
+  const content = "Hello #World";
+  const references = ["World"];
+
+  const result = getFormatedDescription(content, references);
+
+  expect(result).toEqual(
+    'Hello <b><p className="text-blue-gray-700">#World</p></b>',
+  );
+});

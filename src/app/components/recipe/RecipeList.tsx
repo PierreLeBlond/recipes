@@ -56,11 +56,11 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
         </li>
       )}
       {recipeList}
-      {true && (
+      {hasNextPage && (
         <div className="flex w-full justify-center sm:col-span-2 lg:col-span-3">
           <Button
             onClick={() => !isFetchingNextPage && fetchNextPage()}
-            disabled={isFetchingNextPage || !hasNextPage}
+            disabled={isFetchingNextPage}
             className="w-full"
           >
             {isFetchingNextPage ? "Chargement..." : "Afficher plus de recettes"}

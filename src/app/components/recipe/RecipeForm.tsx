@@ -36,7 +36,7 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="grid gap-8 lg:grid-cols-3"
+          className="grid gap-x-4 gap-y-8 lg:grid-cols-3"
         >
           <div className="lg:col-span-3">
             <EditSwitch />
