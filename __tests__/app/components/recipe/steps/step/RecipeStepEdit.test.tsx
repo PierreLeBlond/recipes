@@ -94,8 +94,8 @@ describe("Update description", () => {
     await user.click(contentEditable);
     await user.keyboard("!");
 
-    expect(onDescriptionChangeMock.mock.calls).toHaveLength(1);
-    expect(onDescriptionChangeMock.mock.calls[0][0]).toBe(
+    expect(onDescriptionChangeMock.mock.calls).toHaveLength(2);
+    expect(onDescriptionChangeMock.mock.calls[1][0]).toBe(
       `${step.description}!`,
     );
   });
@@ -181,6 +181,27 @@ describe("Add a reference", () => {
     ]);
   });
 
+  test("Should not display foods when user replace the cursor elsewhere", async () => {
+    const component = getComponent();
+    const contentEditable = component.getByRole("textbox");
+
+    await user.click(contentEditable);
+    await user.keyboard("Hello #A");
+    await user.keyboard("[ArrowLeft]");
+    await user.keyboard("[ArrowLeft]");
+    await user.keyboard("[ArrowLeft]");
+    await user.keyboard("X");
+
+    const buttons = component
+      .queryAllByRole("button")
+      .filter((button) =>
+        foods.map((food) => food.name).includes(button.textContent || ""),
+      );
+
+    expect(buttons).toHaveLength(0);
+    expect(contentEditable.textContent).toBe("DescriptionHelloX #A");
+  });
+
   test("Should complete the reference when a food is clicked", async () => {
     const onChangedDescription = vi.fn();
     const component = render(
@@ -215,8 +236,8 @@ describe("Add a reference", () => {
     const appleButton = component.getByText("Apple");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(4);
-    expect(onChangedDescription.mock.calls[3][0]).toBe("Description #Apple ");
+    expect(onChangedDescription.mock.calls).toHaveLength(5);
+    expect(onChangedDescription.mock.calls[4][0]).toBe("Description #Apple ");
   });
 
   test("Should complete only the reference being typed when a food is clicked", async () => {
@@ -256,8 +277,8 @@ describe("Add a reference", () => {
     const appleButton = component.getByText("Apple");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(4);
-    expect(onChangedDescription.mock.calls[3][0]).toBe(
+    expect(onChangedDescription.mock.calls).toHaveLength(5);
+    expect(onChangedDescription.mock.calls[4][0]).toBe(
       "Description #A #Apple ",
     );
   });
@@ -276,6 +297,19 @@ describe("Add a reference", () => {
 
     await user.click(contentEditable);
     await user.keyboard(" #A");
+
+    component.rerender(
+      <RecipeStepEdit
+        props={{
+          step: {
+            ...step,
+            description: "Description #A",
+          },
+          index: 1,
+          foods,
+        }}
+      />,
+    );
 
     const appleButton = component.getByText("Apple");
     await user.click(appleButton);

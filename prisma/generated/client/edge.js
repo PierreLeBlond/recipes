@@ -216,7 +216,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/pierre/Documents/projects/recipe/prisma/generated/client",
+      "value": "/home/pierre/Documents/projects/recipes/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -233,8 +233,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
   "clientVersion": "5.11.0",

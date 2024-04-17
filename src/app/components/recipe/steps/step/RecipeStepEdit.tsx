@@ -53,12 +53,15 @@ export function RecipeStepEdit({
   };
 
   const handleSelectedFoodReference = (foodName: string) => {
-    const newDescription =
-      step.description
-        .substring(0, caretPosition)
-        .replace(new RegExp(`${typedReference}$`, "g"), `${foodName} `) +
-      step.description.substring(caretPosition);
+    const descriptionStart = step.description
+      .substring(0, caretPosition)
+      .replace(new RegExp(`${typedReference}$`, "g"), `${foodName} `);
 
+    const descriptionEnd = step.description.substring(caretPosition);
+
+    setCaretPosition(descriptionStart.length);
+
+    const newDescription = descriptionStart + descriptionEnd;
     if (!onChangedDescription) {
       return;
     }
@@ -77,7 +80,7 @@ export function RecipeStepEdit({
         ></FoodReferences>
       )}
       <Description
-        props={{ description: step.description }}
+        props={{ description: step.description, caretPosition }}
         onChangedDescription={onChangedDescription}
         onTypedReference={handleTypedReference}
       ></Description>

@@ -32,7 +32,7 @@ export const Description = ({
     onTypedReference({ reference, caretPosition });
   };
 
-  const handleDescriptionChange = ({
+  const handleChangedContent = ({
     content,
     caretPosition,
   }: {
@@ -50,7 +50,7 @@ export const Description = ({
   return (
     <div className="grid w-full p-2">
       <ContentEditable
-        onChangedContent={handleDescriptionChange}
+        onChangedContent={handleChangedContent}
         props={{ formatedContent: formatedDescription, caretPosition }}
       />
     </div>

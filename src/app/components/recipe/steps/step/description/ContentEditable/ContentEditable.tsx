@@ -24,6 +24,7 @@ export const ContentEditable = ({
 
   useEffect(() => {
     if (ref.current) {
+      console.log({ caretPosition });
       const newCaretPosition = caretPosition || getCaretPosition(ref.current);
       ref.current.innerHTML = formatedContent;
       if (ref.current === document.activeElement && newCaretPosition !== null) {
@@ -32,28 +33,30 @@ export const ContentEditable = ({
     }
   }, [formatedContent]);
 
+  const handleChangedContent = () => {
+    if (!onChangedContent || !ref.current) {
+      return;
+    }
+    const caretPosition = getCaretPosition(ref.current);
+    onChangedContent({
+      content: ref.current.textContent || "",
+      caretPosition,
+    });
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const keyMap = {};
+  };
+
   return (
     <div
       role="textbox"
       contentEditable="true"
       className="whitespace-pre-wrap"
       ref={ref}
-      onFocus={() => {
-        if (!ref.current) {
-          return;
-        }
-        setCaretToEnd(ref.current);
-      }}
-      onInput={(e) => {
-        if (!onChangedContent || !ref.current) {
-          return;
-        }
-
-        onChangedContent({
-          content: (e.target as HTMLDivElement).textContent || "",
-          caretPosition: getCaretPosition(ref.current),
-        });
-      }}
+      onClick={handleChangedContent}
+      onInput={handleChangedContent}
+      onKeyDown={handleChangedContent}
     />
   );
 };

@@ -43,8 +43,8 @@ test("Should fire an event when description is changed", async () => {
   await user.click(contentEditable);
   await user.keyboard("!");
 
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(1);
-  expect(onChangedDescriptionMock.mock.calls[0][0]).toEqual("!");
+  expect(onChangedDescriptionMock.mock.calls).toHaveLength(2);
+  expect(onChangedDescriptionMock.mock.calls[1][0]).toEqual("!");
 });
 
 test("Should format initial value", async () => {
@@ -68,16 +68,6 @@ test("Should format new values", async () => {
   expect(contentEditable.innerHTML).toBe("Hello <b>#World</b>!");
 });
 
-test("Should keep caret position when updating description", async () => {
-  const component = getComponent({ description: "Hello #World" });
-  const contentEditable = getContentEditable(component);
-
-  await user.click(contentEditable);
-  await user.keyboard("!");
-
-  expect(contentEditable.innerHTML).toBe("Hello <b>#World</b>!");
-});
-
 test("Should fire an event when typing a reference", async () => {
   const onTypedReferenceMock = vi.fn();
   const component = render(
@@ -91,8 +81,8 @@ test("Should fire an event when typing a reference", async () => {
   await user.click(contentEditable);
   await user.keyboard("#");
 
-  expect(onTypedReferenceMock.mock.calls).toHaveLength(1);
-  expect(onTypedReferenceMock.mock.calls[0][0]).toStrictEqual({
+  expect(onTypedReferenceMock.mock.calls).toHaveLength(2);
+  expect(onTypedReferenceMock.mock.calls[1][0]).toStrictEqual({
     reference: "",
     caretPosition: 1,
   });
@@ -112,8 +102,8 @@ test("Should fire an event when user stop typing a reference", async () => {
   await user.keyboard("#");
   await user.keyboard(" ");
 
-  expect(onTypedReferenceMock.mock.calls).toHaveLength(2);
-  expect(onTypedReferenceMock.mock.calls[1][0]).toStrictEqual({
+  expect(onTypedReferenceMock.mock.calls).toHaveLength(3);
+  expect(onTypedReferenceMock.mock.calls[2][0]).toStrictEqual({
     reference: null,
     caretPosition: 2,
   });

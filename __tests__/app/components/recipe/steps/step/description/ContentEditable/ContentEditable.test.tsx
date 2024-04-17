@@ -55,11 +55,11 @@ test("Component fire an event when content is changed", async () => {
 
   expect(contentEditable).toHaveFocus();
   expect(contentEditable).toHaveTextContent("Hello World");
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(11);
-  expect(onChangedDescriptionMock.mock.calls[10][0].content).toEqual(
+  expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
+  expect(onChangedDescriptionMock.mock.calls[11][0].content).toEqual(
     "Hello World",
   );
-  expect(onChangedDescriptionMock.mock.calls[10][0].caretPosition).toEqual(11);
+  expect(onChangedDescriptionMock.mock.calls[11][0].caretPosition).toEqual(11);
 });
 
 test("Component should handled multiple lines", async () => {
@@ -73,8 +73,8 @@ test("Component should handled multiple lines", async () => {
   await user.keyboard("World");
 
   expect(contentEditable).toHaveFocus();
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(11);
-  expect(onChangedDescriptionMock.mock.calls[10][0].content).toEqual(
+  expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
+  expect(onChangedDescriptionMock.mock.calls[11][0].content).toEqual(
     "Hello\nWorld",
   );
 });
@@ -123,16 +123,6 @@ test("Component should keep focus when given formated content is updated", async
   );
 
   expect(contentEditable).toHaveFocus();
-});
-
-test("Should add new user input to given formated content", async () => {
-  const component = getComponent({ formatedDescription: "<a>Hello</a>" });
-  const contentEditable = getContentEditable(component);
-
-  await user.click(contentEditable);
-  await user.keyboard("!");
-
-  expect(contentEditable.innerHTML).toBe("<a>Hello</a>!");
 });
 
 test("Should keep caret position when updating formated content", async () => {

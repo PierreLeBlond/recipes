@@ -15,7 +15,6 @@ export const RecipeSteps = () => {
   );
   const ingredients = useWatch<FormInputs, "ingredients">({
     name: "ingredients",
-    defaultValue: [],
   });
   const { setValue } = useFormContext<FormInputs>();
   const queryState = useQueryState();
