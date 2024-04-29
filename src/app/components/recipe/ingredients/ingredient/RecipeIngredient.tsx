@@ -2,11 +2,11 @@
 
 import { Check } from "lucide-react";
 import { useState } from "react";
-import { IngredientInput } from "@/src/lib/types/IngredientInput";
+import { Ingredient } from "@/src/lib/types/Ingredient";
 import { RecipeIngredientQuantity } from "./RecipeIngredientQuantity";
 
 type RecipeIngredientProps = {
-  ingredient: IngredientInput;
+  ingredient: Ingredient;
 };
 
 export function RecipeIngredient({

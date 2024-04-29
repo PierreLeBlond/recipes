@@ -1,4 +1,4 @@
-import { Food } from "@/prisma/generated/client";
+import { Food } from "@/src/lib/types/Food";
 import { ReactNode } from "react";
 
 type FoodCardProps = {

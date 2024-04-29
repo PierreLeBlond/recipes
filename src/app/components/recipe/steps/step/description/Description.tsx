@@ -1,58 +1,46 @@
-import { ContentEditable } from "./ContentEditable/ContentEditable";
-import { getFormatedDescription } from "./getFormatedDescription";
-import { getTypedReference } from "./getTypedReference";
+import { Units } from "@/prisma/generated/client";
+import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
+import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
+import { Ingredient } from "@/src/lib/types/Ingredient";
+import parse from "html-react-parser";
 
-type DescriptionInputProps = {
+type DescriptionProps = {
   description: string;
-  caretPosition: number | null;
+  ingredients: Ingredient[];
+  plateRatio: number;
 };
 
-export const Description = ({
-  props: { description, caretPosition },
-  onChangedDescription,
-  onTypedReference,
+// TODO: Add all vowels
+const vowels = ["a", "e", "i", "o", "u", "œ"];
+
+const getAdjectif = (unit: Units, name: string) => {
+  if (unit === Units.PIECE) {
+    return "";
+  }
+
+  if (vowels.includes(name.charAt(0))) {
+    return "d'";
+  }
+
+  return "de ";
+};
+
+export function Description({
+  props: { description, ingredients, plateRatio },
 }: {
-  props: DescriptionInputProps;
-  onChangedDescription?: (description: string) => void;
-  onTypedReference?: (_: {
-    reference: string | null;
-    caretPosition: number;
-  }) => void;
-}) => {
-  const formatedDescription = getFormatedDescription(description);
+  props: DescriptionProps;
+}) {
+  const formatedDescription = description.replace(/#\w+/g, (match: string) => {
+    const ingredient = ingredients.find(
+      ({ food: { name } }) => `#${name}` === match,
+    );
 
-  const handleTypedReference = (
-    content: string,
-    caretPosition: number | null,
-  ) => {
-    if (!onTypedReference || caretPosition === null) {
-      return;
+    if (!ingredient) {
+      return match;
     }
-    const reference = getTypedReference(content, caretPosition);
-    onTypedReference({ reference, caretPosition });
-  };
 
-  const handleChangedContent = ({
-    content,
-    caretPosition,
-  }: {
-    content: string;
-    caretPosition: number | null;
-  }) => {
-    handleTypedReference(content, caretPosition);
+    return `<b>${getFormatedQuantity(ingredient.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(ingredient.unit, ingredient.food.name)}${ingredient.food.name}</b>`;
+  });
 
-    if (!onChangedDescription) {
-      return;
-    }
-    onChangedDescription(content);
-  };
-
-  return (
-    <div className="grid w-full p-2">
-      <ContentEditable
-        onChangedContent={handleChangedContent}
-        props={{ formatedContent: formatedDescription, caretPosition }}
-      />
-    </div>
-  );
-};
+  return <div className="p-4">{parse(formatedDescription)}</div>;
+}

@@ -32,16 +32,18 @@ export const setCaretPosition = (element: HTMLElement, position: number) => {
         return { node, offset };
       }
       return { node: null, offset: offset - length };
-    } else {
-      for (const childNode of node.childNodes) {
-        const result = searchNode(childNode, offset);
+    } 
+      let newOffset = offset;
+      for (let i = 0; i < node.childNodes.length; i += 1) {
+        const childNode = node.childNodes[i] as Node;
+        const result = searchNode(childNode, newOffset);
         if (result.node) {
           return result;
         }
-        offset = result.offset;
+        newOffset = result.offset;
       }
-      return { node: null, offset };
-    }
+      return { node: null, offset: newOffset };
+    
   };
 
   const { node, offset } = searchNode(element, normalizedPosition);

@@ -16,6 +16,7 @@
   },
   "plugins": ["react", "react-hooks", "import"],
   "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/react-in-jsx-scope": "off",

@@ -36,11 +36,3 @@ test("Should return the reference being typed somewhere in the string", () => {
 
   expect(result).toEqual("W");
 });
-
-test("Should return the reference being typed when the cursor is not at the end of the word", () => {
-  const content = "Hello #World";
-
-  const result = getTypedReference(content, 8);
-
-  expect(result).toEqual("World");
-});

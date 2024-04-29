@@ -216,7 +216,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/pierre/Documents/projects/recipes/prisma/generated/client",
+      "value": "/home/pierre/quests/recipes/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -233,7 +233,8 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
   "clientVersion": "5.11.0",
@@ -242,7 +243,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {

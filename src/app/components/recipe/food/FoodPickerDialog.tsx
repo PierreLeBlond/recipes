@@ -6,7 +6,7 @@ import {
   DialogHeader,
 } from "@/src/lib/material";
 import { useState } from "react";
-import { Food } from "@/prisma/generated/client";
+import { Food } from "@/src/lib/types/Food";
 import { FoodPicker } from "./FoodPicker";
 
 type FoodPickerDialogProps = {

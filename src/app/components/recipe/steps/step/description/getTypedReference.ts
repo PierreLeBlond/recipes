@@ -6,12 +6,5 @@ export const getTypedReference = (content: string, caretPosition: number) => {
   }
 
   const [, referenceStartValue] = referenceStart;
-  const referenceEnd = content.substring(caretPosition).match(/^(\w+)/);
-
-  if (!referenceEnd) {
-    return `${referenceStartValue}`;
-  }
-
-  const [, referenceEndValue] = referenceEnd;
-  return `${referenceStartValue}${referenceEndValue}`;
+  return `${referenceStartValue}`;
 };

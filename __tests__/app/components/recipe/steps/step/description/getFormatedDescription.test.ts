@@ -21,13 +21,21 @@ test("Should add bold tag to words starting with #", () => {
   expect(result).toEqual("Hello <b>#World</b>");
 });
 
-test("Should add colorized p tag to words starting with # included in given references", () => {
+test("Should also add tag to single #", async () => {
+  const content = "Hello #";
+
+  const result = getFormatedDescription(content);
+
+  expect(result).toBe("Hello <b>#</b>");
+});
+
+test("Should add colorized span tag to words starting with # included in given references", () => {
   const content = "Hello #World";
   const references = ["World"];
 
   const result = getFormatedDescription(content, references);
 
   expect(result).toEqual(
-    'Hello <b><p className="text-blue-gray-700">#World</p></b>',
+    'Hello <b><span class="text-blue-gray-700">#World</span></b>',
   );
 });

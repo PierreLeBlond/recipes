@@ -53,3 +53,13 @@ test("Should return the caret position within nested content if focused", async 
 
   expect(getCaretPosition(element)).toEqual(11);
 });
+
+test("Should return the caret position when moving woth arrow keys", async () => {
+  const element = getContentEditableElement();
+  element.innerHTML = "test";
+
+  await user.click(element);
+  await user.keyboard("{ArrowLeft}");
+
+  expect(getCaretPosition(element)).toEqual(3);
+});

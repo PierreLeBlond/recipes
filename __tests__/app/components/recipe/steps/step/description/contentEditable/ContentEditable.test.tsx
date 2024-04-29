@@ -19,7 +19,7 @@ const getComponent = ({
 }) => {
   return render(
     <ContentEditable
-      onChangedContent={onChangedDescriptionMock}
+      onChangedContent={onChangedDescriptionMock || (() => {})}
       props={{ formatedContent: formatedDescription, caretPosition }}
     />,
   );
@@ -98,6 +98,7 @@ test("Component should display given formated content and override previous user
   component.rerender(
     <ContentEditable
       props={{ formatedContent: "<span>Hello</span>", caretPosition: null }}
+      onChangedContent={() => {}}
     />,
   );
 
@@ -119,6 +120,7 @@ test("Component should keep focus when given formated content is updated", async
         formatedContent: "<span>Hello World</span>",
         caretPosition: null,
       }}
+      onChangedContent={() => {}}
     />,
   );
 
@@ -137,10 +139,26 @@ test("Should keep caret position when updating formated content", async () => {
   component.rerender(
     <ContentEditable
       props={{ formatedContent: "Hello World", caretPosition: null }}
+      onChangedContent={() => {}}
     />,
   );
 
   await user.keyboard("#");
 
   expect(contentEditable.innerHTML).toBe("Hello #World");
+});
+
+test("Should fire an event when caret position is changed with arrows", async () => {
+  const onChangedDescriptionMock = vi.fn();
+  const component = getComponent({ onChangedDescriptionMock });
+  const contentEditable = getContentEditable(component);
+
+  await user.click(contentEditable);
+  await user.keyboard("Hello World");
+  expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
+  expect(onChangedDescriptionMock.mock.calls[11][0].caretPosition).toBe(11);
+  await user.keyboard("{ArrowLeft}");
+
+  expect(onChangedDescriptionMock.mock.calls).toHaveLength(13);
+  expect(onChangedDescriptionMock.mock.calls[12][0].caretPosition).toBe(10);
 });

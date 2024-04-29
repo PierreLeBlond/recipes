@@ -28,8 +28,8 @@ export const useQueryState = (): QueryState => {
     units: ingredients.reduce(
       (accu, ingredient) => ({
         ...accu,
-        [ingredient.foodName]: searchParams.get(
-          `${ingredient.foodName}Unit`,
+        [ingredient.food.name]: searchParams.get(
+          `${ingredient.food.name}Unit`,
         ) as Units | undefined,
       }),
       {},

@@ -5,16 +5,16 @@ import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { Menu, MenuHandler, MenuItem, MenuList } from "@/src/lib/material";
 import { ArrowDownUp, ChevronDown } from "lucide-react";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
-import { IngredientInput } from "@/src/lib/types/IngredientInput";
 import { cn } from "@/src/lib/utils";
 import { useState } from "react";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
+import { Ingredient } from "@/src/lib/types/Ingredient";
 import { QueryParamsLink } from "../../../utils/QueryParamsLink";
 
 type RecipeIngredientQuantityProps = {
-  ingredient: IngredientInput;
+  ingredient: Ingredient;
 };
 
 const alternativeUnitsMap: {
@@ -90,9 +90,11 @@ export function RecipeIngredientQuantity({
           {getFormatedQuantity(
             unit,
             getQuantityFromPlateAndUnit({
-              ingredient,
+              ingredient: {
+                ...ingredient,
+                unit,
+              },
               plateRatio,
-              unit,
             }),
           )}
         </span>
@@ -135,7 +137,6 @@ export function RecipeIngredientQuantity({
               getQuantityFromPlateAndUnit({
                 ingredient,
                 plateRatio,
-                unit,
               }),
             )}
           </span>
@@ -167,7 +168,6 @@ export function RecipeIngredientQuantity({
                   getQuantityFromPlateAndUnit({
                     ingredient,
                     plateRatio,
-                    unit: alternativeUnit,
                   }),
                 )}
               </span>

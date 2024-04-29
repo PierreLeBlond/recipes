@@ -3,7 +3,7 @@
 import { Input } from "@/src/lib/material";
 import { ArrowBigDown, Search, X } from "lucide-react";
 import { useState } from "react";
-import { Food } from "@/prisma/generated/client";
+import { Food } from "@/src/lib/types/Food";
 import { FoodCard } from "./FoodCard";
 import { FoodList } from "./FoodList";
 
@@ -21,13 +21,13 @@ export function FoodPicker({
   const [search, setSearch] = useState("");
 
   const pickedFoodList = pickedFoods.map((food: Food) => (
-    <li key={`picked_${food.id}`}>
+    <li key={`picked_${food.name}`}>
       <button
         aria-label="retirer l'ingrédient"
         type="button"
         onClick={() => {
           setPickedFoods(
-            pickedFoods.filter((pickedFood) => pickedFood.id !== food.id),
+            pickedFoods.filter((pickedFood) => pickedFood.name !== food.name),
           );
         }}
         className="group w-full hover:text-blue-gray-900"

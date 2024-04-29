@@ -1,14 +1,10 @@
-import { Food, Ingredient, Step } from "@/prisma/generated/client";
+import { Ingredient } from "./Ingredient";
+import { Step } from "./Step";
 
 export type FormInputs = {
   name: string;
   plateCount: number;
   image: string | null;
-  ingredients: (Omit<
-    Ingredient,
-    "id" | "createdAt" | "updatedAt" | "recipeId" | "index"
-  > & {
-    food: Food;
-  })[];
-  steps: Omit<Step, "id" | "createdAt" | "updatedAt" | "recipeId" | "index">[];
+  ingredients: Ingredient[];
+  steps: Step[];
 };

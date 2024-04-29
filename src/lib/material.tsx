@@ -21,6 +21,8 @@ import {
   Typography,
   Textarea,
   Switch,
+  List,
+  ListItem,
 } from "@material-tailwind/react";
 
 export {
@@ -44,4 +46,6 @@ export {
   Typography,
   Textarea,
   Switch,
+  List,
+  ListItem,
 };

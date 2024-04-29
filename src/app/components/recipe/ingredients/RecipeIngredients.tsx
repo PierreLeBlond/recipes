@@ -1,11 +1,11 @@
 import { useFieldArray } from "react-hook-form";
 import { Button, Typography } from "@/src/lib/material";
 import { useState } from "react";
-import { Food } from "@/prisma/generated/client";
 import { useGrab } from "@/src/lib/hooks/useGrab";
 import { cn } from "@/src/lib/utils";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
+import { Food } from "@/src/lib/types/Food";
 import { RecipeIngredient } from "./ingredient/RecipeIngredient";
 import { FoodPickerDialog } from "../food/FoodPickerDialog";
 import { RecipeIngredientEdit } from "./ingredient/RecipeIngredientEdit";
@@ -38,8 +38,8 @@ export function RecipeIngredients() {
     append(
       pickedFoods.map((pickedFood) => ({
         quantity: 0,
-        foodName: pickedFood.name,
         food: pickedFood,
+        unit: queryState.units[pickedFood.name] || pickedFood.unit,
       })),
     );
   };
@@ -71,7 +71,7 @@ export function RecipeIngredients() {
         >
           <ul className="relative flex list-inside flex-col gap-4">
             {fields.map((field, index) => (
-              <li key={field.id}>
+              <li key={field.food.name}>
                 {queryState.edit ? (
                   <RecipeIngredientEdit
                     props={{
@@ -83,12 +83,16 @@ export function RecipeIngredients() {
                       grabbed: grabbedId === field.id,
                       grabbedPosition,
                     }}
-                    onGrab={(event, id: string) => handleGrab(event, id)}
+                    onGrab={(event) => handleGrab(event, field.id)}
                   />
                 ) : (
                   <RecipeIngredient
                     props={{
-                      ingredient: field,
+                      ingredient: {
+                        ...field,
+                        unit:
+                          queryState.units[field.food.name] || field.food.unit,
+                      },
                     }}
                   />
                 )}

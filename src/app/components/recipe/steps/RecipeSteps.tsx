@@ -1,13 +1,13 @@
 import { Button, Typography } from "@/src/lib/material";
 import { UtensilsCrossed } from "lucide-react";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
 import { RecipeStepEdit } from "./step/RecipeStepEdit";
 import { RecipeStep } from "./step/RecipeStep";
 
-export const RecipeSteps = () => {
+export function RecipeSteps() {
   const { fields, append, remove, update } = useFieldArray<FormInputs, "steps">(
     {
       name: "steps",
@@ -16,8 +16,14 @@ export const RecipeSteps = () => {
   const ingredients = useWatch<FormInputs, "ingredients">({
     name: "ingredients",
   });
-  const { setValue } = useFormContext<FormInputs>();
+
+  const plateCount = useWatch<FormInputs, "plateCount">({
+    name: "plateCount",
+  });
+
   const queryState = useQueryState();
+
+  const plateRatio = queryState.plateCount / plateCount;
 
   const handleAddStep = () => {
     append({ description: "" });
@@ -40,16 +46,23 @@ export const RecipeSteps = () => {
     <div className="grid gap-4 lg:grid-cols-3">
       <Typography variant="h2">ÉTAPES</Typography>
       {fields.length !== 0 ? (
-        <ul className="relative flex list-inside flex-col gap-4">
+        <ul className="relative flex list-inside flex-col gap-4 lg:col-span-3">
           {fields.map((field, index) => (
             // Uses index as key cause react-hook-form changes the field id each time its updated, resulting in focus lost
+            // eslint-disable-next-line react/no-array-index-key
             <li key={index}>
               {queryState.edit ? (
                 <RecipeStepEdit
                   props={{
                     step: field,
                     index,
-                    foods: ingredients.map((ingredient) => ingredient.food),
+                    ingredients: ingredients.map((ingredient) => ({
+                      ...ingredient,
+                      unit:
+                        queryState.units[ingredient.food.name] ||
+                        ingredient.food.unit,
+                    })),
+                    plateRatio,
                   }}
                   onChangedDescription={(description) =>
                     handleUpdatedDescription(index, description)
@@ -94,4 +107,4 @@ export const RecipeSteps = () => {
       </Button>
     </div>
   );
-};
+}

@@ -1,10 +1,10 @@
 "use client";
 
-import { Food } from "@/prisma/generated/client";
 import { Button, Spinner } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { api } from "@/src/trpc/react";
 import { Plus, ServerCrash } from "lucide-react";
+import { Food } from "@/src/lib/types/Food";
 import { FoodCard } from "./FoodCard";
 
 type FoodListProps = {
@@ -43,13 +43,13 @@ export function FoodList({
     );
   }
 
-  const disabledFoodIds = [
-    ...disabledFoods.map((food) => food.id),
-    ...pickedFoods.map((food) => food.id),
+  const disabledFoodNames = [
+    ...disabledFoods.map((food) => food.name),
+    ...pickedFoods.map((food) => food.name),
   ];
 
   const handlePickFood = (food: Food) => {
-    if (disabledFoodIds.includes(food.id)) {
+    if (disabledFoodNames.includes(food.name)) {
       return;
     }
 
@@ -66,11 +66,11 @@ export function FoodList({
               onClick={() => handlePickFood(food)}
               className={cn("group w-full hover:text-gray-900", {
                 "border-gray-500 text-gray-500 hover:cursor-not-allowed hover:text-gray-500":
-                  disabledFoodIds.includes(food.id),
+                  disabledFoodNames.includes(food.name),
               })}
             >
               <FoodCard props={{ food }}>
-                {disabledFoodIds.includes(food.id) ? (
+                {disabledFoodNames.includes(food.name) ? (
                   <span className="text-xs text-gray-500">
                     déjà utilisé dans la recette
                   </span>

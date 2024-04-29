@@ -46,9 +46,9 @@ export function RecipeStep({ props: { step } }: { props: RecipeStepProps }) {
       }
 
       const unit =
-        queryState.units[ingredient.foodName] || ingredient.food.unit;
+        queryState.units[ingredient.food.name] || ingredient.food.unit;
 
-      return `<b>${getFormatedQuantity(queryState.units[ingredient.foodName] || ingredient.food.unit, getQuantityFromPlateAndUnit({ ingredient, unit, plateRatio }))} ${getAdjectif(unit, ingredient.food.name)}${ingredient.food.name}</b>`;
+      return `<b>${getFormatedQuantity(queryState.units[ingredient.food.name] || ingredient.food.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(unit, ingredient.food.name)}${ingredient.food.name}</b>`;
     },
   );
 

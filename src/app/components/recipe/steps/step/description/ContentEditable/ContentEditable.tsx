@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { getCaretPosition } from "./getCaretPosition";
 import { setCaretPosition } from "./setCaretPosition";
-import { setCaretToEnd } from "./setCaretToEnd";
+import { getOnCaretMoveEvents } from "./getCaretMoveEvents";
 
 type ContentEditableProps = {
   formatedContent: string;
@@ -9,54 +9,55 @@ type ContentEditableProps = {
 };
 
 type ContentEditableInput = {
-  onChangedContent?: (_: {
+  onChangedContent: (_: {
     content: string;
     caretPosition: number | null;
   }) => void;
   props: ContentEditableProps;
 };
 
-export const ContentEditable = ({
+export function ContentEditable({
   props: { formatedContent, caretPosition },
-  onChangedContent: onChangedContent,
-}: ContentEditableInput) => {
+  onChangedContent,
+}: ContentEditableInput) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current) {
-      console.log({ caretPosition });
       const newCaretPosition = caretPosition || getCaretPosition(ref.current);
       ref.current.innerHTML = formatedContent;
       if (ref.current === document.activeElement && newCaretPosition !== null) {
         setCaretPosition(ref.current, newCaretPosition);
       }
     }
-  }, [formatedContent]);
+  }, [formatedContent, caretPosition]);
 
   const handleChangedContent = () => {
     if (!onChangedContent || !ref.current) {
       return;
     }
-    const caretPosition = getCaretPosition(ref.current);
+    const newCaretPosition = getCaretPosition(ref.current);
     onChangedContent({
       content: ref.current.textContent || "",
-      caretPosition,
+      caretPosition: newCaretPosition,
     });
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const keyMap = {};
-  };
+  const { onclick, oninput, onkeydown } =
+    getOnCaretMoveEvents(handleChangedContent);
 
   return (
     <div
       role="textbox"
+      tabIndex={0}
       contentEditable="true"
-      className="whitespace-pre-wrap"
+      className="min-h-24 w-full whitespace-pre-wrap rounded-md border border-blue-gray-500 bg-gray-50 p-2 shadow-md focus:border-2 focus:outline-none"
       ref={ref}
-      onClick={handleChangedContent}
-      onInput={handleChangedContent}
-      onKeyDown={handleChangedContent}
+      onClick={onclick}
+      onInput={oninput}
+      onKeyDown={onkeydown}
+      onBlur={handleChangedContent}
+      aria-label="Zone d'édition"
     />
   );
-};
+}

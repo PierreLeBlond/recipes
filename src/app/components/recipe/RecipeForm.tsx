@@ -28,7 +28,16 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
   });
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    updateMutation.mutate({ id: recipe.id, ...data });
+    updateMutation.mutate({
+      id: recipe.id,
+      name: data.name,
+      image: data.image,
+      ingredients: data.ingredients.map((ingredient) => ({
+        ...ingredient,
+        foodName: ingredient.food.name,
+      })),
+      steps: data.steps,
+    });
   };
 
   return (

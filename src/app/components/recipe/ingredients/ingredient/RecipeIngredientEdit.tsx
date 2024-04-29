@@ -1,13 +1,12 @@
 import { getFormatedUnit } from "@/src/lib/quantity/getFormatedUnit";
 import { cn } from "@/src/lib/utils";
 import { Grip, X } from "lucide-react";
-import { FieldArrayWithId } from "react-hook-form";
-import { FormInputs } from "@/src/lib/types/FormInputs";
 import { PointerEvent } from "react";
 import { Input } from "@/src/lib/material";
+import { Ingredient } from "@/src/lib/types/Ingredient";
 
 type RecipeIngredientEditProps = {
-  ingredient: FieldArrayWithId<FormInputs, "ingredients", "id">;
+  ingredient: Ingredient;
   handleRemovedIngredient: () => void;
   handleUpdatedQuantity: (quantity: number) => void;
   grabbed: boolean;
@@ -25,7 +24,7 @@ export function RecipeIngredientEdit({
   onGrab,
 }: {
   props: RecipeIngredientEditProps;
-  onGrab: (event: PointerEvent, id: string) => void;
+  onGrab: (event: PointerEvent) => void;
 }) {
   return (
     <>
@@ -47,7 +46,7 @@ export function RecipeIngredientEdit({
               "cursor-grabbing": grabbed,
             },
           )}
-          onPointerDown={(event: PointerEvent) => onGrab(event, ingredient.id)}
+          onPointerDown={(event: PointerEvent) => onGrab(event)}
         >
           <Grip
             size={16}
@@ -66,6 +65,10 @@ export function RecipeIngredientEdit({
               label="Quantité"
               color="blue-gray"
               step="0.1"
+              labelProps={{
+                htmlFor: "quantity-input",
+              }}
+              id="quantity-input"
               containerProps={{
                 className: "h-8",
               }}

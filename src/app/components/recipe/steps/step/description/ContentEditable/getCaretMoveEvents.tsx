@@ -1,18 +1,13 @@
-import { KeyboardEvent } from "react";
-
-type eventNames = "onclick" | "onkeydown";
-
 const arrowKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
 
-export const getOnCaretMoveEvents = (
-  onCaretMove: () => void,
-): Readonly<Record<eventNames, (e: KeyboardEvent) => void>> => ({
+export const getOnCaretMoveEvents = (onCaretMove: () => void) => ({
   onclick: onCaretMove,
-  onkeydown: (e: KeyboardEvent) => {
-    const keyPressedIsArrowKey = arrowKeys.includes(e.key);
+  onkeydown: ({ key }: { key: string }) => {
+    const keyPressedIsArrowKey = arrowKeys.includes(key);
     if (!keyPressedIsArrowKey) {
       return;
     }
     setTimeout(onCaretMove, 0);
   },
+  oninput: onCaretMove,
 });
