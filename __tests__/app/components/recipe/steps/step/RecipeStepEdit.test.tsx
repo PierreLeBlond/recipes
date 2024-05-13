@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 import { RecipeStepEdit } from "@/src/app/components/recipe/steps/step/RecipeStepEdit";
 import { RenderResult, cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -20,6 +20,7 @@ type ComponentInput = {
         density: number | null;
         massPerPiece: number | null;
         unit: Units;
+        image: string | null;
       };
       quantity: number;
       unit: Units;

@@ -1,4 +1,9 @@
-import { createTRPCRouter, publicProcedure } from "@/src/server/api/trpc";
+import { Units } from "@/prisma/generated/client/index.js";
+import {
+  adminProcedure,
+  createTRPCRouter,
+  publicProcedure,
+} from "@/src/server/api/trpc";
 import { z } from "zod";
 
 export const foodRouter = createTRPCRouter({
@@ -32,4 +37,23 @@ export const foodRouter = createTRPCRouter({
         nextCursor: foods.at(foods.length - 1)?.id ?? null,
       };
     }),
+  create: adminProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        density: z.number().nullable(),
+        massPerPiece: z.number().nullable(),
+        unit: z.union([
+          z.literal(Units.GRAM),
+          z.literal(Units.LITER),
+          z.literal(Units.DROP),
+          z.literal(Units.PINCH),
+          z.literal(Units.TEASPOON),
+          z.literal(Units.TABLESPOON),
+          z.literal(Units.PIECE),
+        ]),
+        image: z.string().url().nullable(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => ctx.db.food.create({ data: input })),
 });

@@ -346,8 +346,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.11.0
-   * Query Engine version: efd2449663b3d73d637ea1fd226bafbcf45b3102
+   * Prisma Client JS version: 5.13.0
+   * Query Engine version: b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
    */
   export type PrismaVersion = {
     client: string
@@ -474,6 +474,11 @@ export namespace Prisma {
     include: any
   }
 
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
   /**
    * Get the type of the value, that the Promise holds.
    */
@@ -522,7 +527,9 @@ export namespace Prisma {
   } &
     (T extends SelectAndInclude
       ? 'Please either choose `select` or `include`.'
-      : {})
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
 
   /**
    * Subset + Intersection
@@ -1484,7 +1491,6 @@ export namespace Prisma {
   }
 
   // Custom InputTypes
-
   /**
    * RecipeCountOutputType without action
    */
@@ -1495,7 +1501,6 @@ export namespace Prisma {
     select?: RecipeCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * RecipeCountOutputType without action
    */
@@ -1503,14 +1508,12 @@ export namespace Prisma {
     where?: StepWhereInput
   }
 
-
   /**
    * RecipeCountOutputType without action
    */
   export type RecipeCountOutputTypeCountIngredientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: IngredientWhereInput
   }
-
 
 
   /**
@@ -1526,7 +1529,6 @@ export namespace Prisma {
   }
 
   // Custom InputTypes
-
   /**
    * FoodCountOutputType without action
    */
@@ -1537,14 +1539,12 @@ export namespace Prisma {
     select?: FoodCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * FoodCountOutputType without action
    */
   export type FoodCountOutputTypeCountIngredientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: IngredientWhereInput
   }
-
 
 
   /**
@@ -1564,7 +1564,6 @@ export namespace Prisma {
   }
 
   // Custom InputTypes
-
   /**
    * UserCountOutputType without action
    */
@@ -1575,14 +1574,12 @@ export namespace Prisma {
     select?: UserCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountWhereInput
   }
-
 
   /**
    * UserCountOutputType without action
@@ -1591,14 +1588,12 @@ export namespace Prisma {
     where?: SessionWhereInput
   }
 
-
   /**
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountRecipeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RecipeWhereInput
   }
-
 
 
   /**
@@ -1843,6 +1838,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
   }
+
 
   export type RecipeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
@@ -2279,7 +2275,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Recipe findUnique
    */
@@ -2289,7 +2284,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2297,7 +2292,6 @@ export namespace Prisma {
      */
     where: RecipeWhereUniqueInput
   }
-
 
   /**
    * Recipe findUniqueOrThrow
@@ -2308,7 +2302,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2316,7 +2310,6 @@ export namespace Prisma {
      */
     where: RecipeWhereUniqueInput
   }
-
 
   /**
    * Recipe findFirst
@@ -2327,7 +2320,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2365,7 +2358,6 @@ export namespace Prisma {
      */
     distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
   }
-
 
   /**
    * Recipe findFirstOrThrow
@@ -2376,7 +2368,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2415,7 +2407,6 @@ export namespace Prisma {
     distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
   }
 
-
   /**
    * Recipe findMany
    */
@@ -2425,7 +2416,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2459,7 +2450,6 @@ export namespace Prisma {
     distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
   }
 
-
   /**
    * Recipe create
    */
@@ -2469,7 +2459,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2477,7 +2467,6 @@ export namespace Prisma {
      */
     data: XOR<RecipeCreateInput, RecipeUncheckedCreateInput>
   }
-
 
   /**
    * Recipe createMany
@@ -2490,7 +2479,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Recipe update
    */
@@ -2500,7 +2488,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2512,7 +2500,6 @@ export namespace Prisma {
      */
     where: RecipeWhereUniqueInput
   }
-
 
   /**
    * Recipe updateMany
@@ -2528,7 +2515,6 @@ export namespace Prisma {
     where?: RecipeWhereInput
   }
 
-
   /**
    * Recipe upsert
    */
@@ -2538,7 +2524,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2555,7 +2541,6 @@ export namespace Prisma {
     update: XOR<RecipeUpdateInput, RecipeUncheckedUpdateInput>
   }
 
-
   /**
    * Recipe delete
    */
@@ -2565,7 +2550,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     /**
@@ -2573,7 +2558,6 @@ export namespace Prisma {
      */
     where: RecipeWhereUniqueInput
   }
-
 
   /**
    * Recipe deleteMany
@@ -2585,7 +2569,6 @@ export namespace Prisma {
     where?: RecipeWhereInput
   }
 
-
   /**
    * Recipe.steps
    */
@@ -2595,7 +2578,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     where?: StepWhereInput
@@ -2606,7 +2589,6 @@ export namespace Prisma {
     distinct?: StepScalarFieldEnum | StepScalarFieldEnum[]
   }
 
-
   /**
    * Recipe.ingredients
    */
@@ -2616,7 +2598,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     where?: IngredientWhereInput
@@ -2627,7 +2609,6 @@ export namespace Prisma {
     distinct?: IngredientScalarFieldEnum | IngredientScalarFieldEnum[]
   }
 
-
   /**
    * Recipe without action
    */
@@ -2637,11 +2618,10 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -2861,6 +2841,7 @@ export namespace Prisma {
     updatedAt?: boolean
     recipeId?: boolean
   }
+
 
   export type StepInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe?: boolean | RecipeDefaultArgs<ExtArgs>
@@ -3284,7 +3265,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Step findUnique
    */
@@ -3294,7 +3274,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3302,7 +3282,6 @@ export namespace Prisma {
      */
     where: StepWhereUniqueInput
   }
-
 
   /**
    * Step findUniqueOrThrow
@@ -3313,7 +3292,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3321,7 +3300,6 @@ export namespace Prisma {
      */
     where: StepWhereUniqueInput
   }
-
 
   /**
    * Step findFirst
@@ -3332,7 +3310,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3370,7 +3348,6 @@ export namespace Prisma {
      */
     distinct?: StepScalarFieldEnum | StepScalarFieldEnum[]
   }
-
 
   /**
    * Step findFirstOrThrow
@@ -3381,7 +3358,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3420,7 +3397,6 @@ export namespace Prisma {
     distinct?: StepScalarFieldEnum | StepScalarFieldEnum[]
   }
 
-
   /**
    * Step findMany
    */
@@ -3430,7 +3406,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3464,7 +3440,6 @@ export namespace Prisma {
     distinct?: StepScalarFieldEnum | StepScalarFieldEnum[]
   }
 
-
   /**
    * Step create
    */
@@ -3474,7 +3449,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3482,7 +3457,6 @@ export namespace Prisma {
      */
     data: XOR<StepCreateInput, StepUncheckedCreateInput>
   }
-
 
   /**
    * Step createMany
@@ -3495,7 +3469,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Step update
    */
@@ -3505,7 +3478,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3517,7 +3490,6 @@ export namespace Prisma {
      */
     where: StepWhereUniqueInput
   }
-
 
   /**
    * Step updateMany
@@ -3533,7 +3505,6 @@ export namespace Prisma {
     where?: StepWhereInput
   }
 
-
   /**
    * Step upsert
    */
@@ -3543,7 +3514,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3560,7 +3531,6 @@ export namespace Prisma {
     update: XOR<StepUpdateInput, StepUncheckedUpdateInput>
   }
 
-
   /**
    * Step delete
    */
@@ -3570,7 +3540,7 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
     /**
@@ -3578,7 +3548,6 @@ export namespace Prisma {
      */
     where: StepWhereUniqueInput
   }
-
 
   /**
    * Step deleteMany
@@ -3590,7 +3559,6 @@ export namespace Prisma {
     where?: StepWhereInput
   }
 
-
   /**
    * Step without action
    */
@@ -3600,11 +3568,10 @@ export namespace Prisma {
      */
     select?: StepSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: StepInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -3847,6 +3814,7 @@ export namespace Prisma {
     massPerPiece?: boolean
     unit?: boolean
   }
+
 
   export type FoodInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ingredients?: boolean | Food$ingredientsArgs<ExtArgs>
@@ -4275,7 +4243,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Food findUnique
    */
@@ -4285,7 +4252,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4293,7 +4260,6 @@ export namespace Prisma {
      */
     where: FoodWhereUniqueInput
   }
-
 
   /**
    * Food findUniqueOrThrow
@@ -4304,7 +4270,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4312,7 +4278,6 @@ export namespace Prisma {
      */
     where: FoodWhereUniqueInput
   }
-
 
   /**
    * Food findFirst
@@ -4323,7 +4288,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4361,7 +4326,6 @@ export namespace Prisma {
      */
     distinct?: FoodScalarFieldEnum | FoodScalarFieldEnum[]
   }
-
 
   /**
    * Food findFirstOrThrow
@@ -4372,7 +4336,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4411,7 +4375,6 @@ export namespace Prisma {
     distinct?: FoodScalarFieldEnum | FoodScalarFieldEnum[]
   }
 
-
   /**
    * Food findMany
    */
@@ -4421,7 +4384,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4455,7 +4418,6 @@ export namespace Prisma {
     distinct?: FoodScalarFieldEnum | FoodScalarFieldEnum[]
   }
 
-
   /**
    * Food create
    */
@@ -4465,7 +4427,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4473,7 +4435,6 @@ export namespace Prisma {
      */
     data: XOR<FoodCreateInput, FoodUncheckedCreateInput>
   }
-
 
   /**
    * Food createMany
@@ -4486,7 +4447,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Food update
    */
@@ -4496,7 +4456,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4508,7 +4468,6 @@ export namespace Prisma {
      */
     where: FoodWhereUniqueInput
   }
-
 
   /**
    * Food updateMany
@@ -4524,7 +4483,6 @@ export namespace Prisma {
     where?: FoodWhereInput
   }
 
-
   /**
    * Food upsert
    */
@@ -4534,7 +4492,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4551,7 +4509,6 @@ export namespace Prisma {
     update: XOR<FoodUpdateInput, FoodUncheckedUpdateInput>
   }
 
-
   /**
    * Food delete
    */
@@ -4561,7 +4518,7 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
     /**
@@ -4569,7 +4526,6 @@ export namespace Prisma {
      */
     where: FoodWhereUniqueInput
   }
-
 
   /**
    * Food deleteMany
@@ -4581,7 +4537,6 @@ export namespace Prisma {
     where?: FoodWhereInput
   }
 
-
   /**
    * Food.ingredients
    */
@@ -4591,7 +4546,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     where?: IngredientWhereInput
@@ -4602,7 +4557,6 @@ export namespace Prisma {
     distinct?: IngredientScalarFieldEnum | IngredientScalarFieldEnum[]
   }
 
-
   /**
    * Food without action
    */
@@ -4612,11 +4566,10 @@ export namespace Prisma {
      */
     select?: FoodSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: FoodInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -4850,6 +4803,7 @@ export namespace Prisma {
     foodName?: boolean
     recipeId?: boolean
   }
+
 
   export type IngredientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     food?: boolean | FoodDefaultArgs<ExtArgs>
@@ -5279,7 +5233,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Ingredient findUnique
    */
@@ -5289,7 +5242,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5297,7 +5250,6 @@ export namespace Prisma {
      */
     where: IngredientWhereUniqueInput
   }
-
 
   /**
    * Ingredient findUniqueOrThrow
@@ -5308,7 +5260,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5316,7 +5268,6 @@ export namespace Prisma {
      */
     where: IngredientWhereUniqueInput
   }
-
 
   /**
    * Ingredient findFirst
@@ -5327,7 +5278,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5365,7 +5316,6 @@ export namespace Prisma {
      */
     distinct?: IngredientScalarFieldEnum | IngredientScalarFieldEnum[]
   }
-
 
   /**
    * Ingredient findFirstOrThrow
@@ -5376,7 +5326,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5415,7 +5365,6 @@ export namespace Prisma {
     distinct?: IngredientScalarFieldEnum | IngredientScalarFieldEnum[]
   }
 
-
   /**
    * Ingredient findMany
    */
@@ -5425,7 +5374,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5459,7 +5408,6 @@ export namespace Prisma {
     distinct?: IngredientScalarFieldEnum | IngredientScalarFieldEnum[]
   }
 
-
   /**
    * Ingredient create
    */
@@ -5469,7 +5417,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5477,7 +5425,6 @@ export namespace Prisma {
      */
     data: XOR<IngredientCreateInput, IngredientUncheckedCreateInput>
   }
-
 
   /**
    * Ingredient createMany
@@ -5490,7 +5437,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Ingredient update
    */
@@ -5500,7 +5446,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5512,7 +5458,6 @@ export namespace Prisma {
      */
     where: IngredientWhereUniqueInput
   }
-
 
   /**
    * Ingredient updateMany
@@ -5528,7 +5473,6 @@ export namespace Prisma {
     where?: IngredientWhereInput
   }
 
-
   /**
    * Ingredient upsert
    */
@@ -5538,7 +5482,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5555,7 +5499,6 @@ export namespace Prisma {
     update: XOR<IngredientUpdateInput, IngredientUncheckedUpdateInput>
   }
 
-
   /**
    * Ingredient delete
    */
@@ -5565,7 +5508,7 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
     /**
@@ -5573,7 +5516,6 @@ export namespace Prisma {
      */
     where: IngredientWhereUniqueInput
   }
-
 
   /**
    * Ingredient deleteMany
@@ -5585,7 +5527,6 @@ export namespace Prisma {
     where?: IngredientWhereInput
   }
 
-
   /**
    * Ingredient without action
    */
@@ -5595,11 +5536,10 @@ export namespace Prisma {
      */
     select?: IngredientSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: IngredientInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -5886,6 +5826,7 @@ export namespace Prisma {
     id_token?: boolean
     session_state?: boolean
   }
+
 
   export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -6323,7 +6264,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Account findUnique
    */
@@ -6333,7 +6273,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6341,7 +6281,6 @@ export namespace Prisma {
      */
     where: AccountWhereUniqueInput
   }
-
 
   /**
    * Account findUniqueOrThrow
@@ -6352,7 +6291,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6360,7 +6299,6 @@ export namespace Prisma {
      */
     where: AccountWhereUniqueInput
   }
-
 
   /**
    * Account findFirst
@@ -6371,7 +6309,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6409,7 +6347,6 @@ export namespace Prisma {
      */
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
   }
-
 
   /**
    * Account findFirstOrThrow
@@ -6420,7 +6357,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6459,7 +6396,6 @@ export namespace Prisma {
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
   }
 
-
   /**
    * Account findMany
    */
@@ -6469,7 +6405,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6503,7 +6439,6 @@ export namespace Prisma {
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
   }
 
-
   /**
    * Account create
    */
@@ -6513,7 +6448,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6521,7 +6456,6 @@ export namespace Prisma {
      */
     data: XOR<AccountCreateInput, AccountUncheckedCreateInput>
   }
-
 
   /**
    * Account createMany
@@ -6534,7 +6468,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Account update
    */
@@ -6544,7 +6477,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6556,7 +6489,6 @@ export namespace Prisma {
      */
     where: AccountWhereUniqueInput
   }
-
 
   /**
    * Account updateMany
@@ -6572,7 +6504,6 @@ export namespace Prisma {
     where?: AccountWhereInput
   }
 
-
   /**
    * Account upsert
    */
@@ -6582,7 +6513,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6599,7 +6530,6 @@ export namespace Prisma {
     update: XOR<AccountUpdateInput, AccountUncheckedUpdateInput>
   }
 
-
   /**
    * Account delete
    */
@@ -6609,7 +6539,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     /**
@@ -6617,7 +6547,6 @@ export namespace Prisma {
      */
     where: AccountWhereUniqueInput
   }
-
 
   /**
    * Account deleteMany
@@ -6629,7 +6558,6 @@ export namespace Prisma {
     where?: AccountWhereInput
   }
 
-
   /**
    * Account without action
    */
@@ -6639,11 +6567,10 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -6811,6 +6738,7 @@ export namespace Prisma {
     userId?: boolean
     expires?: boolean
   }
+
 
   export type SessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -7230,7 +7158,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Session findUnique
    */
@@ -7240,7 +7167,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7248,7 +7175,6 @@ export namespace Prisma {
      */
     where: SessionWhereUniqueInput
   }
-
 
   /**
    * Session findUniqueOrThrow
@@ -7259,7 +7185,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7267,7 +7193,6 @@ export namespace Prisma {
      */
     where: SessionWhereUniqueInput
   }
-
 
   /**
    * Session findFirst
@@ -7278,7 +7203,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7316,7 +7241,6 @@ export namespace Prisma {
      */
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
-
 
   /**
    * Session findFirstOrThrow
@@ -7327,7 +7251,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7366,7 +7290,6 @@ export namespace Prisma {
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
-
   /**
    * Session findMany
    */
@@ -7376,7 +7299,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7410,7 +7333,6 @@ export namespace Prisma {
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
-
   /**
    * Session create
    */
@@ -7420,7 +7342,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7428,7 +7350,6 @@ export namespace Prisma {
      */
     data: XOR<SessionCreateInput, SessionUncheckedCreateInput>
   }
-
 
   /**
    * Session createMany
@@ -7441,7 +7362,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * Session update
    */
@@ -7451,7 +7371,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7463,7 +7383,6 @@ export namespace Prisma {
      */
     where: SessionWhereUniqueInput
   }
-
 
   /**
    * Session updateMany
@@ -7479,7 +7398,6 @@ export namespace Prisma {
     where?: SessionWhereInput
   }
 
-
   /**
    * Session upsert
    */
@@ -7489,7 +7407,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7506,7 +7424,6 @@ export namespace Prisma {
     update: XOR<SessionUpdateInput, SessionUncheckedUpdateInput>
   }
 
-
   /**
    * Session delete
    */
@@ -7516,7 +7433,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     /**
@@ -7524,7 +7441,6 @@ export namespace Prisma {
      */
     where: SessionWhereUniqueInput
   }
-
 
   /**
    * Session deleteMany
@@ -7536,7 +7452,6 @@ export namespace Prisma {
     where?: SessionWhereInput
   }
 
-
   /**
    * Session without action
    */
@@ -7546,11 +7461,10 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -7739,6 +7653,7 @@ export namespace Prisma {
     image?: boolean
     role?: boolean
   }
+
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -8171,7 +8086,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * User findUnique
    */
@@ -8181,7 +8095,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8189,7 +8103,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User findUniqueOrThrow
@@ -8200,7 +8113,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8208,7 +8121,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User findFirst
@@ -8219,7 +8131,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8257,7 +8169,6 @@ export namespace Prisma {
      */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
-
 
   /**
    * User findFirstOrThrow
@@ -8268,7 +8179,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8307,7 +8218,6 @@ export namespace Prisma {
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
-
   /**
    * User findMany
    */
@@ -8317,7 +8227,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8351,7 +8261,6 @@ export namespace Prisma {
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
-
   /**
    * User create
    */
@@ -8361,7 +8270,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8369,7 +8278,6 @@ export namespace Prisma {
      */
     data?: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
-
 
   /**
    * User createMany
@@ -8382,7 +8290,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-
   /**
    * User update
    */
@@ -8392,7 +8299,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8404,7 +8311,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User updateMany
@@ -8420,7 +8326,6 @@ export namespace Prisma {
     where?: UserWhereInput
   }
 
-
   /**
    * User upsert
    */
@@ -8430,7 +8335,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8447,7 +8352,6 @@ export namespace Prisma {
     update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
-
   /**
    * User delete
    */
@@ -8457,7 +8361,7 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
     /**
@@ -8465,7 +8369,6 @@ export namespace Prisma {
      */
     where: UserWhereUniqueInput
   }
-
 
   /**
    * User deleteMany
@@ -8477,7 +8380,6 @@ export namespace Prisma {
     where?: UserWhereInput
   }
 
-
   /**
    * User.accounts
    */
@@ -8487,7 +8389,7 @@ export namespace Prisma {
      */
     select?: AccountSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: AccountInclude<ExtArgs> | null
     where?: AccountWhereInput
@@ -8498,7 +8400,6 @@ export namespace Prisma {
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
   }
 
-
   /**
    * User.sessions
    */
@@ -8508,7 +8409,7 @@ export namespace Prisma {
      */
     select?: SessionSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
     where?: SessionWhereInput
@@ -8519,7 +8420,6 @@ export namespace Prisma {
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
-
   /**
    * User.Recipe
    */
@@ -8529,7 +8429,7 @@ export namespace Prisma {
      */
     select?: RecipeSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: RecipeInclude<ExtArgs> | null
     where?: RecipeWhereInput
@@ -8540,7 +8440,6 @@ export namespace Prisma {
     distinct?: RecipeScalarFieldEnum | RecipeScalarFieldEnum[]
   }
 
-
   /**
    * User without action
    */
@@ -8550,11 +8449,10 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -8712,6 +8610,7 @@ export namespace Prisma {
     token?: boolean
     expires?: boolean
   }
+
 
 
   export type $VerificationTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9122,7 +9021,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * VerificationToken findUnique
    */
@@ -9137,7 +9035,6 @@ export namespace Prisma {
     where: VerificationTokenWhereUniqueInput
   }
 
-
   /**
    * VerificationToken findUniqueOrThrow
    */
@@ -9151,7 +9048,6 @@ export namespace Prisma {
      */
     where: VerificationTokenWhereUniqueInput
   }
-
 
   /**
    * VerificationToken findFirst
@@ -9197,7 +9093,6 @@ export namespace Prisma {
     distinct?: VerificationTokenScalarFieldEnum | VerificationTokenScalarFieldEnum[]
   }
 
-
   /**
    * VerificationToken findFirstOrThrow
    */
@@ -9242,7 +9137,6 @@ export namespace Prisma {
     distinct?: VerificationTokenScalarFieldEnum | VerificationTokenScalarFieldEnum[]
   }
 
-
   /**
    * VerificationToken findMany
    */
@@ -9282,7 +9176,6 @@ export namespace Prisma {
     distinct?: VerificationTokenScalarFieldEnum | VerificationTokenScalarFieldEnum[]
   }
 
-
   /**
    * VerificationToken create
    */
@@ -9297,7 +9190,6 @@ export namespace Prisma {
     data: XOR<VerificationTokenCreateInput, VerificationTokenUncheckedCreateInput>
   }
 
-
   /**
    * VerificationToken createMany
    */
@@ -9308,7 +9200,6 @@ export namespace Prisma {
     data: VerificationTokenCreateManyInput | VerificationTokenCreateManyInput[]
     skipDuplicates?: boolean
   }
-
 
   /**
    * VerificationToken update
@@ -9328,7 +9219,6 @@ export namespace Prisma {
     where: VerificationTokenWhereUniqueInput
   }
 
-
   /**
    * VerificationToken updateMany
    */
@@ -9342,7 +9232,6 @@ export namespace Prisma {
      */
     where?: VerificationTokenWhereInput
   }
-
 
   /**
    * VerificationToken upsert
@@ -9366,7 +9255,6 @@ export namespace Prisma {
     update: XOR<VerificationTokenUpdateInput, VerificationTokenUncheckedUpdateInput>
   }
 
-
   /**
    * VerificationToken delete
    */
@@ -9381,7 +9269,6 @@ export namespace Prisma {
     where: VerificationTokenWhereUniqueInput
   }
 
-
   /**
    * VerificationToken deleteMany
    */
@@ -9392,7 +9279,6 @@ export namespace Prisma {
     where?: VerificationTokenWhereInput
   }
 
-
   /**
    * VerificationToken without action
    */
@@ -9402,7 +9288,6 @@ export namespace Prisma {
      */
     select?: VerificationTokenSelect<ExtArgs> | null
   }
-
 
 
   /**

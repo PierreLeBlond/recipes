@@ -2,25 +2,14 @@ import userEvent from "@testing-library/user-event";
 import { test, expect, vi, afterEach, describe } from "vitest";
 import { DescriptionEdit } from "@/src/app/components/recipe/steps/step/description/DescriptionEdit";
 import { RenderResult, cleanup, render } from "@testing-library/react";
-import { Units } from "@/prisma/generated/client";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
+import { Ingredient } from "@/src/lib/types/Ingredient";
 
 afterEach(() => {
   cleanup();
 });
 
 const user = userEvent.setup();
-
-type Ingredient = {
-  food: {
-    name: string;
-    density: number | null;
-    massPerPiece: number | null;
-    unit: Units;
-  };
-  quantity: number;
-  unit: Units;
-};
 
 type ComponentInput = {
   description?: string;
@@ -33,7 +22,13 @@ const defaultInput = {
   description: "Dans un bol, mettre ",
   ingredients: [
     {
-      food: { name: "farine", density: null, massPerPiece: null, unit: "GRAM" },
+      food: {
+        name: "farine",
+        density: null,
+        massPerPiece: null,
+        unit: "GRAM",
+        image: null,
+      },
       quantity: 200,
       unit: "GRAM",
     },
@@ -88,7 +83,13 @@ test("Should format value", async () => {
 describe("Add a reference", () => {
   const ingredients = [
     {
-      food: { name: "pomme", density: null, massPerPiece: null, unit: "PIECE" },
+      food: {
+        name: "pomme",
+        density: null,
+        massPerPiece: null,
+        unit: "PIECE",
+        image: null,
+      },
       quantity: 1,
       unit: "PIECE",
     },
@@ -98,6 +99,7 @@ describe("Add a reference", () => {
         density: null,
         massPerPiece: null,
         unit: "PIECE",
+        image: null,
       },
       quantity: 1,
       unit: "PIECE",
@@ -108,6 +110,7 @@ describe("Add a reference", () => {
         density: null,
         massPerPiece: null,
         unit: "PIECE",
+        image: null,
       },
       quantity: 1,
       unit: "PIECE",
@@ -469,7 +472,13 @@ describe("Add a reference", () => {
 describe("Preview", () => {
   const ingredients = [
     {
-      food: { name: "pomme", density: null, massPerPiece: null, unit: "PIECE" },
+      food: {
+        name: "pomme",
+        density: null,
+        massPerPiece: null,
+        unit: "PIECE",
+        image: null,
+      },
       quantity: 2,
       unit: "PIECE",
     },

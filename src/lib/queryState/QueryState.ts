@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 
 export type QueryState = {
   edit: boolean;

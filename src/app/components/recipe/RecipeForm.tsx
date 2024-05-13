@@ -1,7 +1,12 @@
 "use client";
 
 import { RecipePlateCount } from "@/src/app/components/recipe/plateCount/RecipePlateCount";
-import { Food, Ingredient, Recipe, Step } from "@/prisma/generated/client";
+import {
+  Food,
+  Ingredient,
+  Recipe,
+  Step,
+} from "@/prisma/generated/client/index.js";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { api } from "@/src/trpc/react";

@@ -1,5 +1,6 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 import { Description } from "@/src/app/components/recipe/steps/step/description/Description";
+import { Food } from "@/src/lib/types/Food";
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, test } from "vitest";
 
@@ -10,12 +11,7 @@ afterEach(() => {
 type GetComponentInput = {
   description?: string;
   ingredients?: {
-    food: {
-      name: string;
-      density: number | null;
-      massPerPiece: number | null;
-      unit: Units;
-    };
+    food: Food;
     quantity: number;
     unit: Units;
   }[];
@@ -26,7 +22,13 @@ const defaultInput = {
   description: "Préchauffer le four à 180deg.",
   ingredients: [
     {
-      food: { name: "farine", density: null, massPerPiece: null, unit: "GRAM" },
+      food: {
+        name: "farine",
+        density: null,
+        massPerPiece: null,
+        unit: "GRAM",
+        image: null,
+      },
       quantity: 200,
       unit: "GRAM",
     },

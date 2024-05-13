@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 
 const getRoundedQuantity = (quantity: number, nbChiffres: number) => {
   if (Number.isInteger(quantity)) {

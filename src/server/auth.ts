@@ -7,7 +7,7 @@ import {
 import GithubProvider from "next-auth/providers/github";
 
 import { db } from "@/src/server/db";
-import { Role } from "@/prisma/generated/client";
+import { Role } from "@/prisma/generated/client/index.js";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

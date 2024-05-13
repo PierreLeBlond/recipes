@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 import parse from "html-react-parser";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
 import { useWatch } from "react-hook-form";

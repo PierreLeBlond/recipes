@@ -1,4 +1,4 @@
-import { Food, Ingredient } from "@/prisma/generated/client";
+import { Food, Ingredient } from "@/prisma/generated/client/index.js";
 
 export type IngredientInput = Omit<
   Ingredient,

@@ -1,6 +1,6 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation.js";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "../types/FormInputs";
 import { QueryState } from "../queryState/QueryState";

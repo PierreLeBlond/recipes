@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
 import { Ingredient } from "@/src/lib/types/Ingredient";

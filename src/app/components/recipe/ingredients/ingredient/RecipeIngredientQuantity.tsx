@@ -1,6 +1,6 @@
 "use client";
 
-import { Units } from "@/prisma/generated/client";
+import { Units } from "@/prisma/generated/client/index.js";
 import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { Menu, MenuHandler, MenuItem, MenuList } from "@/src/lib/material";
 import { ArrowDownUp, ChevronDown } from "lucide-react";

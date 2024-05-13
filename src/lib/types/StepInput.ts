@@ -1,4 +1,4 @@
-import { Step } from "@/prisma/generated/client";
+import { Step } from "@/prisma/generated/client/index.js";
 
 export type StepInput = Omit<
   Step,
