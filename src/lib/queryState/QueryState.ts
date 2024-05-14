@@ -1,7 +1,7 @@
-import { Units } from "@/prisma/generated/client/index.js";
+import { Unit } from "../types/Units";
 
 export type QueryState = {
   edit: boolean;
   plateCount: number;
-  units: Record<string, Units>;
+  units: Record<string, Unit>;
 };

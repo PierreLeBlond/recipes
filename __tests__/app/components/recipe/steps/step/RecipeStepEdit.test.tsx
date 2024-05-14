@@ -1,5 +1,5 @@
-import { Units } from "@/prisma/generated/client/index.js";
 import { RecipeStepEdit } from "@/src/app/components/recipe/steps/step/RecipeStepEdit";
+import { Unit } from "@/src/lib/types/Units";
 import { RenderResult, cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { test, expect, describe, vi, afterEach } from "vitest";
@@ -19,11 +19,11 @@ type ComponentInput = {
         name: string;
         density: number | null;
         massPerPiece: number | null;
-        unit: Units;
+        unit: Unit;
         image: string | null;
       };
       quantity: number;
-      unit: Units;
+      unit: Unit;
     }[];
     plateRatio?: number;
   };

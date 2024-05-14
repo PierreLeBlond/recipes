@@ -1,6 +1,6 @@
-import { Units } from "@/prisma/generated/client/index.js";
+import { Unit, Units } from "../types/Units";
 
-const formatedUnitMap: { [Unit in Units]: (quantity: number) => string } = {
+const formatedUnitMap: { [unit in Unit]: (quantity: number) => string } = {
   [Units.PIECE]: (quantity: number) => `${quantity > 1 ? "pièces" : "pièce"}`,
   [Units.GRAM]: () => "g",
   [Units.LITER]: () => "l",
@@ -12,5 +12,5 @@ const formatedUnitMap: { [Unit in Units]: (quantity: number) => string } = {
   [Units.DROP]: (quantity: number) => `${quantity > 1 ? "gouttes" : "goutte"}`,
 };
 
-export const getFormatedUnit = (unit: Units, quantity: number) =>
+export const getFormatedUnit = (unit: Unit, quantity: number) =>
   formatedUnitMap[unit](quantity);

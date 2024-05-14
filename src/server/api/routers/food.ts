@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client/index.js";
+import { Units } from "@/src/lib/types/Units";
 import {
   adminProcedure,
   createTRPCRouter,

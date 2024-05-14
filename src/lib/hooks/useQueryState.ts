@@ -1,9 +1,9 @@
-import { Units } from "@/prisma/generated/client/index.js";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation.js";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "../types/FormInputs";
 import { QueryState } from "../queryState/QueryState";
+import { Unit } from "../types/Units";
 
 // Expect a react-hook-form & a session context
 export const useQueryState = (): QueryState => {
@@ -30,7 +30,7 @@ export const useQueryState = (): QueryState => {
         ...accu,
         [ingredient.food.name]: searchParams.get(
           `${ingredient.food.name}Unit`,
-        ) as Units | undefined,
+        ) as Unit | undefined,
       }),
       {},
     ),

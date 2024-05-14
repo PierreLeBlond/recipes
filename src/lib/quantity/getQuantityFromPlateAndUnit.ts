@@ -1,28 +1,28 @@
-import { Units } from "@/prisma/generated/client/index.js";
+import { Units, Unit } from "../types/Units";
 
 type ConvertInput = {
   ingredient: {
     food: {
       density: number | null;
       massPerPiece: number | null;
-      unit: Units;
+      unit: Unit;
     };
     quantity: number;
-    unit: Units;
+    unit: Unit;
   };
   plateRatio: number;
 };
 
 const convertMap: {
-  [Unit in Units]: (data: {
+  [unit in Unit]: (data: {
     quantity: number;
     density: number | null;
     massPerPiece: number | null;
-  }) => (to: Units) => number;
+  }) => (to: Unit) => number;
 } = {
   [Units.GRAM]:
     ({ quantity, density }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.LITER) {
         if (density === null) {
           throw new Error("No density provided");
@@ -34,7 +34,7 @@ const convertMap: {
     },
   [Units.LITER]:
     ({ quantity, density }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.GRAM) {
         if (density === null) {
           throw new Error("No density provided");
@@ -46,7 +46,7 @@ const convertMap: {
     },
   [Units.PIECE]:
     ({ quantity, massPerPiece }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.GRAM) {
         if (massPerPiece === null) {
           throw new Error("No mass per piece provided");
@@ -58,7 +58,7 @@ const convertMap: {
     },
   [Units.TEASPOON]:
     ({ quantity, density }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.LITER) {
         return quantity * 0.005;
       }
@@ -74,7 +74,7 @@ const convertMap: {
     },
   [Units.TABLESPOON]:
     ({ quantity, density }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.LITER) {
         return quantity * 0.015;
       }
@@ -90,7 +90,7 @@ const convertMap: {
     },
   [Units.PINCH]:
     ({ quantity, density }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.LITER) {
         return quantity * 0.0003;
       }
@@ -104,7 +104,7 @@ const convertMap: {
     },
   [Units.DROP]:
     ({ quantity, density }) =>
-    (to: Units) => {
+    (to: Unit) => {
       if (to === Units.LITER) {
         return quantity * 0.00005;
       }

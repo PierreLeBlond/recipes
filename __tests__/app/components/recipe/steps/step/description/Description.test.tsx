@@ -1,6 +1,6 @@
-import { Units } from "@/prisma/generated/client/index.js";
 import { Description } from "@/src/app/components/recipe/steps/step/description/Description";
 import { Food } from "@/src/lib/types/Food";
+import { Unit } from "@/src/lib/types/Units";
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, test } from "vitest";
 
@@ -13,7 +13,7 @@ type GetComponentInput = {
   ingredients?: {
     food: Food;
     quantity: number;
-    unit: Units;
+    unit: Unit;
   }[];
   plateRatio?: number;
 };

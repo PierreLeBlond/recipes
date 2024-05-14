@@ -1,6 +1,5 @@
 "use client";
 
-import { Units } from "@/prisma/generated/client/index.js";
 import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { Menu, MenuHandler, MenuItem, MenuList } from "@/src/lib/material";
 import { ArrowDownUp, ChevronDown } from "lucide-react";
@@ -11,6 +10,7 @@ import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { Ingredient } from "@/src/lib/types/Ingredient";
+import { Unit, Units } from "@/src/lib/types/Units";
 import { QueryParamsLink } from "../../../utils/QueryParamsLink";
 
 type RecipeIngredientQuantityProps = {
@@ -18,10 +18,10 @@ type RecipeIngredientQuantityProps = {
 };
 
 const alternativeUnitsMap: {
-  [Unit in Units]: (data: {
+  [unit in Unit]: (data: {
     density: number | null;
     massPerPiece: number | null;
-  }) => Units[];
+  }) => Unit[];
 } = {
   [Units.GRAM]: ({ density }) => {
     if (density === null) {

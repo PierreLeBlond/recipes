@@ -1,9 +1,9 @@
-import { Units } from "@/prisma/generated/client/index.js";
+import { Unit } from "./Units";
 
 export type Food = {
   name: string;
   density: number | null;
   massPerPiece: number | null;
-  unit: Units;
+  unit: Unit;
   image: string | null;
 };

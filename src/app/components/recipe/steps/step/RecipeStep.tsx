@@ -1,20 +1,20 @@
-import { Units } from "@/prisma/generated/client/index.js";
 import parse from "html-react-parser";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
-import { StepInput } from "@/src/lib/types/StepInput";
+import { Unit, Units } from "@/src/lib/types/Units";
+import { Step } from "@/src/lib/types/Step";
 import { getFormatedQuantity } from "../../../../../lib/quantity/getFormatedQuantity";
 
 type RecipeStepProps = {
-  step: StepInput;
+  step: Step;
 };
 
 // TODO: Add all vowels
 const vowels = ["a", "e", "i", "o", "u", "œ"];
 
-const getAdjectif = (unit: Units, name: string) => {
+const getAdjectif = (unit: Unit, name: string) => {
   if (unit === Units.PIECE) {
     return "";
   }

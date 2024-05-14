@@ -1,4 +1,4 @@
-import { Units } from "@/prisma/generated/client/index.js";
+import { Unit, Units } from "../types/Units";
 
 const getRoundedQuantity = (quantity: number, nbChiffres: number) => {
   if (Number.isInteger(quantity)) {
@@ -22,7 +22,7 @@ const getFormatedVolume = (quantity: number) => {
   return `${getRoundedQuantity(quantity, 3)}l`;
 };
 
-const formatedQuantityMap: { [Unit in Units]: (quantity: number) => string } = {
+const formatedQuantityMap: { [unit in Unit]: (quantity: number) => string } = {
   [Units.PIECE]: (quantity: number) => `${getRoundedQuantity(quantity, 1)}`,
   [Units.GRAM]: (quantity: number) => getFormatedMass(quantity),
   [Units.LITER]: (quantity: number) => getFormatedVolume(quantity),
@@ -36,5 +36,5 @@ const formatedQuantityMap: { [Unit in Units]: (quantity: number) => string } = {
     `${getRoundedQuantity(quantity, 1)} ${quantity > 1 ? "gouttes" : "goutte"}`,
 };
 
-export const getFormatedQuantity = (unit: Units, quantity: number) =>
+export const getFormatedQuantity = (unit: Unit, quantity: number) =>
   formatedQuantityMap[unit](quantity);
