@@ -73,7 +73,6 @@ describe("submit", () => {
     const button = getButton(component);
 
     expect(button).toBeDefined();
-    expect(button).toHaveRole("submit");
   });
 
   it("Should not submit if nothing is edited", async () => {

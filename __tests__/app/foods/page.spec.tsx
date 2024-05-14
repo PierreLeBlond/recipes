@@ -45,8 +45,6 @@ test.afterAll(() => server.close());
 test("Should navigate to page", async ({ page }) => {
   await page.goto("http://host.docker.internal:3001/foods");
 
-  console.log(await page.content());
-
   expect(await page.getByText(createFoodLabels.title).all()).toHaveLength(1);
 });
 
