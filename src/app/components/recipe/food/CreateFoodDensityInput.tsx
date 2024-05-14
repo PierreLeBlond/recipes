@@ -19,7 +19,7 @@ export function CreateFoodDensityInput({
         crossOrigin=""
         id="create-food-density-input"
         labelProps={{ htmlFor: "create-food-density-input" }}
-        label="Densité (g/l)"
+        label="Densité (g/cm³)"
         placeholder="Densité, entre 0.00 et 23.00, laisser vide si inconnue"
         {...register("density", {
           min: {

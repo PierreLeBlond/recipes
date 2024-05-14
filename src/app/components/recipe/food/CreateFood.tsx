@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
+import { Button, Typography } from "@/src/lib/material";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
@@ -36,19 +37,28 @@ export function CreateFood({
   });
 
   return (
-    <>
-      Ajouter un aliment
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex flex-col gap-4">
+      <Typography variant="h2">Ajouter un aliment</Typography>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <CreateFoodNameInput props={{ register, errors, foods }} />
         <CreateFoodDensityInput props={{ register, errors }} />
         <CreateFoodMassPerPieceInput props={{ register, errors }} />
-        <button type="submit" disabled={!isDirty}>
-          Ajouter
-        </button>
+        <div className="grid grid-cols-2 lg:grid-cols-4">
+          <Button
+            className="col-start-2 lg:col-start-4"
+            type="submit"
+            color="blue-gray"
+            variant="filled"
+            disabled={!isDirty}
+            ripple={false}
+          >
+            Ajouter
+          </Button>
+        </div>
       </form>
       {lastCreatedFood && (
         <div>{`L'aliment '${lastCreatedFood.name}' a bien été ajouté.`}</div>
       )}
-    </>
+    </div>
   );
 }

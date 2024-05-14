@@ -27,7 +27,7 @@ const convertMap: {
         if (density === null) {
           throw new Error("No density provided");
         }
-        return quantity / density;
+        return quantity / (density * 1000);
       }
 
       throw new Error("Not implemented");
@@ -39,7 +39,7 @@ const convertMap: {
         if (density === null) {
           throw new Error("No density provided");
         }
-        return quantity * density;
+        return quantity * density * 1000;
       }
 
       throw new Error("Not implemented");
@@ -67,7 +67,7 @@ const convertMap: {
         if (density === null) {
           throw new Error("No density provided");
         }
-        return quantity * 0.005 * density;
+        return quantity * 0.005 * density * 1000;
       }
 
       throw new Error("Not implemented");
@@ -83,7 +83,7 @@ const convertMap: {
         if (density === null) {
           throw new Error("No density provided");
         }
-        return quantity * 0.015 * density;
+        return quantity * 0.015 * density * 1000;
       }
 
       throw new Error("Not implemented");
@@ -98,7 +98,7 @@ const convertMap: {
         if (density === null) {
           throw new Error("No density provided");
         }
-        return quantity * 0.0003 * density;
+        return quantity * 0.0003 * density * 1000;
       }
       throw new Error("Not implemented");
     },
@@ -112,7 +112,7 @@ const convertMap: {
         if (density === null) {
           throw new Error("No density provided");
         }
-        return quantity * 0.00005 * density;
+        return quantity * 0.00005 * density * 1000;
       }
       throw new Error("Not implemented");
     },

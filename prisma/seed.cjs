@@ -34,7 +34,7 @@ async function seedRecipes() {
       {
         name: "sucre",
         unit: Units.GRAM,
-        density: 800,
+        density: 0.8,
       },
       {
         name: "beurre",
@@ -47,7 +47,7 @@ async function seedRecipes() {
       {
         name: "farine",
         unit: Units.GRAM,
-        density: 600,
+        density: 0.6,
       },
       {
         name: "sel",

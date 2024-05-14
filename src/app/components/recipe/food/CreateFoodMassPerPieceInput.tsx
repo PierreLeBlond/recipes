@@ -23,7 +23,7 @@ export function CreateFoodMassPerPieceInput({
         id="create-food-mass-per-piece-input"
         labelProps={{ htmlFor: "create-food-mass-per-piece-input" }}
         label="Masse par unité (g)"
-        placeholder="Masse par unité, entre 0.00 et 1000.00"
+        placeholder="Masse par unité, entre 0.00 et 1000.00, laisser vide si inconnue"
         {...register("massPerPiece", {
           min: {
             value: 0,
