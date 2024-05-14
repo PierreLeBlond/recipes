@@ -27,12 +27,11 @@ RUN apt-get update -qq && \
 COPY --link package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
 
-# Generate Prisma Client
-COPY --link prisma .
-RUN pnpx prisma generate
-
 # Copy application code
 COPY --link . .
+
+# Generate Prisma Client
+RUN pnpx prisma generate
 
 # Build application
 RUN pnpm run build
