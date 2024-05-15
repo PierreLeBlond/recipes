@@ -37,7 +37,7 @@ export const foodRouter = createTRPCRouter({
         nextCursor: foods.at(foods.length - 1)?.id ?? null,
       };
     }),
-  create: adminProcedure
+  create: publicProcedure
     .input(
       z.object({
         name: z.string(),

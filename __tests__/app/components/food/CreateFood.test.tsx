@@ -13,14 +13,19 @@ afterEach(() => {
 const user = userEvent.setup();
 
 type ComponentInputType = {
-  onSubmit?: (food: Food) => void;
-  lastCreatedFood?: Food | null;
+  onSubmit?: (food: Food) => Promise<Food>;
   foods?: Food[];
 };
 
 const defaultInput = {
-  onSubmit: () => {},
-  lastCreatedFood: null,
+  onSubmit: async () =>
+    ({
+      name: "sucre",
+      density: 2.5,
+      massPerPiece: null,
+      unit: "GRAM",
+      image: null,
+    }) as const satisfies Food,
   foods: [],
 } as const satisfies ComponentInputType;
 
@@ -75,19 +80,6 @@ describe("submit", () => {
     await user.click(button);
 
     expect(onSubmit.mock.calls).toHaveLength(0);
-  });
-
-  it("Should show last created food", async () => {
-    const component = getComponent({
-      lastCreatedFood: {
-        name: "sucre",
-        density: 2.5,
-        massPerPiece: 10,
-        unit: "GRAM",
-        image: null,
-      },
-    });
-    expect(component.baseElement.textContent).toContain("sucre");
   });
 });
 
@@ -247,7 +239,7 @@ describe("density", () => {
     await user.keyboard("1.5");
     await user.click(button);
 
-    expect(onSubmit.mock.calls[0][0].density).toBe("1.5");
+    expect(onSubmit.mock.calls[0][0].density).toBe(1.5);
   });
 
   it("Should return null if density is empty", async () => {
@@ -334,7 +326,7 @@ describe("mass per piece", () => {
     await user.keyboard("10.5");
     await user.click(button);
 
-    expect(onSubmit.mock.calls[0][0].massPerPiece).toBe("10.5");
+    expect(onSubmit.mock.calls[0][0].massPerPiece).toBe(10.5);
   });
 
   it("Should return null if mass per piece is empty", async () => {

@@ -51,7 +51,10 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {isAdmin && (
-        <li className="flex aspect-square justify-center" key="createCard">
+        <li
+          className="relative flex h-12 justify-center sm:aspect-square sm:h-auto"
+          key="createCard"
+        >
           <CreateRecipeCard />
         </li>
       )}
