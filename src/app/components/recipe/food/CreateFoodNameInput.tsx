@@ -1,10 +1,11 @@
 import { Input } from "@/src/lib/material";
-import { Food } from "@/src/lib/types/Food";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { Food } from "@/src/lib/types/Food";
+import { FormFood } from "./FormFood";
 
 type CreateFoodInputProps = {
-  register: UseFormRegister<Food>;
-  errors: FieldErrors<Food>;
+  register: UseFormRegister<FormFood>;
+  errors: FieldErrors<FormFood>;
   foods: Food[];
 };
 
@@ -32,7 +33,7 @@ export function CreateFoodNameInput({
             message: "Le nom doit comporter de 3 et 33 caractères.",
           },
           pattern: {
-            value: /^[a-zA-Z\s']+$/,
+            value: /^[a-zA-ZÀ-ÿ\s']+$/,
             message:
               "Le nom ne doit comporter que des lettres, des espaces, et des apostrophes.",
           },

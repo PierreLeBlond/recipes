@@ -3,43 +3,60 @@
 import { useForm } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
 import { Button, Typography } from "@/src/lib/material";
+import { useState } from "react";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
+import { FormFood } from "./FormFood";
 
 type CreateFoodHandlers = {
-  onSubmit: (food: Food) => void;
+  onSubmit: (food: Food) => Promise<Food>;
 };
 
 type CreateFoodPropsType = {
-  lastCreatedFood: Food | null;
   foods: Food[];
 };
 
 export function CreateFood({
-  props: { lastCreatedFood, foods },
+  props: { foods },
   onSubmit,
 }: {
   props: CreateFoodPropsType;
 } & CreateFoodHandlers) {
+  const [lastCreatedFood, setLastCreatedFood] = useState<Food | null>(null);
+
   const {
     handleSubmit,
     register,
     formState: { isDirty, errors },
-  } = useForm<Food>({
+  } = useForm<FormFood>({
     defaultValues: {
       name: "",
-      density: null,
-      massPerPiece: null,
+      density: "",
+      massPerPiece: "",
       unit: "GRAM",
-      image: null,
+      image: "",
     },
   });
+
+  const handleFormSubmit = async (food: FormFood) => {
+    const result = await onSubmit({
+      name: food.name,
+      density: food.density ? parseFloat(food.density) : null,
+      massPerPiece: food.massPerPiece ? parseFloat(food.massPerPiece) : null,
+      unit: food.unit,
+      image: food.image || null,
+    });
+    setLastCreatedFood(result);
+  };
 
   return (
     <div className="flex flex-col gap-4">
       <Typography variant="h2">Ajouter un aliment</Typography>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={handleSubmit(handleFormSubmit)}
+      >
         <CreateFoodNameInput props={{ register, errors, foods }} />
         <CreateFoodDensityInput props={{ register, errors }} />
         <CreateFoodMassPerPieceInput props={{ register, errors }} />

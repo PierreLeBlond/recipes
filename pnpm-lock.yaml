@@ -156,9 +156,9 @@ importers:
       msw:
         specifier: ^2.2.14
         version: 2.3.0(typescript@5.4.5)
-      msw-trpc:
-        specifier: 2.0.0-beta.1
-        version: 2.0.0-beta.1(@trpc/server@10.45.2)(msw@2.3.0(typescript@5.4.5))
+      playwright-msw:
+        specifier: ^3.0.1
+        version: 3.0.1(@playwright/test@1.41.2)(msw@2.3.0(typescript@5.4.5))
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -2650,12 +2650,6 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  msw-trpc@2.0.0-beta.1:
-    resolution: {integrity: sha512-v6KA1ZYfk99c+nVYN32ltZziMaJUHuffloY6AwePL21wpTWopagMuaC8Ju/Wn4j4wOpZBodiMJoQ9xKr1e4QKg==}
-    peerDependencies:
-      '@trpc/server': '>=10.9.0'
-      msw: ^2.0.0
-
   msw@2.3.0:
     resolution: {integrity: sha512-cDr1q/QTMzaWhY8n9lpGhceY209k29UZtdTgJ3P8Bzne3TSMchX2EM/ldvn4ATLOktpCefCU2gcEgzHc31GTPw==}
     engines: {node: '>=18'}
@@ -2876,6 +2870,13 @@ packages:
     resolution: {integrity: sha512-VaTvwCA4Y8kxEe+kfm2+uUUw5Lubf38RxF7FpBxLPmGe5sdNkSg5e3ChEigaGrX7qdqT3pt2m/98LiyvU2x6CA==}
     engines: {node: '>=16'}
     hasBin: true
+
+  playwright-msw@3.0.1:
+    resolution: {integrity: sha512-w2bVjt7kPIThOQF9OS/1vDDs0HsQfV9inxMVSUv74x/zhCcrgzVN47xpPk84okf3OcCRHHBJKq8sNeBfCDyhMg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@playwright/test': '>=1.20.0'
+      msw: ^2.0.0
 
   playwright@1.41.2:
     resolution: {integrity: sha512-v0bOa6H2GJChDL8pAeLa/LZC4feoAMbSQm1/jF/ySsWWoaNItvrMP7GEkvEEFyCTUYKMxjQKaTSg5up7nR6/8A==}
@@ -6808,11 +6809,6 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw-trpc@2.0.0-beta.1(@trpc/server@10.45.2)(msw@2.3.0(typescript@5.4.5)):
-    dependencies:
-      '@trpc/server': 10.45.2
-      msw: 2.3.0(typescript@5.4.5)
-
   msw@2.3.0(typescript@5.4.5):
     dependencies:
       '@bundled-es-modules/cookie': 2.0.0
@@ -7041,6 +7037,13 @@ snapshots:
       pathe: 1.1.2
 
   playwright-core@1.41.2: {}
+
+  playwright-msw@3.0.1(@playwright/test@1.41.2)(msw@2.3.0(typescript@5.4.5)):
+    dependencies:
+      '@mswjs/cookies': 1.1.0
+      '@playwright/test': 1.41.2
+      msw: 2.3.0(typescript@5.4.5)
+      strict-event-emitter: 0.5.1
 
   playwright@1.41.2:
     dependencies:

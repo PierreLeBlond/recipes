@@ -1,12 +1,12 @@
 import { Input } from "@/src/lib/material";
-import { Food } from "@/src/lib/types/Food";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FormFood } from "./FormFood";
 
 const ROUNDED_OSMIUM_DENSITY = 23;
 
 type CreateFoodDesityInputProps = {
-  register: UseFormRegister<Food>;
-  errors: FieldErrors<Food>;
+  register: UseFormRegister<FormFood>;
+  errors: FieldErrors<FormFood>;
 };
 export function CreateFoodDensityInput({
   props: { register, errors },
