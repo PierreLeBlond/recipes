@@ -23,6 +23,8 @@ import {
   Switch,
   List,
   ListItem,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 
 export {
@@ -48,4 +50,6 @@ export {
   Switch,
   List,
   ListItem,
+  Select,
+  Option,
 };

@@ -1,6 +1,7 @@
 export const createFoodLabels = {
   title: "Ajouter un aliment",
-  nameInput: "Nom de l'aliment",
+  nameInputLabel: "Nom de l'aliment",
+  unitInputLabel: "Unité de mesure",
   densityInputLabel: "Densité (g/cm³)",
   densityInputPlaceholder:
     "Densité, entre 0.00 et 23.00, laisser vide si inconnue",

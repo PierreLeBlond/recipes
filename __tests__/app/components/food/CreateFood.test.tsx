@@ -43,7 +43,11 @@ const getButton = (component: ReturnType<typeof getComponent>) => {
 };
 
 const getNameInput = (component: ReturnType<typeof getComponent>) => {
-  return component.getByLabelText(createFoodLabels.nameInput);
+  return component.getByLabelText(createFoodLabels.nameInputLabel);
+};
+
+const getUnitInput = (component: ReturnType<typeof getComponent>) => {
+  return component.getByLabelText(createFoodLabels.unitInputLabel);
 };
 
 const getDensityInput = (component: ReturnType<typeof getComponent>) => {
@@ -92,7 +96,9 @@ describe("name", () => {
 
   it("Should have a placeholder", () => {
     const component = getComponent();
-    const input = component.getByPlaceholderText(createFoodLabels.nameInput);
+    const input = component.getByPlaceholderText(
+      createFoodLabels.nameInputLabel,
+    );
     expect(input).toBeDefined();
   });
 
@@ -253,6 +259,70 @@ describe("density", () => {
     await user.click(button);
 
     expect(onSubmit.mock.calls[0][0].density).toBe(null);
+  });
+});
+
+describe("unit", () => {
+  it("Should have a unit input", () => {
+    const component = getComponent();
+    const input = getUnitInput(component);
+    expect(input).toBeDefined();
+  });
+
+  it("Should have all units as options", async () => {
+    const units = [
+      "g (gramme)",
+      "l (litre)",
+      "c.a.c. (cuillère à café)",
+      "c.a.s. (cuillère à soupe)",
+      "pièce",
+      "pincée",
+      "goutte",
+    ] as const;
+    const component = getComponent();
+    const input = getUnitInput(component);
+
+    await user.click(input);
+
+    for (const unit of units) {
+      expect(input.textContent).toContain(unit);
+    }
+  });
+
+  it("Should have a default value of 'g (gramme)'", async () => {
+    const onSubmit = vi.fn();
+    const component = getComponent({ onSubmit });
+    const nameInput = getNameInput(component);
+    const button = getButton(component);
+
+    await user.click(nameInput);
+    await user.keyboard("sucre");
+    await user.click(button);
+
+    expect(
+      (
+        component.getByRole("option", {
+          name: "g (gramme)",
+        }) as HTMLOptionElement
+      ).selected,
+    ).toBe(true);
+    expect(onSubmit.mock.calls[0][0].unit).toBe("GRAM");
+  });
+
+  it("Should return selected unit on submit", async () => {
+    const onSubmit = vi.fn();
+    const component = getComponent({ onSubmit });
+    const nameInput = getNameInput(component);
+    const input = getUnitInput(component);
+    const button = getButton(component);
+
+    await user.click(nameInput);
+    await user.keyboard("sucre");
+    await user.click(input);
+    await user.selectOptions(input, ["LITER"]);
+    await user.click(button);
+
+    expect(onSubmit.mock.calls[0][0].unit).toBe("LITER");
   });
 });
 

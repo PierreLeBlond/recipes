@@ -10,7 +10,7 @@ test("Should navigate to page", async ({ page }) => {
 test("Should create a food", async ({ page }) => {
   await page.goto("/foods");
 
-  await page.getByLabel(createFoodLabels.nameInput).fill("fruit du démon");
+  await page.getByLabel(createFoodLabels.nameInputLabel).fill("fruit du démon");
   await page.getByLabel(createFoodLabels.densityInputLabel).fill("1");
 
   const button = page.getByRole("button", {
