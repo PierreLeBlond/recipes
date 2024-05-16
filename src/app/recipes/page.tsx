@@ -10,7 +10,7 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="flex flex-col gap-16 pt-16">
+    <div className="flex flex-col gap-4 pt-4 sm:gap-16 sm:pt-16">
       <form>
         <Input
           crossOrigin=""
