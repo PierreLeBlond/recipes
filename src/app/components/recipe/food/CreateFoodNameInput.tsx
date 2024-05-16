@@ -1,8 +1,8 @@
 import { Alert, Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
-import { FormFood } from "./FormFood";
 import { Ambulance } from "lucide-react";
+import { FormFood } from "./FormFood";
 
 type CreateFoodInputProps = {
   register: UseFormRegister<FormFood>;
@@ -44,7 +44,7 @@ export function CreateFoodNameInput({
         })}
       />
       {errors.name && (
-        <Alert icon={<Ambulance></Ambulance>} color="red">
+        <Alert icon={<Ambulance />} color="red">
           {errors.name.message}
         </Alert>
       )}

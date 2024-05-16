@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "@/src/trpc/react";
 import { ThemeProvider } from "@/src/lib/material";
 import { theme } from "@/src/styles/theme";
 import { Header } from "./components/Header";
+import { getServerAuthSession } from "../server/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,11 +21,13 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession();
+
   return (
     <ThemeProvider value={theme}>
       <html lang="en" className="relative">
@@ -32,7 +35,7 @@ export default function RootLayout({
           className={`font-sans ${inter.variable} flex h-full justify-center border-gray-500 bg-gray-50 text-gray-900`}
         >
           <TRPCReactProvider cookies={cookies().toString()}>
-            <Header />
+            <Header props={{ session }} />
             <main className="relative w-full max-w-72 pb-16 pt-16 sm:max-w-lg lg:max-w-4xl">
               {children}
             </main>

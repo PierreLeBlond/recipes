@@ -1,23 +1,23 @@
 import { UseFormRegister } from "react-hook-form";
-import { FormFood } from "./FormFood";
 import { Select, Option } from "@/src/lib/material";
+import { FormFood } from "./FormFood";
 
 type CreateFoodUnitInputProps = {
   register: UseFormRegister<FormFood>;
 };
 
-export const CreateFoodUnitInput = ({
+export function CreateFoodUnitInput({
   props: { register },
 }: {
   props: CreateFoodUnitInputProps;
-}) => {
+}) {
   const { onChange, ...rest } = register("unit");
   return (
     <Select
       onChange={(value) => {
         onChange({ target: { value, name: "unit" } });
       }}
-      value={"GRAM"}
+      value="GRAM"
       {...rest}
       label="Unité de mesure"
       id="create-food-unit-input"
@@ -33,4 +33,4 @@ export const CreateFoodUnitInput = ({
       <Option value="DROP">goutte</Option>
     </Select>
   );
-};
+}
