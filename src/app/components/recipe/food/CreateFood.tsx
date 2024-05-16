@@ -2,13 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
-import { Button, Typography } from "@/src/lib/material";
+import { Alert, Button, Typography } from "@/src/lib/material";
 import { useState } from "react";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
 import { FormFood } from "./FormFood";
 import { CreateFoodUnitInput } from "./CreateFoodUnitInput";
+import { Leaf } from "lucide-react";
 
 type CreateFoodHandlers = {
   onSubmit: (food: Food) => Promise<Food>;
@@ -76,7 +77,10 @@ export function CreateFood({
         </div>
       </form>
       {lastCreatedFood && (
-        <div>{`L'aliment '${lastCreatedFood.name}' a bien été ajouté.`}</div>
+        <Alert
+          color="green"
+          icon={<Leaf></Leaf>}
+        >{`L'aliment '${lastCreatedFood.name}' a bien été ajouté.`}</Alert>
       )}
     </div>
   );

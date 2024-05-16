@@ -25,6 +25,7 @@ import {
   ListItem,
   Select,
   Option,
+  Alert,
 } from "@material-tailwind/react";
 
 export {
@@ -52,4 +53,5 @@ export {
   ListItem,
   Select,
   Option,
+  Alert,
 };

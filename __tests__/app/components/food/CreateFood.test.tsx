@@ -1,5 +1,5 @@
 import { CreateFood } from "@/src/app/components/recipe/food/CreateFood";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { createFoodLabels } from "./createFoodLabels";
@@ -285,7 +285,7 @@ describe("unit", () => {
     await user.click(input);
 
     for (const unit of units) {
-      expect(input.textContent).toContain(unit);
+      expect(component.baseElement.textContent).toContain(unit);
     }
   });
 
@@ -293,19 +293,14 @@ describe("unit", () => {
     const onSubmit = vi.fn();
     const component = getComponent({ onSubmit });
     const nameInput = getNameInput(component);
+    const unitInput = getUnitInput(component);
     const button = getButton(component);
 
     await user.click(nameInput);
     await user.keyboard("sucre");
     await user.click(button);
 
-    expect(
-      (
-        component.getByRole("option", {
-          name: "g (gramme)",
-        }) as HTMLOptionElement
-      ).selected,
-    ).toBe(true);
+    expect(unitInput.textContent).toBe("g (gramme)");
     expect(onSubmit.mock.calls[0][0].unit).toBe("GRAM");
   });
 
@@ -313,13 +308,16 @@ describe("unit", () => {
     const onSubmit = vi.fn();
     const component = getComponent({ onSubmit });
     const nameInput = getNameInput(component);
-    const input = getUnitInput(component);
+    const unitInput = getUnitInput(component);
     const button = getButton(component);
 
     await user.click(nameInput);
     await user.keyboard("sucre");
-    await user.click(input);
-    await user.selectOptions(input, ["LITER"]);
+    await user.click(unitInput);
+
+    const option = component.getByText("l (litre)");
+    await user.click(option);
+
     await user.click(button);
 
     expect(onSubmit.mock.calls[0][0].unit).toBe("LITER");

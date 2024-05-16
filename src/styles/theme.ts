@@ -1,4 +1,42 @@
-export const theme = {
+import {
+  AlertStylesType,
+  ButtonStyleTypes,
+  DialogBodyStylesType,
+  DialogStylesType,
+  InputStylesType,
+  MenuStylesType,
+} from "@material-tailwind/react";
+
+export const theme: {
+  alert: AlertStylesType;
+  menu: MenuStylesType;
+  button: ButtonStyleTypes;
+  input: InputStylesType;
+  dialog: DialogStylesType;
+  dialogBody: DialogBodyStylesType;
+} = {
+  alert: {
+    styles: {
+      base: {
+        alert: {
+          px: "px-2",
+          py: "py-2",
+        },
+      },
+      variants: {
+        filled: {
+          red: {
+            background: "bg-red-300",
+            color: "text-gray-800",
+          },
+          green: {
+            background: "bg-green-300",
+            color: "text-gray-800",
+          },
+        },
+      },
+    },
+  },
   menu: {
     styles: {
       base: {
