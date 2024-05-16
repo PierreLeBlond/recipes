@@ -8,7 +8,7 @@ export function CreateRecipeCard() {
   return (
     <>
       <Card
-        className="h-full w-full flex-col justify-end overflow-hidden transition-shadow hover:cursor-pointer hover:shadow-lg hover:shadow-blue-gray-500/20"
+        className="h-full w-full flex-col items-center justify-end overflow-hidden transition-shadow hover:cursor-pointer hover:shadow-lg hover:shadow-blue-gray-500/20"
         color="blue-gray"
         onClick={() => setOpen(true)}
       >

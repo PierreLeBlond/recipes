@@ -1,6 +1,6 @@
-import { Alert, Input } from "@/src/lib/material";
+import { Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Ambulance } from "lucide-react";
+import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { FormFood } from "./FormFood";
 
 const MAX_MASS_PER_PIECE = 1000;
@@ -40,10 +40,9 @@ export function CreateFoodMassPerPieceInput({
           },
         })}
       />
+
       {errors.massPerPiece && (
-        <Alert icon={<Ambulance />} color="red">
-          {errors.massPerPiece.message}
-        </Alert>
+        <ErrorAlert>{errors.massPerPiece.message}</ErrorAlert>
       )}
     </>
   );

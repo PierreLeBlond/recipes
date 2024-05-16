@@ -1,7 +1,7 @@
-import { Alert, Input } from "@/src/lib/material";
+import { Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
-import { Ambulance } from "lucide-react";
+import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { FormFood } from "./FormFood";
 
 type CreateFoodInputProps = {
@@ -43,11 +43,7 @@ export function CreateFoodNameInput({
             "Cet aliment existe déjà.",
         })}
       />
-      {errors.name && (
-        <Alert icon={<Ambulance />} color="red">
-          {errors.name.message}
-        </Alert>
-      )}
+      {errors.name && <ErrorAlert>{errors.name.message}</ErrorAlert>}
     </>
   );
 }

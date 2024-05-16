@@ -1,6 +1,6 @@
-import { Alert, Input } from "@/src/lib/material";
+import { Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Ambulance } from "lucide-react";
+import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { FormFood } from "./FormFood";
 
 const ROUNDED_OSMIUM_DENSITY = 23;
@@ -40,11 +40,7 @@ export function CreateFoodDensityInput({
           },
         })}
       />
-      {errors.density && (
-        <Alert icon={<Ambulance />} color="red">
-          {errors.density.message}
-        </Alert>
-      )}
+      {errors.density && <ErrorAlert>{errors.density.message}</ErrorAlert>}
     </>
   );
 }

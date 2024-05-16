@@ -2,9 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
-import { Alert, Button, Typography } from "@/src/lib/material";
+import { Button, Typography } from "@/src/lib/material";
 import { useState } from "react";
-import { Leaf } from "lucide-react";
+import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
@@ -77,10 +77,7 @@ export function CreateFood({
         </div>
       </form>
       {lastCreatedFood && (
-        <Alert
-          color="green"
-          icon={<Leaf />}
-        >{`L'aliment '${lastCreatedFood.name}' a bien été ajouté.`}</Alert>
+        <SuccessAlert>{`L'aliment '${lastCreatedFood.name}' a bien été ajouté.`}</SuccessAlert>
       )}
     </div>
   );

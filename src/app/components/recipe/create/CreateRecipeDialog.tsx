@@ -9,6 +9,7 @@ import {
 import { api } from "@/src/trpc/react";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
 
 type CreateRecipeDialogProps = {
   open: boolean;
@@ -28,6 +29,7 @@ export function CreateRecipeDialog({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isDirty },
   } = useForm<CreateRecipeFormInputs>({
     defaultValues: {
@@ -35,14 +37,23 @@ export function CreateRecipeDialog({
     },
   });
 
-  const handleOpen = () => setOpen(!open);
+  const handleOpen = () => {
+    setOpen(!open);
+    createMutation.reset();
+  };
 
   const onSubmit: SubmitHandler<CreateRecipeFormInputs> = (data) => {
     createMutation.mutate(data);
+    reset();
   };
 
   return (
-    <Dialog open={open} handler={handleOpen} color="blue-gray" className="p-8">
+    <Dialog
+      open={open}
+      handler={handleOpen}
+      color="blue-gray"
+      className="p-4 sm:p-8"
+    >
       <DialogHeader className="w-full justify-center text-sm">
         Création de recette
       </DialogHeader>
@@ -74,9 +85,7 @@ export function CreateRecipeDialog({
           <div>Erreur lors de la création de la recette</div>
         )}
         {createMutation.isSuccess && (
-          <div>
-            La recette a bien été créée, vous pouvez maintenant l&apos;éditer
-          </div>
+          <SuccessAlert>Recette créée !</SuccessAlert>
         )}
       </DialogBody>
       <DialogFooter className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -95,6 +104,7 @@ export function CreateRecipeDialog({
             type="submit"
             disabled={!isDirty}
             color="blue-gray"
+            variant="filled"
             form="createRecipeForm"
             className="lg:col-start-4"
           >
