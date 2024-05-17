@@ -20,7 +20,6 @@ const getComponent = () => {
             density: null,
             massPerPiece: null,
             unit: "GRAM",
-            image: null,
           },
           quantity: 200,
           unit: "GRAM",

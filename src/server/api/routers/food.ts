@@ -52,7 +52,6 @@ export const foodRouter = createTRPCRouter({
           z.literal(Units.TABLESPOON),
           z.literal(Units.PIECE),
         ]),
-        image: z.string().url().nullable(),
       }),
     )
     .mutation(async ({ ctx, input }) => ctx.db.food.create({ data: input })),

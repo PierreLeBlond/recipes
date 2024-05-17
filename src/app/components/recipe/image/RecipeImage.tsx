@@ -1,4 +1,3 @@
-import { Button } from "@/src/lib/material";
 import { Plus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -59,10 +58,8 @@ export function RecipeImage() {
               },
             )}
           >
-            <>
-              <Plus strokeWidth={4} />
-              <p>{image ? "Changer l'image" : "Ajouter une image"}</p>
-            </>
+            <Plus strokeWidth={4} />
+            <p>{image ? "Changer l'image" : "Ajouter une image"}</p>
           </div>
         )}
       </button>

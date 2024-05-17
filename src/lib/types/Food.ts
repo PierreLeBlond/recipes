@@ -5,5 +5,4 @@ export type Food = {
   density: number | null;
   massPerPiece: number | null;
   unit: Unit;
-  image: string | null;
 };

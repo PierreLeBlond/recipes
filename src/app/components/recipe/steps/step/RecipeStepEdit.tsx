@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { Ingredient } from "@/src/lib/types/Ingredient";
-import { DescriptionEdit } from "./description/DescriptionEdit";
 import { Step } from "@/src/lib/types/Step";
+import { DescriptionEdit } from "./description/DescriptionEdit";
 
 type RecipeStepEditProps = {
   step: Step;

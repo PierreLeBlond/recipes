@@ -64,8 +64,6 @@ model Food {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    image String?
-
     density      Float? // g/cm3
     massPerPiece Float?
     unit         Units

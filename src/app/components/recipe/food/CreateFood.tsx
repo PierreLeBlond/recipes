@@ -36,8 +36,6 @@ export function CreateFood({
       name: "",
       density: "",
       massPerPiece: "",
-      unit: "GRAM",
-      image: "",
     },
   });
 
@@ -47,7 +45,6 @@ export function CreateFood({
       density: food.density ? parseFloat(food.density) : null,
       massPerPiece: food.massPerPiece ? parseFloat(food.massPerPiece) : null,
       unit: food.unit,
-      image: food.image || null,
     });
     setLastCreatedFood(result);
   };
@@ -60,7 +57,7 @@ export function CreateFood({
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <CreateFoodNameInput props={{ register, errors, foods }} />
-        <CreateFoodUnitInput props={{ register }} />
+        <CreateFoodUnitInput props={{ register, errors }} />
         <CreateFoodDensityInput props={{ register, errors }} />
         <CreateFoodMassPerPieceInput props={{ register, errors }} />
         <div className="grid grid-cols-2 lg:grid-cols-4">

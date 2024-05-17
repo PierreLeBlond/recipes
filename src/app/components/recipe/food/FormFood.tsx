@@ -5,5 +5,4 @@ export type FormFood = {
   density: string;
   massPerPiece: string;
   unit: Unit;
-  image: string;
 };

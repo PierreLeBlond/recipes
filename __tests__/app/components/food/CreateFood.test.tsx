@@ -24,7 +24,6 @@ const defaultInput = {
       density: 2.5,
       massPerPiece: null,
       unit: "GRAM",
-      image: null,
     }) as const satisfies Food,
   foods: [],
 } as const satisfies ComponentInputType;
@@ -66,25 +65,6 @@ it("Should exists", () => {
 it("Should have a title", () => {
   const component = getComponent();
   expect(component.baseElement.textContent).toContain(createFoodLabels.title);
-});
-
-describe("submit", () => {
-  it("Should have a button to add a food", () => {
-    const component = getComponent();
-    const button = getButton(component);
-
-    expect(button).toBeDefined();
-  });
-
-  it("Should not submit if nothing is edited", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
-    const button = getButton(component);
-
-    await user.click(button);
-
-    expect(onSubmit.mock.calls).toHaveLength(0);
-  });
 });
 
 describe("name", () => {
@@ -160,9 +140,16 @@ describe("name", () => {
     );
   });
 
-  it("Should return given name on submit if valid", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
+  it("Should not accept a name that already exists", async () => {
+    const foods = [
+      {
+        name: "sucre",
+        density: 2.5,
+        massPerPiece: 10,
+        unit: "GRAM",
+      },
+    ] as const satisfies Food[];
+    const component = getComponent({ foods });
     const input = getNameInput(component);
     const button = getButton(component);
 
@@ -170,7 +157,64 @@ describe("name", () => {
     await user.keyboard("sucre");
     await user.click(button);
 
-    expect(onSubmit.mock.calls[0][0].name).toBe("sucre");
+    expect(component.baseElement.textContent).toContain(
+      createFoodErrorsMessages.name.unique,
+    );
+  });
+});
+
+describe("unit", () => {
+  it("Should have a unit input", () => {
+    const component = getComponent();
+    const input = getUnitInput(component);
+    expect(input).toBeDefined();
+  });
+
+  it("Should have all units as options", async () => {
+    const units = [
+      "g (gramme)",
+      "l (litre)",
+      "c.a.c. (cuillère à café)",
+      "c.a.s. (cuillère à soupe)",
+      "pièce",
+      "pincée",
+      "goutte",
+    ] as const;
+    const component = getComponent();
+    const input = getUnitInput(component);
+
+    await user.click(input);
+
+    for (const unit of units) {
+      expect(component.baseElement.textContent).toContain(unit);
+    }
+  });
+
+  it("Shoud display an error if no unit is chosen on submit", async () => {
+    const component = getComponent();
+    const button = getButton(component);
+    const nameInput = getNameInput(component);
+
+    await user.click(nameInput);
+    await user.keyboard("sucre");
+    await user.click(button);
+
+    expect(component.baseElement.textContent).toContain(
+      createFoodErrorsMessages.unit,
+    );
+  });
+
+  it("Should not submit if no unit is chosen", async () => {
+    const onSubmit = vi.fn();
+    const component = getComponent({ onSubmit });
+    const button = getButton(component);
+    const nameInput = getNameInput(component);
+
+    await user.click(nameInput);
+    await user.keyboard("sucre");
+    await user.click(button);
+
+    expect(onSubmit.mock.calls).toHaveLength(0);
   });
 });
 
@@ -231,97 +275,6 @@ describe("density", () => {
       createFoodErrorsMessages.density,
     );
   });
-
-  it("Should return given density on submit if valid", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
-    const densityInput = getDensityInput(component);
-    const nameInput = getNameInput(component);
-    const button = getButton(component);
-
-    await user.click(nameInput);
-    await user.keyboard("sucre");
-    await user.click(densityInput);
-    await user.keyboard("1.5");
-    await user.click(button);
-
-    expect(onSubmit.mock.calls[0][0].density).toBe(1.5);
-  });
-
-  it("Should return null if density is empty", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
-    const nameInput = getNameInput(component);
-    const button = getButton(component);
-
-    await user.click(nameInput);
-    await user.keyboard("sucre");
-    await user.click(button);
-
-    expect(onSubmit.mock.calls[0][0].density).toBe(null);
-  });
-});
-
-describe("unit", () => {
-  it("Should have a unit input", () => {
-    const component = getComponent();
-    const input = getUnitInput(component);
-    expect(input).toBeDefined();
-  });
-
-  it("Should have all units as options", async () => {
-    const units = [
-      "g (gramme)",
-      "l (litre)",
-      "c.a.c. (cuillère à café)",
-      "c.a.s. (cuillère à soupe)",
-      "pièce",
-      "pincée",
-      "goutte",
-    ] as const;
-    const component = getComponent();
-    const input = getUnitInput(component);
-
-    await user.click(input);
-
-    for (const unit of units) {
-      expect(component.baseElement.textContent).toContain(unit);
-    }
-  });
-
-  it("Should have a default value of 'g (gramme)'", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
-    const nameInput = getNameInput(component);
-    const unitInput = getUnitInput(component);
-    const button = getButton(component);
-
-    await user.click(nameInput);
-    await user.keyboard("sucre");
-    await user.click(button);
-
-    expect(unitInput.textContent).toBe("g (gramme)");
-    expect(onSubmit.mock.calls[0][0].unit).toBe("GRAM");
-  });
-
-  it("Should return selected unit on submit", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
-    const nameInput = getNameInput(component);
-    const unitInput = getUnitInput(component);
-    const button = getButton(component);
-
-    await user.click(nameInput);
-    await user.keyboard("sucre");
-    await user.click(unitInput);
-
-    const option = component.getByText("l (litre)");
-    await user.click(option);
-
-    await user.click(button);
-
-    expect(onSubmit.mock.calls[0][0].unit).toBe("LITER");
-  });
 });
 
 describe("mass per piece", () => {
@@ -380,58 +333,79 @@ describe("mass per piece", () => {
       createFoodErrorsMessages.massPerPiece,
     );
   });
+});
 
-  it("Should return given mass per piece on submit if valid", async () => {
+describe("submit", () => {
+  it("Should have a button to add a food", () => {
+    const component = getComponent();
+    const button = getButton(component);
+
+    expect(button).toBeDefined();
+  });
+
+  it("Should not submit if nothing is edited", async () => {
     const onSubmit = vi.fn();
     const component = getComponent({ onSubmit });
-    const input = getMassPerPieceInput(component);
+    const button = getButton(component);
+
+    await user.click(button);
+
+    expect(onSubmit.mock.calls).toHaveLength(0);
+  });
+
+  it("Should submit if inputs are valid", async () => {
+    const onSubmit = vi.fn();
+    const component = getComponent({ onSubmit });
     const nameInput = getNameInput(component);
+    const unitInput = getUnitInput(component);
     const button = getButton(component);
 
     await user.click(nameInput);
     await user.keyboard("sucre");
-    await user.click(input);
-    await user.keyboard("10.5");
+
+    await user.click(unitInput);
+    const option = component.getByText("l (litre)");
+    await user.click(option);
+
     await user.click(button);
 
-    expect(onSubmit.mock.calls[0][0].massPerPiece).toBe(10.5);
+    expect(onSubmit.mock.calls[0][0]).toEqual({
+      name: "sucre",
+      density: null,
+      massPerPiece: null,
+      unit: "LITER",
+    });
   });
 
-  it("Should return null if mass per piece is empty", async () => {
+  it("Should submit input values", async () => {
     const onSubmit = vi.fn();
     const component = getComponent({ onSubmit });
     const nameInput = getNameInput(component);
+    const unitInput = getUnitInput(component);
+    const densityInput = getDensityInput(component);
+    const massPerPieceInput = getMassPerPieceInput(component);
     const button = getButton(component);
 
     await user.click(nameInput);
     await user.keyboard("sucre");
+
+    await user.click(unitInput);
+    const option = component.getByText("l (litre)");
+    await user.click(option);
+
+    await user.click(densityInput);
+    await user.keyboard("2.5");
+
+    await user.click(massPerPieceInput);
+    await user.keyboard("10");
+
     await user.click(button);
 
-    expect(onSubmit.mock.calls[0][0].massPerPiece).toBe(null);
-  });
-
-  describe("existing foods", () => {
-    it("Should not accept a name that already exists", async () => {
-      const foods = [
-        {
-          name: "sucre",
-          density: 2.5,
-          massPerPiece: 10,
-          unit: "GRAM",
-          image: null,
-        },
-      ] as const satisfies Food[];
-      const component = getComponent({ foods });
-      const input = getNameInput(component);
-      const button = getButton(component);
-
-      await user.click(input);
-      await user.keyboard("sucre");
-      await user.click(button);
-
-      expect(component.baseElement.textContent).toContain(
-        createFoodErrorsMessages.name.unique,
-      );
+    expect(onSubmit.mock.calls[0][0]).toEqual({
+      name: "sucre",
+      density: 2.5,
+      massPerPiece: 10,
+      unit: "LITER",
     });
   });
 });

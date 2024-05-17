@@ -1,12 +1,9 @@
 import parse from "html-react-parser";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
-import { useWatch } from "react-hook-form";
-import { FormInputs } from "@/src/lib/types/FormInputs";
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { Unit, Units } from "@/src/lib/types/Units";
 import { Step } from "@/src/lib/types/Step";
-import { getFormatedQuantity } from "../../../../../lib/quantity/getFormatedQuantity";
 import { Ingredient } from "@/src/lib/types/Ingredient";
+import { getFormatedQuantity } from "../../../../../lib/quantity/getFormatedQuantity";
 
 type RecipeStepProps = {
   step: Step;

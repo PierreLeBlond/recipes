@@ -27,7 +27,6 @@ const defaultInput = {
         density: null,
         massPerPiece: null,
         unit: "GRAM",
-        image: null,
       },
       quantity: 200,
       unit: "GRAM",

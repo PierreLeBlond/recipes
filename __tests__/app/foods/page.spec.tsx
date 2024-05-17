@@ -1,6 +1,5 @@
 import test, { expect } from "@playwright/test";
 import { createFoodLabels } from "../components/food/createFoodLabels";
-//import { expect, test } from "./test";
 
 test("Should navigate to page", async ({ page }) => {
   await page.goto("/foods");

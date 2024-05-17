@@ -8,4 +8,5 @@ export const createFoodErrorsMessages = {
   density: "La densité doit être un nombre décimal entre 0.00 et 23.00.",
   massPerPiece:
     "La masse par unité doit être un nombre décimal entre 0.00 et 1000.00.",
+  unit: "Une unité doit être sélectionnée.",
 } as const;

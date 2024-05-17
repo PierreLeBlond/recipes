@@ -15,7 +15,6 @@ const foods = [
     createdAt: new Date(),
     updatedAt: new Date(),
     id: "1",
-    image: null,
   },
 ] as const satisfies Food[];
 
