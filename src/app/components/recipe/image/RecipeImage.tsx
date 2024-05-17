@@ -41,33 +41,31 @@ export function RecipeImage() {
         className="hidden"
         ref={hiddenInputRef}
         onChange={handleFileChange}
-       />
-      <Button
+      />
+      <button
         type="button"
-        color="white"
-        variant="filled"
-        disabled={!edit}
         onClick={handleOnClick}
-        className="group relative h-full w-full !bg-transparent bg-cover bg-center p-0 text-blue-gray-500 disabled:shadow-md"
+        disabled={!edit}
+        className="group relative h-full w-full rounded-lg !bg-transparent bg-cover bg-center p-0 text-blue-gray-500 disabled:shadow-md"
         style={{ backgroundImage: `url('${image}')` }}
       >
-        <div
-          className={cn(
-            "flex h-full w-full flex-col items-center justify-center gap-y-4 transition-all duration-300",
-            {
-              "text-blue-gray-50 opacity-0 group-hover:opacity-100 group-hover:backdrop-blur-md":
-                image,
-            },
-          )}
-        >
-          {edit && (
+        {edit && (
+          <div
+            className={cn(
+              "flex h-full w-full flex-col items-center justify-center gap-y-4 rounded-lg transition-all duration-300",
+              {
+                "text-blue-gray-700 opacity-70 group-hover:opacity-100 group-hover:backdrop-blur-md":
+                  image,
+              },
+            )}
+          >
             <>
               <Plus strokeWidth={4} />
               <p>{image ? "Changer l'image" : "Ajouter une image"}</p>
             </>
-          )}
-        </div>
-      </Button>
+          </div>
+        )}
+      </button>
     </div>
   );
 }

@@ -6,9 +6,12 @@ import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { Unit, Units } from "@/src/lib/types/Units";
 import { Step } from "@/src/lib/types/Step";
 import { getFormatedQuantity } from "../../../../../lib/quantity/getFormatedQuantity";
+import { Ingredient } from "@/src/lib/types/Ingredient";
 
 type RecipeStepProps = {
   step: Step;
+  ingredients: Ingredient[];
+  plateRatio: number;
 };
 
 // TODO: Add all vowels
@@ -26,15 +29,11 @@ const getAdjectif = (unit: Unit, name: string) => {
   return "de ";
 };
 
-export function RecipeStep({ props: { step } }: { props: RecipeStepProps }) {
-  const queryState = useQueryState();
-  const [ingredients, plateCount] = useWatch<
-    FormInputs,
-    ["ingredients", "plateCount"]
-  >({ name: ["ingredients", "plateCount"] });
-
-  const plateRatio = queryState.plateCount / plateCount;
-
+export function RecipeStep({
+  props: { step, ingredients, plateRatio },
+}: {
+  props: RecipeStepProps;
+}) {
   const description = step.description.replace(
     /#([0-9]+)/g,
     (match: string) => {
@@ -45,10 +44,7 @@ export function RecipeStep({ props: { step } }: { props: RecipeStepProps }) {
         return match;
       }
 
-      const unit =
-        queryState.units[ingredient.food.name] || ingredient.food.unit;
-
-      return `<b>${getFormatedQuantity(queryState.units[ingredient.food.name] || ingredient.food.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(unit, ingredient.food.name)}${ingredient.food.name}</b>`;
+      return `<b>${getFormatedQuantity(ingredient.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(ingredient.unit, ingredient.food.name)}${ingredient.food.name}</b>`;
     },
   );
 

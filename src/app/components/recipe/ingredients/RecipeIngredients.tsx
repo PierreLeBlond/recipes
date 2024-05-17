@@ -29,7 +29,7 @@ export function RecipeIngredients() {
     grabbedPosition,
     grabbedId,
   } = useGrab(
-    64,
+    108,
     move,
     fields.map((field) => field.id),
   );

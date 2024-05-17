@@ -19,35 +19,31 @@ export function PlateCountButton({
 }) {
   const queryState = useQueryState();
 
-  return (
+  return queryState.edit ? (
     <Button
-      className="w-16 p-0 transition-colors duration-300"
-      disabled={plateCount <= 0 || plateCount >= 100}
-      color={queryState.edit ? "blue-gray" : "gray"}
+      type="button"
+      className="flex h-full w-16 items-center justify-center p-2"
+      color="blue-gray"
       variant="filled"
+      disabled={plateCount <= 0 || plateCount >= 100}
+      onClick={() => {
+        field.onChange(field.value + value);
+      }}
     >
-      {queryState.edit ? (
-        <button
-          type="button"
-          className="flex h-full w-full items-center justify-center p-2"
-          onClick={() => {
-            field.onChange(field.value + value);
-          }}
-        >
-          {children}
-        </button>
-      ) : (
-        <QueryParamsLink
-          className="flex h-full w-full items-center justify-center p-2"
-          props={{
-            partialQueryState: {
-              plateCount: queryState.plateCount + value,
-            },
-          }}
-        >
-          {children}
-        </QueryParamsLink>
-      )}
+      {children}
+    </Button>
+  ) : (
+    <Button color="brown" className="h-full w-16 p-0">
+      <QueryParamsLink
+        className="flex h-full w-full items-center justify-center p-2"
+        props={{
+          partialQueryState: {
+            plateCount: queryState.plateCount + value,
+          },
+        }}
+      >
+        {children}
+      </QueryParamsLink>
     </Button>
   );
 }

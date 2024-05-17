@@ -5,23 +5,27 @@ import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
 import { RecipeStepEdit } from "./step/RecipeStepEdit";
-import { RecipeStep } from "./step/RecipeStep";
+import { Description } from "./step/description/Description";
 
 export function RecipeSteps() {
+  const queryState = useQueryState();
+
   const { fields, append, remove, update } = useFieldArray<FormInputs, "steps">(
     {
       name: "steps",
     },
   );
+
   const ingredients = useWatch<FormInputs, "ingredients">({
     name: "ingredients",
-  });
+  }).map((ingredient) => ({
+    ...ingredient,
+    unit: queryState.units[ingredient.food.name] || ingredient.food.unit,
+  }));
 
   const plateCount = useWatch<FormInputs, "plateCount">({
     name: "plateCount",
   });
-
-  const queryState = useQueryState();
 
   const plateRatio = queryState.plateCount / plateCount;
 
@@ -56,12 +60,7 @@ export function RecipeSteps() {
                   props={{
                     step: field,
                     index,
-                    ingredients: ingredients.map((ingredient) => ({
-                      ...ingredient,
-                      unit:
-                        queryState.units[ingredient.food.name] ||
-                        ingredient.food.unit,
-                    })),
+                    ingredients,
                     plateRatio,
                   }}
                   onChangedDescription={(description) =>
@@ -70,9 +69,11 @@ export function RecipeSteps() {
                   onDeleteStep={() => handleRemovedStep(index)}
                 />
               ) : (
-                <RecipeStep
+                <Description
                   props={{
-                    step: field,
+                    description: field.description,
+                    ingredients,
+                    plateRatio,
                   }}
                 />
               )}

@@ -1,11 +1,10 @@
 import { X } from "lucide-react";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 import { DescriptionEdit } from "./description/DescriptionEdit";
+import { Step } from "@/src/lib/types/Step";
 
 type RecipeStepEditProps = {
-  step: {
-    description: string;
-  };
+  step: Step;
   index: number;
   ingredients: Ingredient[];
   plateRatio: number;
