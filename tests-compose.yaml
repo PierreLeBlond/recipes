@@ -1,0 +1,17 @@
+services:
+  db:
+    build: ./tests/dockerfiles/db
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=recipes
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.40.0-jammy
+  test:
+    build:
+      context: .
+      dockerfile: ./tests/dockerfiles/test/Dockerfile
+      args:
+        - DATABASE_URL=postgres://docker:docker@db:5432/recipes
+    depends_on:
+      - db

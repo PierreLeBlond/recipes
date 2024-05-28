@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 async function seedRecipes() {
   try {
-    const user = await prisma.user.findUniqueOrThrow({
-      where: {
-        email: "pierre.lespingal@gmail.com",
+    const user = await prisma.user.create({
+      data: {
+        email: "john.doe@gmail.com",
       },
     });
 

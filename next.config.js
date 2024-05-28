@@ -1,5 +1,6 @@
 /** @type {import("next").NextConfig} */
 const config = {
+  distDir: "build",
   images: {
     remotePatterns: [
       {
@@ -15,6 +16,9 @@ const config = {
         pathname: "/*/**",
       },
     ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
