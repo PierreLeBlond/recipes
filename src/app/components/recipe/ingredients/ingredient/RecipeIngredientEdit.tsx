@@ -58,7 +58,6 @@ export function RecipeIngredientEdit({
           <div className="order-last w-full">
             <div className="flex w-full items-center justify-center p-2">
               <Input
-                crossOrigin=""
                 className="peer w-full cursor-pointer rounded-md bg-gray-50 pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 value={ingredient.quantity}
                 type="number"

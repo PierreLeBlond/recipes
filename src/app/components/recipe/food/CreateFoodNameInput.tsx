@@ -18,7 +18,6 @@ export function CreateFoodNameInput({
   return (
     <>
       <Input
-        crossOrigin=""
         label="Nom de l'aliment"
         placeholder="Nom de l'aliment"
         id="create-food-name-input"

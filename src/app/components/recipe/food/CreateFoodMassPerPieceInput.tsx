@@ -20,7 +20,6 @@ export function CreateFoodMassPerPieceInput({
   return (
     <>
       <Input
-        crossOrigin=""
         id="create-food-mass-per-piece-input"
         labelProps={{ htmlFor: "create-food-mass-per-piece-input" }}
         label="Masse par unité (g)"

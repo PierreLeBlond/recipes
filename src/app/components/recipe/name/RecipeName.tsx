@@ -20,7 +20,6 @@ export function RecipeName() {
       <Title props={{ title: name }} />
 
       <Input
-        crossOrigin=""
         disabled={!edit}
         label={
           errors.name?.message || "Nom de la recette, entre 3 et 33 caractères"
@@ -45,7 +44,7 @@ export function RecipeName() {
               !edit,
           }),
         }}
-       />
+      />
     </div>
   );
 }

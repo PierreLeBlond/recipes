@@ -27,6 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerAuthSession();
+  const cookieData = cookies();
 
   return (
     <ThemeProvider value={theme}>
@@ -34,7 +35,7 @@ export default async function RootLayout({
         <body
           className={`font-sans ${inter.variable} flex h-full justify-center border-gray-500 bg-gray-50 text-gray-900`}
         >
-          <TRPCReactProvider cookies={cookies().toString()}>
+          <TRPCReactProvider cookies={cookieData.toString()}>
             <Header props={{ session }} />
             <main className="relative w-full max-w-72 pb-16 pt-16 sm:max-w-lg lg:max-w-4xl">
               {children}

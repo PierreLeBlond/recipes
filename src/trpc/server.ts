@@ -1,10 +1,6 @@
 import "server-only";
 
-import {
-  createTRPCProxyClient,
-  loggerLink,
-  TRPCClientError,
-} from "@trpc/client";
+import { createTRPCClient, loggerLink, TRPCClientError } from "@trpc/client";
 import { callProcedure } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
 import { type TRPCErrorResponse } from "@trpc/server/rpc";
@@ -13,21 +9,21 @@ import { cache } from "react";
 
 import { appRouter, type AppRouter } from "@/src/server/api/root";
 import { createTRPCContext } from "@/src/server/api/trpc";
-import { transformer } from "./shared";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a tRPC call from a React Server Component.
  */
-const createContext = cache(() => createTRPCContext({
+const createContext = cache(() =>
+  createTRPCContext({
     headers: new Headers({
       cookie: cookies().toString(),
       "x-trpc-source": "rsc",
     }),
-  }));
+  }),
+);
 
-export const api = createTRPCProxyClient<AppRouter>({
-  transformer,
+export const api = createTRPCClient<AppRouter>({
   links: [
     loggerLink({
       enabled: (op) =>
@@ -42,13 +38,15 @@ export const api = createTRPCProxyClient<AppRouter>({
       ({ op }) =>
         observable((observer) => {
           createContext()
-            .then((ctx) => callProcedure({
+            .then((ctx) =>
+              callProcedure({
                 procedures: appRouter._def.procedures,
                 path: op.path,
-                rawInput: op.input,
+                getRawInput: async () => op.input,
                 ctx,
                 type: op.type,
-              }))
+              }),
+            )
             .then((data) => {
               observer.next({ result: { data } });
               observer.complete();

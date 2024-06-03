@@ -30,12 +30,7 @@ export function EditSwitch() {
       >
         présentation
       </Typography>
-      <Switch
-        crossOrigin=""
-        color="blue-gray"
-        checked={queryState.edit}
-        readOnly
-      />
+      <Switch color="blue-gray" checked={queryState.edit} readOnly />
       <Typography
         className={cn("text-blue-gray-500 transition-colors", {
           "text-blue-gray-500/20": !queryState.edit,

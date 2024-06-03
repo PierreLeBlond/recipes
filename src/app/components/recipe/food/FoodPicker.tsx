@@ -43,7 +43,6 @@ export function FoodPicker({
     <div className="relative flex h-full flex-col gap-y-4">
       <form className="w-full">
         <Input
-          crossOrigin=""
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher un ingredient"

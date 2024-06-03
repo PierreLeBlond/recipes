@@ -4,14 +4,15 @@ const prisma = new PrismaClient();
 
 async function seedRecipes() {
   try {
+    await prisma.recipe.deleteMany();
+    await prisma.food.deleteMany();
+    await prisma.user.deleteMany();
+
     const user = await prisma.user.create({
       data: {
         email: "john.doe@gmail.com",
       },
     });
-
-    await prisma.recipe.deleteMany();
-    await prisma.food.deleteMany();
 
     const foods = [
       {

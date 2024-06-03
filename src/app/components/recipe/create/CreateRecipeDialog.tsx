@@ -61,7 +61,6 @@ export function CreateRecipeDialog({
         {createMutation.isIdle && (
           <form id="createRecipeForm" onSubmit={handleSubmit(onSubmit)}>
             <Input
-              crossOrigin=""
               label="Nom de la recette"
               {...register("name", {
                 required:
@@ -80,7 +79,7 @@ export function CreateRecipeDialog({
             />
           </form>
         )}
-        {createMutation.isLoading && <div>Création de la recette...</div>}
+        {createMutation.isPending && <div>Création de la recette...</div>}
         {createMutation.isError && (
           <div>Erreur lors de la création de la recette</div>
         )}

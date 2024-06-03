@@ -17,7 +17,6 @@ export function CreateFoodDensityInput({
   return (
     <>
       <Input
-        crossOrigin=""
         id="create-food-density-input"
         labelProps={{ htmlFor: "create-food-density-input" }}
         label="Densité (g/cm³)"

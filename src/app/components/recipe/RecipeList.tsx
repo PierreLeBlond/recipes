@@ -20,7 +20,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
       },
     );
 
-  if (status === "loading") {
+  if (status === "pending") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
         <Spinner color="blue-gray" />

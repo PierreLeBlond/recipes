@@ -27,7 +27,7 @@ export function FoodList({
       },
     );
 
-  if (status === "loading") {
+  if (status === "pending") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
         <Spinner className="text-orange-500" />

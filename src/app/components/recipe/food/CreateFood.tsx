@@ -30,6 +30,7 @@ export function CreateFood({
   const {
     handleSubmit,
     register,
+    control,
     formState: { isDirty, errors },
   } = useForm<FormFood>({
     defaultValues: {
@@ -57,7 +58,7 @@ export function CreateFood({
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <CreateFoodNameInput props={{ register, errors, foods }} />
-        <CreateFoodUnitInput props={{ register, errors }} />
+        <CreateFoodUnitInput props={{ control, errors }} />
         <CreateFoodDensityInput props={{ register, errors }} />
         <CreateFoodMassPerPieceInput props={{ register, errors }} />
         <div className="grid grid-cols-2 lg:grid-cols-4">

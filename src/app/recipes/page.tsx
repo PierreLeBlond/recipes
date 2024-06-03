@@ -13,7 +13,6 @@ export default function HomePage() {
     <div className="flex flex-col gap-4 pt-4 sm:gap-16 sm:pt-16">
       <form>
         <Input
-          crossOrigin=""
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher une recette"
