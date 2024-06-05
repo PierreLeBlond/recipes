@@ -40,6 +40,6 @@ export function CreateFoodUnitInput({
           {errors.unit && <ErrorAlert>{errors.unit.message}</ErrorAlert>}
         </>
       )}
-    ></Controller>
+     />
   );
 }
