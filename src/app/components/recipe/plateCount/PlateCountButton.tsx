@@ -17,36 +17,38 @@ export function PlateCountButton({
   props: PlateCountButtonProps;
   children: React.ReactNode;
 }) {
-  const button = edit ? (
+  const content = edit ? (
+    <>{children}</>
+  ) : (
+    <QueryParamsLink
+      className="flex h-full w-full items-center justify-center"
+      props={{
+        partialQueryState: {
+          plateCount: plateCount + value,
+        },
+      }}
+    >
+      {children}
+    </QueryParamsLink>
+  );
+
+  const handleClick = () => {
+    if (!edit) {
+      return;
+    }
+    field.onChange(field.value + value);
+  };
+  const button = (
     <Button
       type="button"
       id={`plate-count-button-${value}`}
       className="flex h-full w-16 items-center justify-center p-2"
-      color="blue-gray"
-      variant="filled"
+      color={edit ? "blue-gray" : "brown"}
+      variant={edit ? "filled" : "outlined"}
       disabled={plateCount <= 0 || plateCount >= 100}
-      onClick={() => {
-        field.onChange(field.value + value);
-      }}
+      onClick={handleClick}
     >
-      {children}
-    </Button>
-  ) : (
-    <Button
-      id={`plate-count-button-${value}`}
-      color="brown"
-      className="h-full w-16 p-0"
-    >
-      <QueryParamsLink
-        className="flex h-full w-full items-center justify-center p-2"
-        props={{
-          partialQueryState: {
-            plateCount: plateCount + value,
-          },
-        }}
-      >
-        {children}
-      </QueryParamsLink>
+      {content}
     </Button>
   );
 
