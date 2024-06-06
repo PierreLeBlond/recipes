@@ -1,6 +1,6 @@
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
-import { Button } from "@/src/lib/material";
 import { useFormContext } from "react-hook-form";
+import { Button } from "@/src/app/components/ui/button";
 
 export function RecipeSubmitButton() {
   const queryState = useQueryState();
@@ -15,10 +15,9 @@ export function RecipeSubmitButton() {
       type="submit"
       className="w-full"
       disabled={!formState.isDirty}
-      variant="filled"
-      color="blue-gray"
+      variant="edit"
     >
-      Sauvegarder
+      SAUVEGARDER
     </Button>
   );
 }

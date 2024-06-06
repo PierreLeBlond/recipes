@@ -48,13 +48,13 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
   return (
     <SessionProvider>
       <FormProvider {...methods}>
+        <div className="flex justify-center py-8">
+          <EditSwitch />
+        </div>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
           className="grid gap-x-4 gap-y-8 lg:grid-cols-3"
         >
-          <div className="lg:col-span-3">
-            <EditSwitch />
-          </div>
           <div className="aspect-square h-72">
             <RecipeImage />
           </div>

@@ -7,8 +7,9 @@ import { TRPCReactProvider } from "@/src/trpc/react";
 
 import { ThemeProvider } from "@/src/lib/material";
 import { theme } from "@/src/styles/theme";
+import { getServerAuthSession } from "@/src/server/auth";
+import { cn } from "@/src/lib/utils";
 import { Header } from "./components/Header";
-import { getServerAuthSession } from "../server/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,7 +34,10 @@ export default async function RootLayout({
     <ThemeProvider value={theme}>
       <html lang="en" className="relative">
         <body
-          className={`font-sans ${inter.variable} flex h-full justify-center border-gray-500 bg-gray-50 text-gray-900`}
+          className={cn(
+            `flex h-full justify-center border-gray-500 bg-gray-50 font-sans text-gray-900`,
+            inter.variable,
+          )}
         >
           <TRPCReactProvider cookies={cookieData.toString()}>
             <Header props={{ session }} />

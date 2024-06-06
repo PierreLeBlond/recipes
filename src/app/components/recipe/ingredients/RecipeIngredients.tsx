@@ -1,5 +1,4 @@
 import { useFieldArray } from "react-hook-form";
-import { Button, Typography } from "@/src/lib/material";
 import { useState } from "react";
 import { useGrab } from "@/src/lib/hooks/useGrab";
 import { cn } from "@/src/lib/utils";
@@ -9,6 +8,7 @@ import { Food } from "@/src/lib/types/Food";
 import { RecipeIngredient } from "./ingredient/RecipeIngredient";
 import { FoodPickerDialog } from "../food/FoodPickerDialog";
 import { RecipeIngredientEdit } from "./ingredient/RecipeIngredientEdit";
+import { Button } from "../../ui/button";
 
 export function RecipeIngredients() {
   const { fields, append, update, remove, move } = useFieldArray<
@@ -58,9 +58,7 @@ export function RecipeIngredients() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-3">
-      <Typography variant="h2" className="lg:col-span-3">
-        INGRÉDIENTS
-      </Typography>
+      <h2 className="text-2xl lg:col-span-3">INGRÉDIENTS</h2>
       {fields.length !== 0 ? (
         <div
           ref={scrollAreaRef}
@@ -101,7 +99,7 @@ export function RecipeIngredients() {
           </ul>
         </div>
       ) : (
-        <Typography
+        <p
           className={cn("text-center lg:col-span-3", {
             "text-blue-gray-500": queryState.edit,
           })}
@@ -109,19 +107,18 @@ export function RecipeIngredients() {
           {queryState.edit
             ? "Ajoutez des ingrédients à votre recette"
             : "Pas d'ingrédients"}
-        </Typography>
+        </p>
       )}
       <Button
         onClick={() => setOpen(true)}
         disabled={!queryState.edit}
+        variant="edit"
         className={cn("transition-all duration-300 lg:col-start-3", {
           "pointer-events-none !h-0 translate-y-10 !opacity-0 lg:!h-8 lg:translate-x-40 lg:translate-y-0":
             !queryState.edit,
         })}
-        color="blue-gray"
-        variant="filled"
       >
-        Ajouter des ingrédients
+        AJOUTER DES INGRÉDIENTS
       </Button>
       <FoodPickerDialog
         props={{

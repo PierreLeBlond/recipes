@@ -1,14 +1,20 @@
-import { Alert } from "@/src/lib/material";
 import { Ambulance } from "lucide-react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/src/app/components/ui/alert";
 
 export function ErrorAlert({ children }: { children: React.ReactNode }) {
   return (
     <Alert
-      color="red"
-      icon={<Ambulance />}
-      className="flex-wrap justify-center"
+      className="flex flex-wrap items-center justify-center gap-2"
+      variant="error"
     >
-      {children}
+      <AlertTitle>
+        <Ambulance />
+      </AlertTitle>
+      <AlertDescription>{children}</AlertDescription>
     </Alert>
   );
-};
+}

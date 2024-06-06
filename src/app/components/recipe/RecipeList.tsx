@@ -1,7 +1,8 @@
 import { api } from "@/src/trpc/react";
-import { Button, Spinner } from "@/src/lib/material";
+import { Spinner } from "@/src/lib/material";
 import { useSession } from "next-auth/react";
 import { ServerCrash } from "lucide-react";
+import { Button } from "@/src/app/components/ui/button";
 import { RecipeCard } from "./RecipeCard";
 import { CreateRecipeCard } from "./create/CreateRecipeCard";
 
@@ -14,7 +15,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
 
   const { status, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     api.recipe.list.useInfiniteQuery(
-      { search, limit: 6 },
+      { search, limit: 3 },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       },
@@ -66,7 +67,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
             disabled={isFetchingNextPage}
             className="w-full"
           >
-            {isFetchingNextPage ? "Chargement..." : "Afficher plus de recettes"}
+            {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS DE RECETTES"}
           </Button>
         </div>
       )}

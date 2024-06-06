@@ -1,9 +1,9 @@
 "use client";
 
-import { Switch, Typography } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { useSession } from "next-auth/react";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
+import { Switch } from "@/src/app/components/ui/switch";
 import { QueryParamsLink } from "../utils/QueryParamsLink";
 
 export function EditSwitch() {
@@ -23,21 +23,25 @@ export function EditSwitch() {
         },
       }}
     >
-      <Typography
+      <p
         className={cn("text-gray-800 transition-colors", {
           "text-gray-800/20": queryState.edit,
         })}
       >
         présentation
-      </Typography>
-      <Switch color="blue-gray" checked={queryState.edit} readOnly />
-      <Typography
-        className={cn("text-blue-gray-500 transition-colors", {
-          "text-blue-gray-500/20": !queryState.edit,
+      </p>
+      <Switch
+        checked={queryState.edit}
+        disabled
+        className="pointer-events-none"
+      />
+      <p
+        className={cn("text-edit transition-colors", {
+          "text-edit/50": !queryState.edit,
         })}
       >
         édition
-      </Typography>
+      </p>
     </QueryParamsLink>
   );
 }

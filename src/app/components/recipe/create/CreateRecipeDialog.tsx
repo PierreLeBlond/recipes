@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogBody,
   DialogFooter,
@@ -10,6 +9,7 @@ import { api } from "@/src/trpc/react";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
+import { Button } from "@/src/app/components/ui/button";
 
 type CreateRecipeDialogProps = {
   open: boolean;
@@ -89,12 +89,10 @@ export function CreateRecipeDialog({
       </DialogBody>
       <DialogFooter className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Button
-          color="gray"
           onClick={() => {
             setOpen(false);
           }}
           className="lg:col-start-3"
-          variant="text"
         >
           Quitter
         </Button>
@@ -102,8 +100,6 @@ export function CreateRecipeDialog({
           <Button
             type="submit"
             disabled={!isDirty}
-            color="blue-gray"
-            variant="filled"
             form="createRecipeForm"
             className="lg:col-start-4"
           >
@@ -112,8 +108,8 @@ export function CreateRecipeDialog({
         ) : (
           <Button
             disabled={!createMutation.isSuccess}
-            color="brown"
             className="lg:col-start-4"
+            variant="link"
           >
             <Link href={`/recipes/${createMutation.data?.id}?edit=true`}>
               Éditer

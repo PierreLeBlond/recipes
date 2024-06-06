@@ -2,9 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
-import { Button, Typography } from "@/src/lib/material";
 import { useState } from "react";
 import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
+import { Button } from "@/src/app/components/ui/button";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
@@ -52,7 +52,7 @@ export function CreateFood({
 
   return (
     <div className="flex flex-col gap-4">
-      <Typography variant="h2">Ajouter un aliment</Typography>
+      <h2 className="text-xl">Ajouter un aliment</h2>
       <form
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(handleFormSubmit)}
@@ -65,10 +65,8 @@ export function CreateFood({
           <Button
             className="col-start-2 lg:col-start-4"
             type="submit"
-            color="blue-gray"
-            variant="filled"
+            variant="edit"
             disabled={!isDirty}
-            ripple={false}
           >
             Ajouter
           </Button>

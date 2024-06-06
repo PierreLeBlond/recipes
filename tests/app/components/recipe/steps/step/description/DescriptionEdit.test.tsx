@@ -418,7 +418,7 @@ describe("Add a reference", () => {
       const button = component
         .getAllByRole("button")
         .find((button) =>
-          button.textContent?.includes("Ajouter un ingrédient"),
+          button.textContent?.includes("AJOUTER UN INGRÉDIENT"),
         );
 
       expect(button).toBeDefined();

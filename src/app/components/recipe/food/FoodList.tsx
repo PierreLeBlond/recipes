@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Spinner } from "@/src/lib/material";
+import { Spinner } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { api } from "@/src/trpc/react";
 import { Plus, ServerCrash } from "lucide-react";
 import { Food } from "@/src/lib/types/Food";
+import { Button } from "@/src/app/components/ui/button";
 import { FoodCard } from "./FoodCard";
 
 type FoodListProps = {
@@ -94,9 +95,8 @@ export function FoodList({
           onClick={() => !isFetchingNextPage && fetchNextPage()}
           disabled={isFetchingNextPage || !hasNextPage}
           className="w-full"
-          variant="filled"
         >
-          {isFetchingNextPage ? "Chargement..." : "Afficher plus d'ingrédients"}
+          {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS D'ALIMENTS"}
         </Button>
       )}
     </>

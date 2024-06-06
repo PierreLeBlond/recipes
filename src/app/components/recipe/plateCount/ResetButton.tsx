@@ -1,4 +1,4 @@
-import { Button } from "@/src/lib/material";
+import { Button } from "../../ui/button";
 import { QueryParamsLink } from "../../utils/QueryParamsLink";
 
 type PlateCountButtonProps = {
@@ -19,7 +19,7 @@ export function ResetButton({
       </label>
       <Button
         id="reset-button"
-        color="brown"
+        variant="link"
         className="h-8 w-8 rounded-full p-0"
       >
         <QueryParamsLink

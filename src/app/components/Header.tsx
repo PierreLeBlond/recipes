@@ -8,11 +8,11 @@ import {
   LogIn,
   UtensilsCrossed,
 } from "lucide-react";
-import { Button } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 import { Badge } from "./utils/Badge";
+import { Button } from "./ui/button";
 
 type HeaderProps = {
   session: Session | null;
@@ -30,7 +30,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
               src={session?.user.image}
               alt={session?.user.name || "image utilisateur"}
               className={cn("h-10 w-10 rounded-full", {
-                "border-2 border-blue-gray-500 md:border-0":
+                "border-blue-gray-500 border-2 md:border-0":
                   session?.user.role === "ADMIN",
               })}
               width={40}
@@ -49,7 +49,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
         <Link
           href="/recipes"
           className={cn(
-            "border-gray-900 transition-colors hover:text-blue-gray-300",
+            "hover:text-blue-gray-300 border-gray-900 transition-colors",
             {
               "border-b-2": pathname === "/recipes",
             },
@@ -61,7 +61,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
         <Link
           href="/foods"
           className={cn(
-            "border-gray-900 transition-colors hover:text-blue-gray-300",
+            "hover:text-blue-gray-300 border-gray-900 transition-colors",
             {
               "border-b-2": pathname === "/foods",
             },
@@ -71,12 +71,16 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
         </Link>
       </div>
       <div className="flex items-center justify-end gap-x-4">
-        <Button className="hidden md:block" color="brown">
+        <Button className="hidden md:block" variant="link" size="sm">
           <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
             {session ? "logout" : "login"}
           </Link>
         </Button>
-        <Button className="block rounded-full p-3 md:hidden" color="brown">
+        <Button
+          className="block rounded-full p-3 md:hidden"
+          variant="link"
+          size="sm"
+        >
           <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
             {session ? <DoorOpen size={16} /> : <LogIn size={16} />}
           </Link>

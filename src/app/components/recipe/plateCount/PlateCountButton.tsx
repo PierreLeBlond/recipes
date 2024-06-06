@@ -1,7 +1,7 @@
-import { Button } from "@/src/lib/material";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { ControllerRenderProps } from "react-hook-form";
 import { QueryParamsLink } from "../../utils/QueryParamsLink";
+import { Button } from "../../ui/button";
 
 type PlateCountButtonProps = {
   plateCount: number;
@@ -18,7 +18,7 @@ export function PlateCountButton({
   children: React.ReactNode;
 }) {
   const content = edit ? (
-    <>{children}</>
+    children
   ) : (
     <QueryParamsLink
       className="flex h-full w-full items-center justify-center"
@@ -43,8 +43,7 @@ export function PlateCountButton({
       type="button"
       id={`plate-count-button-${value}`}
       className="flex h-full w-16 items-center justify-center p-2"
-      color={edit ? "blue-gray" : "brown"}
-      variant={edit ? "filled" : "outlined"}
+      variant={edit ? "edit" : "link"}
       disabled={plateCount <= 0 || plateCount >= 100}
       onClick={handleClick}
     >

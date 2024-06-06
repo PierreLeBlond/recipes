@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogBody,
   DialogFooter,
@@ -7,6 +6,7 @@ import {
 } from "@/src/lib/material";
 import { useState } from "react";
 import { Food } from "@/src/lib/types/Food";
+import { Button } from "@/src/app/components/ui/button";
 import { FoodPicker } from "./FoodPicker";
 
 type FoodPickerDialogProps = {
@@ -43,10 +43,9 @@ export function FoodPickerDialog({
           onClick={() => {
             setOpen(false);
           }}
-          variant="text"
           className="w-full"
         >
-          Quitter
+          QUITTER
         </Button>
         <Button
           disabled={pickedFoods.length === 0}
@@ -56,10 +55,9 @@ export function FoodPickerDialog({
             setPickedFoods([]);
           }}
           className="w-full"
-          variant="filled"
           color="blue-gray"
         >
-          Ajouter ces ingrédients
+          AJOUTER CES INGRÉDIENTS
         </Button>
       </DialogFooter>
     </Dialog>
