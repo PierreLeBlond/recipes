@@ -3,13 +3,13 @@ import {
   DialogBody,
   DialogFooter,
   DialogHeader,
-  Input,
 } from "@/src/lib/material";
 import { api } from "@/src/trpc/react";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
 import { Button } from "@/src/app/components/ui/button";
+import { Input } from "../../ui/input";
 
 type CreateRecipeDialogProps = {
   open: boolean;

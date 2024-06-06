@@ -1,7 +1,7 @@
-import { Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { FormFood } from "./FormFood";
+import { Input } from "@/src/app/components/ui/input";
 
 const ROUNDED_OSMIUM_DENSITY = 23;
 
@@ -17,8 +17,6 @@ export function CreateFoodDensityInput({
   return (
     <>
       <Input
-        id="create-food-density-input"
-        labelProps={{ htmlFor: "create-food-density-input" }}
         label="Densité (g/cm³)"
         placeholder="Densité, entre 0.00 et 23.00, laisser vide si inconnue"
         {...register("density", {

@@ -2,7 +2,6 @@
 
 import {
   ThemeProvider,
-  Input,
   Menu,
   MenuHandler,
   MenuItem,
@@ -27,7 +26,6 @@ import {
 
 export {
   ThemeProvider,
-  Input,
   Menu,
   MenuHandler,
   MenuItem,

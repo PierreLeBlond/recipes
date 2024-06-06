@@ -1,7 +1,7 @@
-import { Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { FormFood } from "./FormFood";
+import { Input } from "../../ui/input";
 
 const MAX_MASS_PER_PIECE = 1000;
 
@@ -20,8 +20,6 @@ export function CreateFoodMassPerPieceInput({
   return (
     <>
       <Input
-        id="create-food-mass-per-piece-input"
-        labelProps={{ htmlFor: "create-food-mass-per-piece-input" }}
         label="Masse par unité (g)"
         placeholder="Masse par unité, entre 0.00 et 1000.00, laisser vide si inconnue"
         {...register("massPerPiece", {

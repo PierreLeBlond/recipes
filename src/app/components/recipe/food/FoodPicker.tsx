@@ -1,11 +1,11 @@
 "use client";
 
-import { Input } from "@/src/lib/material";
 import { ArrowBigDown, Search, X } from "lucide-react";
 import { useState } from "react";
 import { Food } from "@/src/lib/types/Food";
 import { FoodCard } from "./FoodCard";
 import { FoodList } from "./FoodList";
+import { Input } from "../../ui/input";
 
 type FoodPickerProps = {
   pickedFoods: Food[];
@@ -46,10 +46,7 @@ export function FoodPicker({
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher un ingredient"
-          color="blue-gray"
-          containerProps={{
-            className: "max-w-xs md:max-w-full",
-          }}
+          className="max-w-xs md:max-w-full"
           icon={
             <Search className="-translate-x-1 -translate-y-0.5 text-blue-gray-500" />
           }

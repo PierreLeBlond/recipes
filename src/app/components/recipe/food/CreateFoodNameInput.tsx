@@ -1,8 +1,8 @@
-import { Input } from "@/src/lib/material";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Food } from "@/src/lib/types/Food";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { FormFood } from "./FormFood";
+import { Input } from "../../ui/input";
 
 type CreateFoodInputProps = {
   register: UseFormRegister<FormFood>;
@@ -20,8 +20,6 @@ export function CreateFoodNameInput({
       <Input
         label="Nom de l'aliment"
         placeholder="Nom de l'aliment"
-        id="create-food-name-input"
-        labelProps={{ htmlFor: "create-food-name-input" }}
         {...register("name", {
           required: "Le nom doit comporter de 3 et 33 caractères.",
           minLength: {

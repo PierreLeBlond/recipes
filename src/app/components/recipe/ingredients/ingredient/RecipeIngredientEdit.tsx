@@ -2,8 +2,8 @@ import { getFormatedUnit } from "@/src/lib/quantity/getFormatedUnit";
 import { cn } from "@/src/lib/utils";
 import { Grip, X } from "lucide-react";
 import { PointerEvent } from "react";
-import { Input } from "@/src/lib/material";
 import { Ingredient } from "@/src/lib/types/Ingredient";
+import { Input } from "../../../ui/input";
 
 type RecipeIngredientEditProps = {
   ingredient: Ingredient;
@@ -58,19 +58,12 @@ export function RecipeIngredientEdit({
           <div className="order-last w-full">
             <div className="flex w-full items-center justify-center p-2">
               <Input
-                className="peer w-full cursor-pointer rounded-md bg-gray-50 pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="peer h-8 w-full cursor-pointer rounded-md bg-gray-50 pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 value={ingredient.quantity}
                 type="number"
                 label="Quantité"
                 color="blue-gray"
                 step="0.1"
-                labelProps={{
-                  htmlFor: "quantity-input",
-                }}
-                id="quantity-input"
-                containerProps={{
-                  className: "h-8",
-                }}
                 onChange={(e) => handleUpdatedQuantity(Number(e.target.value))}
                 onFocus={(e) => e.target.select()}
               />
