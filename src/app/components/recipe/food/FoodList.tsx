@@ -3,7 +3,7 @@
 import { Spinner } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { api } from "@/src/trpc/react";
-import { Plus, ServerCrash } from "lucide-react";
+import { LoaderCircle, Plus, ServerCrash } from "lucide-react";
 import { Food } from "@/src/lib/types/Food";
 import { Button } from "@/src/app/components/ui/button";
 import { FoodCard } from "./FoodCard";
@@ -31,7 +31,7 @@ export function FoodList({
   if (status === "pending") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
-        <Spinner className="text-orange-500" />
+        <LoaderCircle className="animate-spin text-edit" />
       </div>
     );
   }
