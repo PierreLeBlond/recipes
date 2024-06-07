@@ -9,6 +9,7 @@ import { RecipeIngredient } from "./ingredient/RecipeIngredient";
 import { FoodPickerDialog } from "../food/FoodPickerDialog";
 import { RecipeIngredientEdit } from "./ingredient/RecipeIngredientEdit";
 import { Button } from "../../ui/button";
+import { Typography } from "../../ui/typography";
 
 export function RecipeIngredients() {
   const { fields, append, update, remove, move } = useFieldArray<
@@ -58,7 +59,9 @@ export function RecipeIngredients() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-3">
-      <h2 className="text-2xl lg:col-span-3">INGRÉDIENTS</h2>
+      <Typography variant="h2" className="text-2xl lg:col-span-3">
+        INGRÉDIENTS
+      </Typography>
       {fields.length !== 0 ? (
         <div
           ref={scrollAreaRef}
@@ -99,7 +102,7 @@ export function RecipeIngredients() {
           </ul>
         </div>
       ) : (
-        <p
+        <Typography
           className={cn("text-center lg:col-span-3", {
             "text-blue-gray-500": queryState.edit,
           })}
@@ -107,7 +110,7 @@ export function RecipeIngredients() {
           {queryState.edit
             ? "Ajoutez des ingrédients à votre recette"
             : "Pas d'ingrédients"}
-        </p>
+        </Typography>
       )}
       <Button
         onClick={() => setOpen(true)}

@@ -60,8 +60,7 @@ export interface InputProps
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, placeholder, icon, variant, ...props }, ref) => {
-    return (
+  ({ className, type, label, placeholder, icon, variant, ...props }, ref) => (
       <div className="!min-w-auto relative h-10 w-full min-w-[200px]">
         {icon && <div className={cn(iconVariants({ variant }))}>{icon}</div>}
         <input
@@ -76,8 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {label}
         </label>
       </div>
-    );
-  },
+    ),
 );
 Input.displayName = "Input";
 

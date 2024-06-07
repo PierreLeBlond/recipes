@@ -1,6 +1,5 @@
 "use client";
 
-import { Typography } from "@/src/lib/material";
 import { Minus, Plus, RotateCcw } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
@@ -8,6 +7,7 @@ import { cn } from "@/src/lib/utils";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { PlateCountButton } from "./PlateCountButton";
 import { ResetButton } from "./ResetButton";
+import { Typography } from "../../ui/typography";
 
 export function RecipePlateCount() {
   const { control } = useFormContext<FormInputs>();

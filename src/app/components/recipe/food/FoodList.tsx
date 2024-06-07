@@ -1,6 +1,5 @@
 "use client";
 
-import { Spinner } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { api } from "@/src/trpc/react";
 import { LoaderCircle, Plus, ServerCrash } from "lucide-react";

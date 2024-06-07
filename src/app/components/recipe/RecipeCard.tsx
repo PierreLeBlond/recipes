@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Card, CardHeader, CardBody, Typography } from "@/src/lib/material";
+import { Card, CardHeader, CardBody } from "@/src/lib/material";
+import { Typography } from "../ui/typography";
 
 type RecipeCardProps = {
   image: string | null;
@@ -25,7 +26,7 @@ export function RecipeCard({
           <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50 to-black/10" />
         </CardHeader>
         <CardBody className="relative">
-          <Typography variant="h3" className="text-start !text-blue-gray-50">
+          <Typography variant="h2" className="text-white">
             {name}
           </Typography>
         </CardBody>

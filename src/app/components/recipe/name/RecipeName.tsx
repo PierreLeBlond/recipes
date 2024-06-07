@@ -10,10 +10,7 @@ export function RecipeName() {
   const name = useWatch({
     name: "name",
   });
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<FormInputs>();
+  const { register } = useFormContext<FormInputs>();
 
   return (
     <div className="flex h-full max-w-full flex-col justify-between gap-2 overflow-hidden">

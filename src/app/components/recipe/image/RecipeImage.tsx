@@ -5,6 +5,7 @@ import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
 import { convertToBase64 } from "@/src/lib/s3/convertToBase64";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
+import { Typography } from "@material-tailwind/react";
 
 export function RecipeImage() {
   const hiddenInputRef = useRef<HTMLInputElement>(null);
@@ -59,7 +60,9 @@ export function RecipeImage() {
             )}
           >
             <Plus strokeWidth={4} />
-            <p>{image ? "Changer l'image" : "Ajouter une image"}</p>
+            <Typography variant="h3">
+              {image ? "Changer l'image" : "Ajouter une image"}
+            </Typography>
           </div>
         )}
       </button>

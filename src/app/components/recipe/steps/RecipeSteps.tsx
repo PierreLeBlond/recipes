@@ -6,6 +6,7 @@ import { cn } from "@/src/lib/utils";
 import { RecipeStepEdit } from "./step/RecipeStepEdit";
 import { Description } from "./step/description/Description";
 import { Button } from "../../ui/button";
+import { Typography } from "../../ui/typography";
 
 export function RecipeSteps() {
   const queryState = useQueryState();
@@ -48,7 +49,7 @@ export function RecipeSteps() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-3">
-      <h2 className="text-2xl">ÉTAPES</h2>
+      <Typography variant="h2">ÉTAPES</Typography>
       {fields.length !== 0 ? (
         <ul className="relative flex list-inside flex-col gap-4 lg:col-span-3">
           {fields.map((field, index) => (
@@ -81,7 +82,7 @@ export function RecipeSteps() {
           ))}
         </ul>
       ) : (
-        <p
+        <Typography
           className={cn("text-center lg:col-span-3", {
             "text-blue-gray-500": queryState.edit,
           })}
@@ -89,7 +90,7 @@ export function RecipeSteps() {
           {queryState.edit
             ? "Ajoutez des étapes à votre recette"
             : "Pas d'étapes"}
-        </p>
+        </Typography>
       )}
       <div className="flex w-full justify-center lg:col-span-3">
         <UtensilsCrossed />

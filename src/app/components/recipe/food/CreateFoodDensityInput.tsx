@@ -1,7 +1,7 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
-import { FormFood } from "./FormFood";
 import { Input } from "@/src/app/components/ui/input";
+import { FormFood } from "./FormFood";
 
 const ROUNDED_OSMIUM_DENSITY = 23;
 

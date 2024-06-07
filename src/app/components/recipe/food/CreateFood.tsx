@@ -10,6 +10,7 @@ import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
 import { FormFood } from "./FormFood";
 import { CreateFoodUnitInput } from "./CreateFoodUnitInput";
+import { Typography } from "../../ui/typography";
 
 type CreateFoodHandlers = {
   onSubmit: (food: Food) => Promise<Food>;
@@ -52,7 +53,9 @@ export function CreateFood({
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl">Ajouter un aliment</h2>
+      <Typography variant="h2" className="text-xl">
+        Ajouter un aliment
+      </Typography>
       <form
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(handleFormSubmit)}

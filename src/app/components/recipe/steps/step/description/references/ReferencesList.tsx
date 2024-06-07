@@ -1,5 +1,6 @@
 import { List, ListItem } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
+import { Typography } from "@material-tailwind/react";
 
 type Ingredient = {
   food: {
@@ -21,9 +22,9 @@ export function ReferencesList({
 }) {
   if (ingredients.length === 0) {
     return (
-      <p className="relative min-w-0 lg:w-1/3">
+      <Typography className="relative min-w-0 lg:w-1/3">
         Pas d&apos;ingrédients correspondants
-      </p>
+      </Typography>
     );
   }
 
