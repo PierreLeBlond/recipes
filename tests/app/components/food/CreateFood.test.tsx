@@ -10,6 +10,13 @@ afterEach(() => {
   cleanup();
 });
 
+const mockPointerCaptureEvent = () => {
+  // https://github.com/testing-library/user-event/discussions/1087
+  window.HTMLElement.prototype.scrollIntoView = vi.fn();
+  window.HTMLElement.prototype.hasPointerCapture = vi.fn();
+  window.HTMLElement.prototype.releasePointerCapture = vi.fn();
+};
+
 const user = userEvent.setup();
 
 type ComponentInputType = {
@@ -171,6 +178,7 @@ describe("unit", () => {
   });
 
   it("Should have all units as options", async () => {
+    mockPointerCaptureEvent();
     const units = [
       "g (gramme)",
       "l (litre)",
@@ -354,6 +362,7 @@ describe("submit", () => {
   });
 
   it("Should submit if inputs are valid", async () => {
+    mockPointerCaptureEvent();
     const onSubmit = vi.fn();
     const component = getComponent({ onSubmit });
     const nameInput = getNameInput(component);
@@ -364,7 +373,7 @@ describe("submit", () => {
     await user.keyboard("sucre");
 
     await user.click(unitInput);
-    const option = component.getByText("l (litre)");
+    const option = component.getByRole("option", { name: "l (litre)" });
     await user.click(option);
 
     await user.click(button);
@@ -379,6 +388,7 @@ describe("submit", () => {
 
   it("Should submit input values", async () => {
     const onSubmit = vi.fn();
+    mockPointerCaptureEvent();
     const component = getComponent({ onSubmit });
     const nameInput = getNameInput(component);
     const unitInput = getUnitInput(component);
@@ -390,7 +400,7 @@ describe("submit", () => {
     await user.keyboard("sucre");
 
     await user.click(unitInput);
-    const option = component.getByText("l (litre)");
+    const option = component.getByRole("option", { name: "l (litre)" });
     await user.click(option);
 
     await user.click(densityInput);

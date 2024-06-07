@@ -7,6 +7,7 @@ const config = withMT({
   theme: {
     colors: {
       ...colors,
+      background: "hsl(var(--background) / <alpha-value>)",
       primary: "hsl(var(--primary) / <alpha-value>)",
       "primary-foreground": "hsl(var(--primary-foreground) / <alpha-value>)",
       edit: "hsl(var(--edit) / <alpha-value>)",

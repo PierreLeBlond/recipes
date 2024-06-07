@@ -16,8 +16,6 @@ import {
   Textarea,
   List,
   ListItem,
-  Select,
-  Option,
 } from "@material-tailwind/react";
 
 export {
@@ -36,6 +34,4 @@ export {
   Textarea,
   List,
   ListItem,
-  Select,
-  Option,
 };
