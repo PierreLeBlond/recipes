@@ -7,11 +7,11 @@ const config = withMT({
   theme: {
     colors: {
       ...colors,
-      primary: "hsl(var(--primary))",
-      "primary-foreground": "hsl(var(--primary-foreground))",
-      edit: "hsl(var(--edit))",
-      "edit-foreground": "hsl(var(--edit-foreground))",
-      link: "hsl(var(--link))",
+      primary: "hsl(var(--primary) / <alpha-value>)",
+      "primary-foreground": "hsl(var(--primary-foreground) / <alpha-value>)",
+      edit: "hsl(var(--edit) / <alpha-value>)",
+      "edit-foreground": "hsl(var(--edit-foreground) / <alpha-value>)",
+      link: "hsl(var(--link) / <alpha-value>)",
     },
     container: {
       center: true,
