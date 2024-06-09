@@ -34,9 +34,8 @@ export function ReferencesButton({
   return (
     <Button
       onPointerDown={handleClickedButton}
-      className="flex items-center justify-center gap-2 border-0"
+      className="flex h-8 items-center justify-center gap-2 p-1 px-2"
       variant="edit"
-      size="sm"
     >
       <Hash size={16} /> AJOUTER UN INGRÉDIENT
     </Button>

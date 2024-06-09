@@ -1,4 +1,3 @@
-import { List, ListItem } from "@/src/lib/material";
 import { cn } from "@/src/lib/utils";
 import { Typography } from "@material-tailwind/react";
 
@@ -29,7 +28,7 @@ export function ReferencesList({
   }
 
   const handleIngredientReferenceSelected = (
-    e: React.PointerEvent<HTMLDivElement>,
+    e: React.PointerEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
 
@@ -41,20 +40,24 @@ export function ReferencesList({
   };
 
   return (
-    <List className="min-w-auto relative h-12 flex-row p-2 lg:w-1/3">
+    <ul className="min-w-auto relative flex gap-2 overflow-x-scroll">
       {ingredients.map((ingredient) => (
-        <ListItem
-          className={cn("w-auto p-1 px-2", {
-            selected: selectedReference === ingredient.food.name,
-          })}
-          role="button"
-          onPointerDown={handleIngredientReferenceSelected}
-          key={ingredient.food.name}
-          selected={selectedReference === ingredient.food.name}
-        >
-          {ingredient.food.name}
-        </ListItem>
+        <li>
+          <button
+            className={cn(
+              "flex items-center justify-center rounded-md border border-edit p-1 px-2 text-edit hover:font-bold",
+              {
+                selected: selectedReference === ingredient.food.name,
+              },
+            )}
+            type="button"
+            onPointerDown={handleIngredientReferenceSelected}
+            key={ingredient.food.name}
+          >
+            {ingredient.food.name}
+          </button>
+        </li>
       ))}
-    </List>
+    </ul>
   );
 }

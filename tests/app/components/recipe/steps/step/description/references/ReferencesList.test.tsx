@@ -58,13 +58,11 @@ test("Should exists", () => {
 test("Should display given foods within a button", () => {
   const component = getComponent({});
 
-  const appleButton = component.getByText("pomme");
-  const bananaButton = component.getByText("banane");
+  const appleButton = component.getByRole("button", { name: "pomme" });
+  const bananaButton = component.getByRole("button", { name: "banane" });
 
   expect(appleButton).toBeDefined();
-  expect(appleButton).toHaveAttribute("role", "button");
   expect(bananaButton).toBeDefined();
-  expect(bananaButton).toHaveAttribute("role", "button");
 });
 
 test("Should display a message if no foods are given", () => {

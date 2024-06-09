@@ -13,9 +13,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Textarea,
-  List,
-  ListItem,
 } from "@material-tailwind/react";
 
 export {
@@ -31,7 +28,4 @@ export {
   Card,
   CardHeader,
   CardBody,
-  Textarea,
-  List,
-  ListItem,
 };
