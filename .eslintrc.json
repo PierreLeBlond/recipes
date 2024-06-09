@@ -16,7 +16,9 @@
   },
   "plugins": ["react", "react-hooks", "import"],
   "rules": {
+    // Forced by shadcn components
     "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/heading-has-content": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/react-in-jsx-scope": "off",
