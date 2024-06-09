@@ -1,15 +1,11 @@
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-} from "@/src/lib/material";
 import { api } from "@/src/trpc/react";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
 import { Button } from "@/src/app/components/ui/button";
 import { Input } from "../../ui/input";
+import { Dialog, DialogContent } from "../../ui/dialog";
+import { Typography } from "../../ui/typography";
 
 type CreateRecipeDialogProps = {
   open: boolean;
@@ -48,16 +44,9 @@ export function CreateRecipeDialog({
   };
 
   return (
-    <Dialog
-      open={open}
-      handler={handleOpen}
-      color="blue-gray"
-      className="p-4 sm:p-8"
-    >
-      <DialogHeader className="w-full justify-center text-sm">
-        Création de recette
-      </DialogHeader>
-      <DialogBody>
+    <Dialog open={open} onOpenChange={handleOpen}>
+      <DialogContent className="p-4 sm:p-8">
+        <Typography variant="h3">Création de recette</Typography>
         {createMutation.isIdle && (
           <form id="createRecipeForm" onSubmit={handleSubmit(onSubmit)}>
             <Input
@@ -86,37 +75,29 @@ export function CreateRecipeDialog({
         {createMutation.isSuccess && (
           <SuccessAlert>Recette créée !</SuccessAlert>
         )}
-      </DialogBody>
-      <DialogFooter className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Button
-          onClick={() => {
-            setOpen(false);
-          }}
-          className="lg:col-start-3"
-        >
-          Quitter
-        </Button>
-        {createMutation.isIdle ? (
-          <Button
-            type="submit"
-            disabled={!isDirty}
-            form="createRecipeForm"
-            className="lg:col-start-4"
-          >
-            Créer
-          </Button>
-        ) : (
-          <Button
-            disabled={!createMutation.isSuccess}
-            className="lg:col-start-4"
-            variant="link"
-          >
-            <Link href={`/recipes/${createMutation.data?.id}?edit=true`}>
-              Éditer
-            </Link>
-          </Button>
-        )}
-      </DialogFooter>
+        <div className="flex justify-end">
+          {createMutation.isIdle ? (
+            <Button
+              type="submit"
+              disabled={!isDirty}
+              form="createRecipeForm"
+              className="w-full sm:w-1/2"
+            >
+              Créer
+            </Button>
+          ) : (
+            <Button
+              disabled={!createMutation.isSuccess}
+              className="w-full sm:w-1/2"
+              variant="link"
+            >
+              <Link href={`/recipes/${createMutation.data?.id}?edit=true`}>
+                Éditer
+              </Link>
+            </Button>
+          )}
+        </div>
+      </DialogContent>
     </Dialog>
   );
 }

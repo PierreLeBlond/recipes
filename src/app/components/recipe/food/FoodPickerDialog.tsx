@@ -1,13 +1,9 @@
-import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-} from "@/src/lib/material";
 import { useState } from "react";
 import { Food } from "@/src/lib/types/Food";
 import { Button } from "@/src/app/components/ui/button";
 import { FoodPicker } from "./FoodPicker";
+import { Dialog, DialogContent } from "../../ui/dialog";
+import { Typography } from "../../ui/typography";
 
 type FoodPickerDialogProps = {
   open: boolean;
@@ -26,40 +22,25 @@ export function FoodPickerDialog({
   const handleOpen = () => setOpen(!open);
 
   return (
-    <Dialog
-      open={open}
-      handler={handleOpen}
-      color="blue-gray"
-      className="h-full"
-    >
-      <DialogHeader className="w-full justify-center text-sm">
-        Ajout d&apos;ingrédients
-      </DialogHeader>
-      <DialogBody>
+    <Dialog open={open} onOpenChange={handleOpen}>
+      <DialogContent className="h-5/6">
+        <Typography variant="h3">Ajout d&apos;ingrédients</Typography>
         <FoodPicker props={{ pickedFoods, setPickedFoods, disabledFoods }} />
-      </DialogBody>
-      <DialogFooter className="grid grid-cols-2 gap-2">
-        <Button
-          onClick={() => {
-            setOpen(false);
-          }}
-          className="w-full"
-        >
-          QUITTER
-        </Button>
-        <Button
-          disabled={pickedFoods.length === 0}
-          onClick={() => {
-            handlePickedFoods(pickedFoods);
-            setOpen(false);
-            setPickedFoods([]);
-          }}
-          className="w-full"
-          color="blue-gray"
-        >
-          AJOUTER CES INGRÉDIENTS
-        </Button>
-      </DialogFooter>
+        <div className="flex justify-end">
+          <Button
+            disabled={pickedFoods.length === 0}
+            onClick={() => {
+              handlePickedFoods(pickedFoods);
+              setOpen(false);
+              setPickedFoods([]);
+            }}
+            className="w-full sm:w-1/2"
+            color="blue-gray"
+          >
+            AJOUTER CES INGRÉDIENTS
+          </Button>
+        </div>
+      </DialogContent>
     </Dialog>
   );
 }

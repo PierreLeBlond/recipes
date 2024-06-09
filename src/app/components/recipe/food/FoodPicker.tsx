@@ -40,7 +40,7 @@ export function FoodPicker({
   ));
 
   return (
-    <div className="relative flex h-full flex-col gap-y-4">
+    <div className="relative flex h-full min-h-0 flex-col gap-y-4">
       <form className="w-full">
         <Input
           onChange={(e) => setSearch(e.target.value)}
@@ -52,7 +52,7 @@ export function FoodPicker({
           }
         />
       </form>
-      <div className="relative flex min-h-0 grow flex-col gap-y-4">
+      <div className="relative flex min-h-0 flex-col gap-y-4">
         <ArrowBigDown
           size={80}
           strokeWidth={0.5}
