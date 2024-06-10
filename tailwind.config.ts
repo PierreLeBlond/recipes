@@ -1,3 +1,4 @@
+import { error } from "console";
 import colors from "tailwindcss/colors";
 
 const config = {
@@ -6,12 +7,15 @@ const config = {
   theme: {
     colors: {
       ...colors,
-      background: "hsl(var(--background) / <alpha-value>)",
       primary: "hsl(var(--primary) / <alpha-value>)",
       "primary-foreground": "hsl(var(--primary-foreground) / <alpha-value>)",
+      secondary: "hsl(var(--secondary) / <alpha-value>)",
+      "secondary-foreground":
+        "hsl(var(--secondary-foreground) / <alpha-value>)",
       edit: "hsl(var(--edit) / <alpha-value>)",
       "edit-foreground": "hsl(var(--edit-foreground) / <alpha-value>)",
-      link: "hsl(var(--link) / <alpha-value>)",
+      success: "hsl(var(--success) / <alpha-value>)",
+      error: "hsl(var(--error) / <alpha-value>)",
     },
     container: {
       center: true,

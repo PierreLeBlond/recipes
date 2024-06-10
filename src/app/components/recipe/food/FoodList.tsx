@@ -38,7 +38,7 @@ export function FoodList({
   if (status === "error") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
-        <ServerCrash className="text-red-500" />
+        <ServerCrash className="text-error" />
       </div>
     );
   }
@@ -64,20 +64,20 @@ export function FoodList({
             <button
               type="button"
               onClick={() => handlePickFood(food)}
-              className={cn("group w-full hover:text-gray-900", {
-                "border-gray-500 text-gray-500 hover:cursor-not-allowed hover:text-gray-500":
+              className={cn("group w-full hover:text-primary-foreground/80", {
+                "text-primary-foreground/20 hover:cursor-not-allowed hover:text-primary-foreground/20":
                   disabledFoodNames.includes(food.name),
               })}
             >
               <FoodCard props={{ food }}>
                 {disabledFoodNames.includes(food.name) ? (
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-primary-foreground/50">
                     déjà utilisé dans la recette
                   </span>
                 ) : (
                   <Plus
                     size={24}
-                    className="invisible text-green-500 group-hover:visible"
+                    className="text-success invisible group-hover:visible"
                   />
                 )}
               </FoodCard>
@@ -94,6 +94,7 @@ export function FoodList({
           onClick={() => !isFetchingNextPage && fetchNextPage()}
           disabled={isFetchingNextPage || !hasNextPage}
           className="w-full"
+          variant="edit"
         >
           {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS D'ALIMENTS"}
         </Button>

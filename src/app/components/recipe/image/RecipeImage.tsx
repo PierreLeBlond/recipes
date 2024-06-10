@@ -46,7 +46,7 @@ export function RecipeImage() {
         type="button"
         onClick={handleOnClick}
         disabled={!edit}
-        className="group relative h-full w-full rounded-lg !bg-transparent bg-cover bg-center p-0 text-blue-gray-500 disabled:shadow-md"
+        className="group relative h-full w-full rounded-lg !bg-transparent bg-cover bg-center p-0 shadow-md"
         style={{ backgroundImage: `url('${image}')` }}
       >
         {edit && (
@@ -54,8 +54,7 @@ export function RecipeImage() {
             className={cn(
               "flex h-full w-full flex-col items-center justify-center gap-y-4 rounded-lg transition-all duration-300",
               {
-                "text-blue-gray-700 opacity-70 group-hover:opacity-100 group-hover:backdrop-blur-md":
-                  image,
+                "text-edit group-hover:backdrop-blur-md": image,
               },
             )}
           >

@@ -51,7 +51,7 @@ export function ContentEditable({
       role="textbox"
       tabIndex={0}
       contentEditable="true"
-      className="min-h-24 w-full whitespace-pre-wrap rounded-md border border-blue-gray-500 bg-gray-50 p-2 shadow-md focus:border-2 focus:outline-none"
+      className="min-h-24 w-full whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-none"
       ref={ref}
       onClick={onclick}
       onInput={oninput}

@@ -104,7 +104,7 @@ export function RecipeIngredients() {
       ) : (
         <Typography
           className={cn("text-center lg:col-span-3", {
-            "text-blue-gray-500": queryState.edit,
+            "text-edit": queryState.edit,
           })}
         >
           {queryState.edit

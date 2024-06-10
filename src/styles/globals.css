@@ -4,13 +4,15 @@
 
 
 :root {
-  --background: 210 20% 98.04%;
+  --primary: 210 20% 98.04%;
+  --primary-foreground: 240 10% 3.92%;
 
-  --primary: 199.53 18.3% 46.08%;
-  --primary-foreground: 0 0% 100%;
+  --secondary: 199.35 18.34% 33.14%;
+  --secondary-foreground: 0 0% 100%;
   
   --edit-foreground: 0 0% 100%;
   --edit: 22.73 82.5% 31.37%;
 
-  --link: 199.35 18.34% 33.14%;
+  --success: 161.38 93.55% 30.39%;
+  --error: 0 84.24% 60.2%;
 }

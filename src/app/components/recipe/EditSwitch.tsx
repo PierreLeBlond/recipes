@@ -25,8 +25,8 @@ export function EditSwitch() {
       }}
     >
       <Typography
-        className={cn("text-gray-800 transition-colors", {
-          "text-gray-800/20": queryState.edit,
+        className={cn("text-primary-foreground transition-colors", {
+          "text-primary-foreground/20": queryState.edit,
         })}
       >
         présentation
@@ -38,7 +38,7 @@ export function EditSwitch() {
       />
       <Typography
         className={cn("text-edit transition-colors", {
-          "text-edit/50": !queryState.edit,
+          "text-edit/20": !queryState.edit,
         })}
       >
         édition

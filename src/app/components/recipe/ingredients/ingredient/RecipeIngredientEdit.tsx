@@ -30,7 +30,7 @@ export function RecipeIngredientEdit({
     <>
       <div
         className={cn(
-          "flex w-full rounded-t-md rounded-bl-md border border-blue-gray-500 bg-gray-50 shadow-md",
+          "flex w-full rounded-t-md rounded-bl-md border bg-primary shadow-md",
           {
             "absolute cursor-grabbing": grabbed,
           },
@@ -45,11 +45,7 @@ export function RecipeIngredientEdit({
           })}
           onPointerDown={(event: PointerEvent) => onGrab(event)}
         >
-          <Grip
-            size={16}
-            strokeWidth={5}
-            className="text-gray-500 group-hover:text-gray-900"
-          />
+          <Grip size={16} strokeWidth={5} className="text-edit" />
         </button>
         <div className="flex w-full flex-wrap">
           <div className="flex grow items-center justify-center font-bold">
@@ -58,14 +54,14 @@ export function RecipeIngredientEdit({
           <div className="order-last w-full">
             <div className="flex w-full items-center justify-center p-2">
               <Input
-                className="peer h-8 w-full cursor-pointer rounded-md bg-gray-50 pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="peer h-8 w-full cursor-pointer rounded-md pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 value={ingredient.quantity}
                 type="number"
                 label="Quantité"
-                color="blue-gray"
                 step="0.1"
                 onChange={(e) => handleUpdatedQuantity(Number(e.target.value))}
                 onFocus={(e) => e.target.select()}
+                variant="edit"
               />
               <span className="p-2 peer-focus:block">
                 {getFormatedUnit(ingredient.food.unit, ingredient.quantity)}
@@ -75,13 +71,13 @@ export function RecipeIngredientEdit({
           <button
             aria-label="Supprimer l'ingrédient"
             type="button"
-            className="group flex h-10 w-10 items-center justify-center rounded-bl-md border-b border-l"
+            className="group flex h-10 w-10 items-center justify-center"
             onClick={handleRemovedIngredient}
           >
             <X
               size={16}
               strokeWidth={5}
-              className="text-gray-500 group-hover:cursor-pointer group-hover:text-red-500"
+              className="text-error group-hover:cursor-pointer"
             />
           </button>
         </div>

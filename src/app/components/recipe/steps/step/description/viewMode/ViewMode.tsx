@@ -12,8 +12,8 @@ export function ViewMode({
 }) {
   return (
     <>
-      <div className="relative flex items-center justify-center pt-2">
-        <label className="flex w-full translate-y-[1px] justify-center rounded-tr-md border-b border-r border-t border-gray-500 p-2 text-sm font-bold hover:cursor-pointer has-[:checked]:border-b-0 has-[:checked]:border-r-0">
+      <div className="relative flex items-center justify-center">
+        <label className="flex w-full translate-y-[1px] justify-center rounded-tr-md p-2 text-sm font-bold hover:cursor-pointer has-[:checked]:bg-primary">
           ÉDITION
           <input
             type="radio"
@@ -24,7 +24,7 @@ export function ViewMode({
           />
         </label>
 
-        <label className="flex w-full translate-y-[1px] justify-center rounded-tl-md border-b border-l border-t border-gray-500 p-2 text-sm font-bold hover:cursor-pointer has-[:checked]:border-b-0 has-[:checked]:border-l-0">
+        <label className="flex w-full translate-y-[1px] justify-center rounded-tl-md p-2 text-sm font-bold hover:cursor-pointer has-[:checked]:bg-primary">
           PRÉVISUALISATION
           <input
             type="radio"
@@ -35,7 +35,7 @@ export function ViewMode({
           />
         </label>
       </div>
-      <div className="flex p-2">{children}</div>
+      <div className="flex bg-primary p-2">{children}</div>
     </>
   );
 }

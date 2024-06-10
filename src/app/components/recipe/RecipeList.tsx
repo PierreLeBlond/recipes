@@ -31,7 +31,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
   if (status === "error") {
     return (
       <div className="flex h-72 w-full items-center justify-center">
-        <ServerCrash className="text-red-500" />
+        <ServerCrash className="text-error" />
       </div>
     );
   }

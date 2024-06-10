@@ -20,10 +20,10 @@ export function RecipeCard({
           className="absolute inset-0 m-0 h-full w-full bg-cover bg-center"
           style={{ backgroundImage: `url('${image}')` }}
         >
-          <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50 to-black/10" />
+          <div className="absolute inset-0 h-full w-full bg-gradient-to-t from-primary-foreground/80 via-primary-foreground/50 to-primary-foreground/10" />
         </CardContent>
         <CardFooter className="relative flex h-full flex-col items-start justify-end">
-          <Typography variant="h2" className="text-white">
+          <Typography variant="h2" className="text-secondary-foreground">
             {name}
           </Typography>
         </CardFooter>

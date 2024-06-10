@@ -13,7 +13,7 @@ export function FoodCard({
   children: ReactNode;
 }) {
   return (
-    <div className="flex rounded-t-md rounded-bl-md border border-blue-gray-500 shadow-md">
+    <div className="border-secondary/20 flex rounded-t-md rounded-bl-md border shadow-md">
       <div className="flex w-full items-center justify-between p-2">
         {food.name}
         {children}

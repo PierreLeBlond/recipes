@@ -36,6 +36,6 @@ test("Should add colorized span tag to words starting with # included in given r
   const result = getFormatedDescription(content, references);
 
   expect(result).toEqual(
-    'Hello <b><span class="text-blue-gray-700">#World</span></b>',
+    'Hello <b><span class="text-secondary">#World</span></b>',
   );
 });

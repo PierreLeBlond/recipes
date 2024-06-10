@@ -17,17 +17,17 @@ export function RecipeIngredient({
   const [checked, setChecked] = useState(false);
 
   return (
-    <div className="flex h-12 rounded-t-md rounded-bl-md border border-gray-500 bg-white">
+    <div className="border-secondary flex h-12 rounded-t-md rounded-bl-md border">
       <button
         aria-label="Cocher l'ingrédient"
         type="button"
-        className="flex items-center border-r border-gray-500/20 px-4 py-2"
+        className="border-secondary/50 flex items-center border-r px-4 py-2"
         onClick={() => setChecked(!checked)}
       >
         <Check
           size={16}
           strokeWidth={5}
-          className={`${checked ? "text-green-500" : "text-gray-500"}`}
+          className={`${checked ? "text-success" : "text-secondary/20"}`}
         />
       </button>
       <div className="flex w-full flex-wrap items-center justify-between p-2">

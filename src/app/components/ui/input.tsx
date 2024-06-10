@@ -9,7 +9,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         default:
-          "border-primary border-t-transparent text-primary placeholder-shown:border-primary placeholder-shown:border-t-primary focus:border-primary focus:border-t-transparent disabled:bg-primary/20",
+          "border-secondary border-t-transparent text-secondary placeholder-shown:border-secondary placeholder-shown:border-t-secondary focus:border-secondary focus:border-t-transparent disabled:bg-secondary/20",
         edit: "border-edit border-t-transparent text-edit placeholder-shown:border-edit placeholder-shown:border-t-edit focus:border-edit focus:border-t-transparent disabled:bg-edit/20",
       },
     },
@@ -25,7 +25,7 @@ const labelVariants = cva(
     variants: {
       variant: {
         default:
-          "text-primary before:border-primary peer-disabled:peer-placeholder-shown:text-primary peer-focus:after:!border-primary after:border-primary peer-placeholder-shown:text-primary peer-focus:text-primary peer-focus:before:!border-primary",
+          "text-secondary before:border-secondary peer-disabled:peer-placeholder-shown:text-secondary peer-focus:after:!border-secondary after:border-secondary peer-placeholder-shown:text-secondary peer-focus:text-secondary peer-focus:before:!border-secondary",
         edit: "text-edit before:border-edit peer-disabled:peer-placeholder-shown:text-edit peer-focus:after:!border-edit after:border-edit peer-placeholder-shown:text-edit peer-focus:text-edit peer-focus:before:!border-edit",
       },
     },
@@ -40,7 +40,7 @@ const iconVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-primary",
+        default: "text-secondary",
         edit: "text-edit",
       },
     },
@@ -61,21 +61,21 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, placeholder, icon, variant, ...props }, ref) => (
-      <div className="!min-w-auto relative h-10 w-full min-w-[200px]">
-        {icon && <div className={cn(iconVariants({ variant }))}>{icon}</div>}
-        <input
-          id={label}
-          type={type}
-          className={cn(inputVariants({ variant }), className)}
-          placeholder={placeholder || " "}
-          ref={ref}
-          {...props}
-        />
-        <label htmlFor={label} className={cn(labelVariants({ variant }))}>
-          {label}
-        </label>
-      </div>
-    ),
+    <div className="!min-w-auto relative h-10 w-full min-w-[200px]">
+      {icon && <div className={cn(iconVariants({ variant }))}>{icon}</div>}
+      <input
+        id={label}
+        type={type}
+        className={cn(inputVariants({ variant }), className)}
+        placeholder={placeholder || " "}
+        ref={ref}
+        {...props}
+      />
+      <label htmlFor={label} className={cn(labelVariants({ variant }))}>
+        {label}
+      </label>
+    </div>
+  ),
 );
 Input.displayName = "Input";
 

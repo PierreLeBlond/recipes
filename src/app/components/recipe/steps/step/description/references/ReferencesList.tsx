@@ -42,7 +42,7 @@ export function ReferencesList({
   return (
     <ul className="min-w-auto relative flex gap-2 overflow-x-scroll">
       {ingredients.map((ingredient) => (
-        <li>
+        <li key={ingredient.food.name}>
           <button
             className={cn(
               "flex items-center justify-center rounded-md border border-edit p-1 px-2 text-edit hover:font-bold",

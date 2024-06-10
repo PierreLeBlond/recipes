@@ -35,7 +35,7 @@ export function FoodPickerDialog({
               setPickedFoods([]);
             }}
             className="w-full sm:w-1/2"
-            color="blue-gray"
+            variant="edit"
           >
             AJOUTER CES INGRÉDIENTS
           </Button>

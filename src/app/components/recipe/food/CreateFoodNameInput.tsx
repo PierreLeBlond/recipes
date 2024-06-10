@@ -20,6 +20,7 @@ export function CreateFoodNameInput({
       <Input
         label="Nom de l'aliment"
         placeholder="Nom de l'aliment"
+        variant="edit"
         {...register("name", {
           required: "Le nom doit comporter de 3 et 33 caractères.",
           minLength: {

@@ -99,7 +99,7 @@ export function RecipeIngredientQuantity({
             }),
           )}
         </span>
-        <ChevronDown className="text-gray-400" />
+        <ChevronDown className="text-secondary/20" />
       </div>
     );
   }
@@ -113,7 +113,7 @@ export function RecipeIngredientQuantity({
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <div className="flex min-w-40 cursor-pointer justify-end gap-4 justify-self-end">
           <span className="font-bold">
@@ -125,10 +125,13 @@ export function RecipeIngredientQuantity({
               }),
             )}
           </span>
-          <ChevronDown strokeWidth={3} />
+          <ChevronDown strokeWidth={3} className="text-secondary" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        className="border-secondary shadow-secondary/80 shadow-lg"
+      >
         {alternativeUnits.map((alternativeUnit) => (
           <DropdownMenuItem key={alternativeUnit}>
             <QueryParamsLink
@@ -151,7 +154,7 @@ export function RecipeIngredientQuantity({
                   }),
                 )}
               </span>
-              <div className="invisible flex size-6 items-center justify-center group-hover:visible">
+              <div className="text-secondary invisible flex size-6 items-center justify-center group-hover:visible">
                 <ArrowDownUp strokeWidth={3} size={18} />
               </div>
             </QueryParamsLink>

@@ -20,8 +20,8 @@ export function RecipeStepEdit({
   onDeleteStep: () => void;
 }) {
   return (
-    <div className="grid min-h-24 w-full grid-cols-2 rounded-t-md rounded-bl-md border border-blue-gray-500 bg-gray-50 shadow-md">
-      <div className="flex h-12 w-12 items-center justify-center rounded-br-md border-b border-r px-4 py-4 font-bold">
+    <div className="grid min-h-24 w-full grid-cols-2 rounded-t-md rounded-bl-md border bg-primary-foreground/10 shadow-md">
+      <div className="flex h-12 w-12 items-center justify-center px-4 py-4 font-bold">
         {index + 1}
       </div>
 
@@ -34,13 +34,13 @@ export function RecipeStepEdit({
       <button
         aria-label="Supprimer l'étape"
         type="button"
-        className="group flex h-12 w-12 items-center justify-center justify-self-end rounded-bl-md border-b border-l px-4 py-4"
+        className="group flex h-12 w-12 items-center justify-center justify-self-end px-4 py-4"
         onClick={onDeleteStep}
       >
         <X
           size={16}
           strokeWidth={5}
-          className="text-gray-500 group-hover:cursor-pointer group-hover:text-red-500"
+          className="text-error group-hover:cursor-pointer"
         />
       </button>
     </div>

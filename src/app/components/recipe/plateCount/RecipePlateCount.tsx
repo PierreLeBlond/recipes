@@ -39,7 +39,7 @@ export function RecipePlateCount() {
               <div className="flex translate-x-14 items-end gap-2">
                 <Typography
                   className={cn("font-bold transition-colors duration-300", {
-                    "text-blue-gray-500": queryState.edit,
+                    "text-edit": queryState.edit,
                   })}
                 >
                   {plateCount}
