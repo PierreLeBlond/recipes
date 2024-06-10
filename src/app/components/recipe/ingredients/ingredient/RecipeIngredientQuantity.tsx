@@ -1,17 +1,20 @@
 "use client";
 
 import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
-import { Menu, MenuHandler, MenuItem, MenuList } from "@/src/lib/material";
 import { ArrowDownUp, ChevronDown } from "lucide-react";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
-import { cn } from "@/src/lib/utils";
-import { useState } from "react";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 import { Unit, Units } from "@/src/lib/types/Units";
 import { QueryParamsLink } from "../../../utils/QueryParamsLink";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../../ui/dropdown-menu";
 
 type RecipeIngredientQuantityProps = {
   ingredient: Ingredient;
@@ -67,8 +70,6 @@ export function RecipeIngredientQuantity({
 }: {
   props: RecipeIngredientQuantityProps;
 }) {
-  const [open, setOpen] = useState(false);
-
   const queryState = useQueryState();
   const plateCount = useWatch<FormInputs, "plateCount">({ name: "plateCount" });
 
@@ -112,24 +113,8 @@ export function RecipeIngredientQuantity({
   }
 
   return (
-    <Menu
-      open={open}
-      handler={setOpen}
-      placement="bottom-end"
-      offset={{ mainAxis: 11, crossAxis: 9 }}
-      animate={{
-        mount: {
-          transform: "scaleY(1)",
-          transition: { duration: 0.1, times: [0.4, 0, 0.2, 1] },
-        },
-        unmount: {
-          opacity: 1,
-          transform: "scaleY(0)",
-          transition: { duration: 0.1, times: [0.4, 0, 0.2, 1] },
-        },
-      }}
-    >
-      <MenuHandler>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
         <div className="flex min-w-40 cursor-pointer justify-end gap-4 justify-self-end">
           <span className="font-bold">
             {getFormatedQuantity(
@@ -140,19 +125,14 @@ export function RecipeIngredientQuantity({
               }),
             )}
           </span>
-          <ChevronDown
-            className={cn("text-gray-900 transition-transform", {
-              "rotate-180": open,
-            })}
-            strokeWidth={4}
-          />
+          <ChevronDown strokeWidth={3} />
         </div>
-      </MenuHandler>
-      <MenuList className="relative rounded-b rounded-t-none border-b border-l border-r border-t-0 border-gray-500 p-2">
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
         {alternativeUnits.map((alternativeUnit) => (
-          <MenuItem key={alternativeUnit} className="p-0">
+          <DropdownMenuItem key={alternativeUnit}>
             <QueryParamsLink
-              className="group flex justify-end gap-4 text-center text-base"
+              className="group flex w-full justify-between gap-4 text-center text-base"
               props={{
                 partialQueryState: {
                   units: {
@@ -172,12 +152,12 @@ export function RecipeIngredientQuantity({
                 )}
               </span>
               <div className="invisible flex size-6 items-center justify-center group-hover:visible">
-                <ArrowDownUp strokeWidth={4} size={18} />
+                <ArrowDownUp strokeWidth={3} size={18} />
               </div>
             </QueryParamsLink>
-          </MenuItem>
+          </DropdownMenuItem>
         ))}
-      </MenuList>
-    </Menu>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
