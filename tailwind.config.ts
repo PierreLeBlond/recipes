@@ -1,7 +1,6 @@
-import withMT from "@material-tailwind/react/utils/withMT";
 import colors from "tailwindcss/colors";
 
-const config = withMT({
+const config = {
   content: ["./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
@@ -39,6 +38,6 @@ const config = withMT({
     },
   },
   plugins: [require("tailwindcss-animate")],
-});
+};
 
 export default config;

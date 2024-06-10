@@ -1,5 +1,5 @@
+import { Typography } from "@/src/app/components/ui/typography";
 import { cn } from "@/src/lib/utils";
-import { Typography } from "@material-tailwind/react";
 
 type Ingredient = {
   food: {
