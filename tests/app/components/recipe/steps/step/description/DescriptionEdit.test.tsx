@@ -111,6 +111,16 @@ describe("Add a reference", () => {
       quantity: 1,
       unit: "PIECE",
     },
+    {
+      food: {
+        name: "œufs",
+        density: null,
+        massPerPiece: null,
+        unit: "PIECE",
+      },
+      quantity: 1,
+      unit: "PIECE",
+    },
   ] as const satisfies Ingredient[];
 
   const getButtons = (component: RenderResult) => {
@@ -145,6 +155,7 @@ describe("Add a reference", () => {
       "pomme",
       "poire",
       "abricot",
+      "œufs",
     ]);
   });
 
@@ -162,6 +173,22 @@ describe("Add a reference", () => {
     expect(buttons.map((button) => button.textContent)).toStrictEqual([
       "abricot",
     ]);
+  });
+
+  test("Should match ligature with non-ligature equivalent", async () => {
+    const component = getComponent({
+      ingredients,
+      description: "Dans un bol, mettre #oeu",
+    });
+    const contentEditable = component.getByRole("textbox");
+
+    await user.click(contentEditable);
+
+    const buttons = getButtons(component);
+
+    console.log(buttons);
+
+    expect(buttons.map((button) => button.textContent)).toStrictEqual(["œufs"]);
   });
 
   test("Should not display foods when user replace the cursor elsewhere", async () => {
@@ -329,6 +356,7 @@ describe("Add a reference", () => {
       await user.keyboard("[ArrowDown]");
       await user.keyboard("[ArrowDown]");
       await user.keyboard("[ArrowDown]");
+      await user.keyboard("[ArrowDown]");
 
       const button = component
         .queryAllByRole("button")
@@ -367,7 +395,7 @@ describe("Add a reference", () => {
 
       const button = component
         .queryAllByRole("button")
-        .find((button) => button.textContent === "abricot");
+        .find((button) => button.textContent === "œufs");
 
       expect(button).toHaveClass("selected");
     });

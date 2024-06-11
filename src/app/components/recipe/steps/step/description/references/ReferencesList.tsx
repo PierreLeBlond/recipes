@@ -52,7 +52,6 @@ export function ReferencesList({
             )}
             type="button"
             onPointerDown={handleIngredientReferenceSelected}
-            key={ingredient.food.name}
           >
             {ingredient.food.name}
           </button>
