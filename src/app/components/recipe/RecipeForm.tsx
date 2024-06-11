@@ -53,12 +53,13 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
         </div>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="grid gap-x-4 gap-y-8 lg:grid-cols-3"
+          className="grid gap-y-8 lg:grid-cols-3 lg:gap-x-4"
         >
-          <div className="aspect-square h-72">
+          <div className="order-0 aspect-square h-[310px]">
             <RecipeImage />
           </div>
-          <div className="lg:col-span-2">
+
+          <div className="order-first lg:order-none lg:col-span-2">
             <RecipeName />
           </div>
 

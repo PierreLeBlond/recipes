@@ -30,7 +30,7 @@ export function RecipeIngredient({
           className={`${checked ? "text-success" : "text-secondary/20"}`}
         />
       </button>
-      <div className="flex w-full flex-wrap items-center justify-between p-2">
+      <div className="flex w-full items-center justify-between p-2">
         {ingredient.food.name}
         <RecipeIngredientQuantity props={{ ingredient }} />
       </div>

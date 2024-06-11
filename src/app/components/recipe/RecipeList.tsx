@@ -14,7 +14,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
 
   const { status, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     api.recipe.list.useInfiniteQuery(
-      { search, limit: 3 },
+      { search, limit: 5 },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       },
@@ -60,11 +60,11 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
       )}
       {recipeList}
       {hasNextPage && (
-        <div className="flex w-full justify-center sm:col-span-2 lg:col-span-3">
+        <div className="flex w-full justify-end sm:col-span-2 lg:col-span-3">
           <Button
             onClick={() => !isFetchingNextPage && fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="w-full"
+            className="w-full sm:w-2/3"
           >
             {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS DE RECETTES"}
           </Button>

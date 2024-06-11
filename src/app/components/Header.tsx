@@ -30,7 +30,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
               src={session?.user.image}
               alt={session?.user.name || "image utilisateur"}
               className={cn("h-10 w-10 rounded-full", {
-                "border-2 border-primary-foreground md:border-0":
+                "border-2 border-edit md:border-0":
                   session?.user.role === "ADMIN",
               })}
               width={40}
@@ -45,7 +45,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </span>
         </div>
       )}
-      <div className="col-span-3 flex items-center justify-center gap-x-4">
+      <div className="col-span-3 col-start-2 flex items-center justify-center gap-x-4">
         <Link
           href="/recipes"
           className={cn(
@@ -77,12 +77,12 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </Link>
         </Button>
         <Button
-          className="block rounded-full p-3 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full md:hidden"
           variant="link"
           size="sm"
         >
           <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-            {session ? <DoorOpen size={16} /> : <LogIn size={16} />}
+            {session ? <DoorOpen size={14} /> : <LogIn size={14} />}
           </Link>
         </Button>
       </div>

@@ -41,7 +41,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light">
           <TRPCReactProvider cookies={cookieData.toString()}>
             <Header props={{ session }} />
-            <main className="relative w-full max-w-72 pb-16 pt-16 sm:max-w-lg lg:max-w-4xl">
+            <main className="relative w-full max-w-[310px] pb-16 pt-16 sm:max-w-lg lg:max-w-4xl">
               {children}
             </main>
           </TRPCReactProvider>

@@ -10,8 +10,8 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="flex flex-col gap-4 pt-4 sm:gap-16 sm:pt-16">
-      <form>
+    <div className="flex flex-col gap-8 pt-8 sm:gap-16 sm:pt-16">
+      <form className="sm:w-2/3">
         <Input
           onChange={(e) => setSearch(e.target.value)}
           type="search"
