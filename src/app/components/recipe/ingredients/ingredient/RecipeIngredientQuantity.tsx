@@ -9,12 +9,7 @@ import { FormInputs } from "@/src/lib/types/FormInputs";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 import { Unit, Units } from "@/src/lib/types/Units";
 import { QueryParamsLink } from "../../../utils/QueryParamsLink";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../../ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover";
 
 type RecipeIngredientQuantityProps = {
   ingredient: Ingredient;
@@ -113,8 +108,8 @@ export function RecipeIngredientQuantity({
   }
 
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger>
+    <Popover modal={false}>
+      <PopoverTrigger>
         <div className="flex min-w-40 cursor-pointer justify-end gap-4 justify-self-end">
           <span className="font-bold">
             {getFormatedQuantity(
@@ -127,13 +122,13 @@ export function RecipeIngredientQuantity({
           </span>
           <ChevronDown strokeWidth={3} className="text-secondary" />
         </div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
+      </PopoverTrigger>
+      <PopoverContent
         align="end"
-        className="border-secondary shadow-secondary/80 shadow-lg"
+        className="border-secondary shadow-lg shadow-secondary/80"
       >
         {alternativeUnits.map((alternativeUnit) => (
-          <DropdownMenuItem key={alternativeUnit}>
+          <div key={alternativeUnit}>
             <QueryParamsLink
               className="group flex w-full justify-between gap-4 text-center text-base"
               props={{
@@ -154,13 +149,13 @@ export function RecipeIngredientQuantity({
                   }),
                 )}
               </span>
-              <div className="text-secondary invisible flex size-6 items-center justify-center group-hover:visible">
+              <div className="invisible flex size-6 items-center justify-center text-secondary group-hover:visible">
                 <ArrowDownUp strokeWidth={3} size={18} />
               </div>
             </QueryParamsLink>
-          </DropdownMenuItem>
+          </div>
         ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </PopoverContent>
+    </Popover>
   );
 }
