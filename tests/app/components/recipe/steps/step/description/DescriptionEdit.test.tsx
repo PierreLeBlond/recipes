@@ -70,15 +70,6 @@ test("Should fire an event when description is changed", async () => {
   );
 });
 
-test("Should format value", async () => {
-  const component = getComponent({
-    description: "Dans un bol, mettre #far",
-  });
-  const contentEditable = getContentEditable(component);
-
-  expect(contentEditable.innerHTML).toBe("Dans un bol, mettre <b>#far</b>");
-});
-
 describe("Add a reference", () => {
   const ingredients = [
     {

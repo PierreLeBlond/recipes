@@ -1,14 +1,16 @@
 export const getFormatedDescription = (
   description: string,
   references: string[] = [],
+  className: string = "",
 ) => {
-  const boldedDescription = description.replace(/(#\w*)/g, "<b>$1</b>");
-  return references.reduce(
-    (acc, reference) =>
-      acc.replace(
-        new RegExp(`(#${reference})`, "g"),
-        `<span class="text-secondary">$1</span>`,
-      ),
-    boldedDescription,
-  );
+  return references
+    .sort((a, b) => b.length - a.length)
+    .reduce(
+      (acc, reference) =>
+        acc.replace(
+          new RegExp(`(#${reference})`, "g"),
+          `<span class="${className}">$1</span>`,
+        ),
+      description,
+    );
 };

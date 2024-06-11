@@ -25,6 +25,7 @@ export function DescriptionEdit({
   const formatedDescription = getFormatedDescription(
     description,
     ingredients.map((ingredient) => ingredient.food.name),
+    "text-edit font-bold",
   );
 
   const handleChangedDescription = (input: {

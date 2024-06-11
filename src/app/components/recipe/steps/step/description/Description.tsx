@@ -30,17 +30,16 @@ export function Description({
 }: {
   props: DescriptionProps;
 }) {
-  const formatedDescription = description.replace(/#\w+/g, (match: string) => {
-    const ingredient = ingredients.find(
-      ({ food: { name } }) => `#${name}` === match,
+  const formatedDescription = ingredients
+    .sort((a, b) => b.food.name.length - a.food.name.length)
+    .reduce(
+      (acc, ingredient) =>
+        acc.replace(
+          new RegExp(`(#${ingredient.food.name})`, "g"),
+          `<b>${getFormatedQuantity(ingredient.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(ingredient.unit, ingredient.food.name)}${ingredient.food.name}</b>`,
+        ),
+      description,
     );
-
-    if (!ingredient) {
-      return match;
-    }
-
-    return `<b>${getFormatedQuantity(ingredient.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(ingredient.unit, ingredient.food.name)}${ingredient.food.name}</b>`;
-  });
 
   return <div className="p-4">{parse(formatedDescription)}</div>;
 }

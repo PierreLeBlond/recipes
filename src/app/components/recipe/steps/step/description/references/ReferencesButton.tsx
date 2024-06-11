@@ -33,7 +33,8 @@ export function ReferencesButton({
   };
   return (
     <Button
-      onPointerDown={handleClickedButton}
+      onPointerDown={(e) => e.preventDefault()}
+      onPointerUp={handleClickedButton}
       className="flex h-8 items-center justify-center gap-2 p-1 px-2"
       variant="edit"
     >

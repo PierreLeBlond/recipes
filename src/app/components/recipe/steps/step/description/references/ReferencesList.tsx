@@ -45,13 +45,14 @@ export function ReferencesList({
         <li key={ingredient.food.name}>
           <button
             className={cn(
-              "flex items-center justify-center rounded-md border border-edit p-1 px-2 text-edit hover:font-bold",
+              "flex items-center justify-center text-nowrap rounded-md border border-edit p-1 px-2 text-edit hover:font-bold",
               {
                 selected: selectedReference === ingredient.food.name,
               },
             )}
             type="button"
-            onPointerDown={handleIngredientReferenceSelected}
+            onPointerUp={handleIngredientReferenceSelected}
+            onPointerDown={(e) => e.preventDefault()}
           >
             {ingredient.food.name}
           </button>
