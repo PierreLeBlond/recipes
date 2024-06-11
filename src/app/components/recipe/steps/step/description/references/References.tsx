@@ -10,9 +10,7 @@ type ReferencesProps = {
   ingredients: Ingredient[];
 };
 
-const removeLigature = (text: string) => {
-  return text.replace(/œ/g, "oe").replace(/æ/g, "ae");
-};
+const removeLigature = (text: string) => text.replace(/œ/g, "oe").replace(/æ/g, "ae");
 
 const getReferencedIngredients = (
   partialReference: string | null,
@@ -26,11 +24,9 @@ const getReferencedIngredients = (
     return ingredients;
   }
 
-  const referencedIngredients = ingredients.filter((ingredient) => {
-    return removeLigature(ingredient.food.name.toLowerCase()).startsWith(
+  const referencedIngredients = ingredients.filter((ingredient) => removeLigature(ingredient.food.name.toLowerCase()).startsWith(
       partialReference.toLowerCase(),
-    );
-  });
+    ));
 
   return referencedIngredients;
 };

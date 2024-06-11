@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Ingredient } from "@/src/lib/types/Ingredient";
+import { Tabs, TabsList, TabsTrigger } from "@/src/app/components/ui/tabs";
+import { TabsContent } from "@radix-ui/react-tabs";
 import { ContentEditable } from "./ContentEditable/ContentEditable";
 import { getFormatedDescription } from "./getFormatedDescription";
 import { Description } from "./Description";
-import { ViewMode } from "./viewMode/ViewMode";
 import { References } from "./references/References";
 
 type DescriptionInputProps = {
@@ -20,7 +21,6 @@ export function DescriptionEdit({
   onChangedDescription: (description: string) => void;
 }) {
   const [caretPosition, setCaretPosition] = useState<number>(0);
-  const [preview, setPreview] = useState<boolean>(false);
 
   const formatedDescription = getFormatedDescription(
     description,
@@ -40,10 +40,12 @@ export function DescriptionEdit({
   };
 
   return (
-    <ViewMode props={{ preview, setPreview }}>
-      {preview ? (
-        <Description props={{ description, ingredients, plateRatio }} />
-      ) : (
+    <Tabs defaultValue="edit" className="flex flex-col justify-center p-2">
+      <TabsList>
+        <TabsTrigger value="edit">Édition</TabsTrigger>
+        <TabsTrigger value="view">Prévisualisation</TabsTrigger>
+      </TabsList>
+      <TabsContent value="edit">
         <References
           props={{ description, caretPosition, ingredients }}
           onChangedDescription={handleChangedDescription}
@@ -58,7 +60,10 @@ export function DescriptionEdit({
             props={{ formatedContent: formatedDescription, caretPosition }}
           />
         </References>
-      )}
-    </ViewMode>
+      </TabsContent>
+      <TabsContent value="view">
+        <Description props={{ description, ingredients, plateRatio }} />
+      </TabsContent>
+    </Tabs>
   );
 }

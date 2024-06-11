@@ -20,7 +20,7 @@ export function RecipeStepEdit({
   onDeleteStep: () => void;
 }) {
   return (
-    <div className="grid min-h-24 w-full grid-cols-2 rounded-t-md rounded-bl-md border bg-primary-foreground/10 shadow-md">
+    <div className="grid min-h-24 w-full grid-cols-2 rounded-t-md rounded-bl-md border shadow-md">
       <div className="flex h-12 w-12 items-center justify-center px-4 py-4 font-bold">
         {index + 1}
       </div>

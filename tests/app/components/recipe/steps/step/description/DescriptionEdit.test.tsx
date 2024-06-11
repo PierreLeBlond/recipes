@@ -503,7 +503,7 @@ describe("Preview", () => {
       ingredients,
       description: "Dans un bol, mettre #pomme",
     });
-    const button = component.getByLabelText("PRÉVISUALISATION");
+    const button = component.getByText("Prévisualisation");
     await user.click(button);
 
     expect(component.baseElement.textContent).toContain(
@@ -516,10 +516,10 @@ describe("Preview", () => {
       ingredients,
       description: "Dans un bol, mettre #pomme",
     });
-    const button = component.getByText("PRÉVISUALISATION");
+    const button = component.getByText("Prévisualisation");
     await user.click(button);
 
-    const editionButton = component.getByText("ÉDITION");
+    const editionButton = component.getByText("Édition");
     await user.click(editionButton);
 
     expect(component.baseElement.textContent).toContain(

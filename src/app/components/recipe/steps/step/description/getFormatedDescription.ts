@@ -2,8 +2,7 @@ export const getFormatedDescription = (
   description: string,
   references: string[] = [],
   className: string = "",
-) => {
-  return references
+) => references
     .sort((a, b) => b.length - a.length)
     .reduce(
       (acc, reference) =>
@@ -13,4 +12,3 @@ export const getFormatedDescription = (
         ),
       description,
     );
-};
