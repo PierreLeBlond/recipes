@@ -31,14 +31,19 @@ export default async function RootLayout({
   const cookieData = cookies();
 
   return (
-    <html lang="en" className="relative">
+    <html lang="en" className="relative" suppressHydrationWarning>
       <body
         className={cn(
           `flex h-full justify-center border-primary-foreground bg-primary font-sans text-primary-foreground`,
           inter.variable,
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="light">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
           <TRPCReactProvider cookies={cookieData.toString()}>
             <Header props={{ session }} />
             <main className="relative w-full max-w-[310px] pb-16 pt-16 sm:max-w-lg lg:max-w-4xl">

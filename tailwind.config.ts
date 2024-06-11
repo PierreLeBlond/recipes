@@ -1,4 +1,3 @@
-import { error } from "console";
 import colors from "tailwindcss/colors";
 
 const config = {
