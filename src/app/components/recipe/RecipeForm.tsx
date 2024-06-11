@@ -36,6 +36,7 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
     updateMutation.mutate({
       id: recipe.id,
       name: data.name,
+      plateCount: data.plateCount,
       image: data.image,
       ingredients: data.ingredients.map((ingredient) => ({
         ...ingredient,
