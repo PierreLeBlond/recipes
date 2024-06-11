@@ -13,7 +13,7 @@ export function RecipeImage() {
   const [preview, setPreview] = useState<string>();
 
   const { setValue } = useFormContext<FormInputs>();
-  const recipeImage = useWatch({ name: "image" });
+  const recipeImage = useWatch<FormInputs, "image">({ name: "image" });
   const { edit } = useQueryState();
 
   const handleOnClick = () => {
@@ -47,7 +47,7 @@ export function RecipeImage() {
         onClick={handleOnClick}
         disabled={!edit}
         className="group relative h-full w-full rounded-lg !bg-transparent bg-cover bg-center p-0 shadow-md"
-        style={{ backgroundImage: `url('${image}')` }}
+        style={image ? { backgroundImage: `url('${image}')` } : {}}
       >
         {edit && (
           <div
