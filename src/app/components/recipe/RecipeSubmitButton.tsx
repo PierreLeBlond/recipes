@@ -11,7 +11,7 @@ export function RecipeSubmitButton() {
   }
 
   return (
-    <div className="xs:w-64 xs:border xs:rounded-lg xs:bottom-4 fixed bottom-0 z-40 flex w-full justify-center border-t px-16 py-4 backdrop-blur-md">
+    <div className="fixed bottom-0 z-40 flex w-full justify-center border-t bg-primary/20 px-16 py-4 backdrop-blur-md xs:bottom-4 xs:w-64 xs:rounded-lg xs:border">
       <Button
         type="submit"
         className="w-full"

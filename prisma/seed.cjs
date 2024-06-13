@@ -6,7 +6,11 @@ async function seedRecipes() {
   try {
     await prisma.recipe.deleteMany();
     await prisma.food.deleteMany();
-    await prisma.user.deleteMany();
+    await prisma.user.delete({
+      where: {
+        email: "john.doe@gmail.com",
+      },
+    });
 
     const user = await prisma.user.create({
       data: {
@@ -211,15 +215,16 @@ async function seedRecipes() {
             },
             {
               description:
-                "Couper #2 en morceaux et faire fondre dans une casserole avec #1. Mettre le beurre en premier, il fond moins vite. Garder l'emballage du beurre pour beurrer le moule.",
+                "Couper #chocolat en morceaux et faire fondre dans une casserole avec #beurre. Mettre le beurre en premier, il fond moins vite. Garder l'emballage du beurre pour beurrer le moule.",
               index: 2,
             },
             {
-              description: "Dans un grand bol, mélanger #3, #4 et #6.",
+              description:
+                "Dans un grand bol, mélanger #sucre, #farine et #sel.",
               index: 3,
             },
             {
-              description: "Ajouter #5 et mélanger.",
+              description: "Ajouter #œufs et mélanger.",
               index: 4,
             },
             {

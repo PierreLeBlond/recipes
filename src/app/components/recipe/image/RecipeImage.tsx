@@ -57,13 +57,20 @@ export function RecipeImage() {
         style={image ? { backgroundImage: `url('${image}')` } : {}}
       />
       {edit && (
-        <div className="relative hidden h-full flex-col justify-between sm:flex">
+        <div className="relative flex h-full flex-col justify-between">
           <CardHeader>
             <Typography className="text-primary">
               <PlusCircle size={48} className="rounded-full backdrop-blur-md" />
             </Typography>
           </CardHeader>
-          <CardFooter className="border-t border-secondary-foreground/40 pt-6 backdrop-blur-md">
+          <CardFooter
+            className={cn(
+              "border-secondary-foreground/40 pt-6 backdrop-blur-md",
+              {
+                "border-t": image,
+              },
+            )}
+          >
             <Typography variant="h2" className="text-primary">
               {image ? "Modifier cette image" : "Ajouter une image"}
             </Typography>

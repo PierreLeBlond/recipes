@@ -22,7 +22,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
   const pathname = usePathname();
 
   return (
-    <header className="fixed z-40 grid h-16 w-full grid-cols-7 items-center justify-between border-b border-border px-2 text-center text-sm font-bold backdrop-blur-md xs:grid-cols-5 xs:px-4">
+    <header className="fixed z-40 grid h-16 w-full grid-cols-5 items-center justify-between border-b border-border bg-primary/20 px-2 text-center text-sm font-bold backdrop-blur-md xs:grid-cols-7 xs:px-4">
       {session && (
         <div className="flex items-center gap-x-4">
           {session?.user.image ? (
@@ -45,7 +45,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </span>
         </div>
       )}
-      <div className="col-span-5 col-start-2 flex items-center justify-center gap-x-4 xs:col-span-3">
+      <div className="col-span-3 col-start-2 flex items-center justify-center gap-x-4 text-xs xs:col-span-5 xs:col-start-2 xs:text-sm">
         <Link
           href="/recipes"
           className={cn(
@@ -82,7 +82,11 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           size="sm"
         >
           <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-            {session ? <DoorOpen size={14} /> : <LogIn size={14} />}
+            {session ? (
+              <DoorOpen size={14} className="fill-primary" />
+            ) : (
+              <LogIn size={14} />
+            )}
           </Link>
         </Button>
       </div>
