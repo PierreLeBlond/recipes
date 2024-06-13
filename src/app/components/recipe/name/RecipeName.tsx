@@ -13,7 +13,7 @@ export function RecipeName() {
   const { register } = useFormContext<FormInputs>();
 
   return (
-    <div className="flex h-full max-w-full flex-col justify-between gap-2 overflow-hidden">
+    <div className="flex h-full max-w-full flex-col justify-between gap-4 overflow-hidden">
       <Title props={{ title: name }} />
 
       <div

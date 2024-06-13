@@ -12,7 +12,7 @@ export default async function FoodPage() {
   };
 
   return (
-    <div className="grid w-full grid-cols-2 gap-16 pt-16 sm:grid-cols-4 lg:grid-cols-6">
+    <div className="grid w-full grid-cols-2 gap-16 pt-8 xs:pt-16 sm:grid-cols-4 lg:grid-cols-6">
       <div className="col-span-2 sm:col-span-4 lg:col-span-6">
         <CreateFood props={{ foods: result.foods }} onSubmit={onSubmit} />
       </div>

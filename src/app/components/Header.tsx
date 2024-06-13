@@ -22,7 +22,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
   const pathname = usePathname();
 
   return (
-    <header className="fixed z-40 grid h-16 w-full grid-cols-5 items-center justify-between border-b border-primary-foreground px-4 text-center text-sm font-bold backdrop-blur-md">
+    <header className="fixed z-40 grid h-16 w-full grid-cols-7 items-center justify-between border-b border-border px-2 text-center text-sm font-bold backdrop-blur-md xs:grid-cols-5 xs:px-4">
       {session && (
         <div className="flex items-center gap-x-4">
           {session?.user.image ? (
@@ -45,13 +45,13 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </span>
         </div>
       )}
-      <div className="col-span-3 col-start-2 flex items-center justify-center gap-x-4">
+      <div className="col-span-5 col-start-2 flex items-center justify-center gap-x-4 xs:col-span-3">
         <Link
           href="/recipes"
           className={cn(
-            "border-primary-foreground transition-colors hover:border-primary-foreground/50 hover:text-primary-foreground/50",
+            "rounded-md border-primary-foreground p-2 transition-colors hover:bg-primary-foreground/10",
             {
-              "border-b-2": pathname === "/recipes",
+              "bg-primary-foreground/10": pathname === "/recipes",
             },
           )}
         >
@@ -61,9 +61,9 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
         <Link
           href="/foods"
           className={cn(
-            "border-primary-foreground transition-colors hover:border-primary-foreground/50 hover:text-primary-foreground/50",
+            "rounded-md border-primary-foreground p-2 transition-colors hover:bg-primary-foreground/10",
             {
-              "border-b-2": pathname === "/foods",
+              "bg-primary-foreground/10": pathname === "/foods",
             },
           )}
         >
@@ -73,7 +73,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
       <div className="flex items-center justify-end gap-x-4">
         <Button className="hidden md:block" variant="link" size="sm">
           <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-            {session ? "logout" : "login"}
+            {session ? "LOGOUT" : "LOGIN"}
           </Link>
         </Button>
         <Button

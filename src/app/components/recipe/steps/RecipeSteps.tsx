@@ -92,9 +92,6 @@ export function RecipeSteps() {
             : "Pas d'étapes"}
         </Typography>
       )}
-      <div className="flex w-full justify-center lg:col-span-3">
-        <UtensilsCrossed />
-      </div>
       <Button
         onClick={() => handleAddStep()}
         disabled={!queryState.edit}
@@ -106,6 +103,9 @@ export function RecipeSteps() {
       >
         AJOUTER UNE ÉTAPE
       </Button>
+      <div className="flex w-full justify-center lg:col-span-3">
+        <UtensilsCrossed />
+      </div>
     </div>
   );
 }

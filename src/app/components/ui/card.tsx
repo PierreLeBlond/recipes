@@ -7,7 +7,7 @@ const cardVariants = cva("bg-card text-card-foreground rounded-xl shadow-lg", {
   variants: {
     variant: {
       default:
-        "bg-gradient-to-tl from-secondary/90 to-secondary/60 shadow-secondary/80",
+        "bg-gradient-to-tl from-primary/90 to-primary/60 shadow-primary-foreground/60",
       edit: "bg-gradient-to-tl from-edit/90 to-edit/60 shadow-edit/50",
     },
   },

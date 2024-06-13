@@ -37,7 +37,7 @@ export function CreateFoodUnitInput({
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent align="start">
               <SelectItem value="GRAM">g (gramme)</SelectItem>
               <SelectItem value="LITER">l (litre)</SelectItem>
               <SelectItem value="TEASPOON">c.a.c. (cuillère à café)</SelectItem>

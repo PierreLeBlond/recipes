@@ -9,8 +9,8 @@ const inputVariants = cva(
     variants: {
       variant: {
         default:
-          "border-secondary border-t-transparent text-secondary placeholder-shown:border-secondary placeholder-shown:border-t-secondary focus:border-secondary focus:border-t-transparent disabled:bg-secondary/20",
-        edit: "border-edit border-t-transparent text-edit placeholder-shown:border-edit placeholder-shown:border-t-edit focus:border-edit focus:border-t-transparent disabled:bg-edit/20",
+          "border-secondary border-t-transparent placeholder-shown:border-secondary placeholder-shown:border-t-secondary focus:border-secondary focus:border-t-transparent disabled:bg-secondary/20",
+        edit: "border-edit-border border-t-transparent placeholder-shown:border-edit placeholder-shown:border-t-edit focus:border-edit focus:border-t-transparent disabled:bg-edit/20",
       },
     },
     defaultVariants: {
@@ -26,7 +26,7 @@ const labelVariants = cva(
       variant: {
         default:
           "text-secondary before:border-secondary peer-disabled:peer-placeholder-shown:text-secondary peer-focus:after:!border-secondary after:border-secondary peer-placeholder-shown:text-secondary peer-focus:text-secondary peer-focus:before:!border-secondary",
-        edit: "text-edit before:border-edit peer-disabled:peer-placeholder-shown:text-edit peer-focus:after:!border-edit after:border-edit peer-placeholder-shown:text-edit peer-focus:text-edit peer-focus:before:!border-edit",
+        edit: "text-edit before:border-edit-border peer-disabled:peer-placeholder-shown:text-edit peer-focus:after:!border-edit after:border-edit-border peer-placeholder-shown:text-edit peer-focus:text-edit peer-focus:before:!border-edit",
       },
     },
     defaultVariants: {

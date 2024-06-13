@@ -64,7 +64,7 @@ export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
           <Button
             onClick={() => !isFetchingNextPage && fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="w-full sm:w-2/3"
+            className="w-full rounded-none xs:rounded-lg sm:w-2/3"
           >
             {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS DE RECETTES"}
           </Button>

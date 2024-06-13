@@ -12,7 +12,8 @@ const config = {
       "secondary-foreground":
         "hsl(var(--secondary-foreground) / <alpha-value>)",
       edit: "hsl(var(--edit) / <alpha-value>)",
-      "edit-foreground": "hsl(var(--edit-foreground) / <alpha-value>)",
+      "edit-border": "hsl(var(--edit-border) / <alpha-value>)",
+      border: "hsl(var(--border) / <alpha-value>)",
       success: "hsl(var(--success) / <alpha-value>)",
       error: "hsl(var(--error) / <alpha-value>)",
     },
@@ -22,6 +23,12 @@ const config = {
       screens: {
         "2xl": "1400px",
       },
+    },
+    screens: {
+      xs: "375px",
+      sm: "640px",
+      md: "768px",
+      lg: "1300px",
     },
     extend: {
       keyframes: {

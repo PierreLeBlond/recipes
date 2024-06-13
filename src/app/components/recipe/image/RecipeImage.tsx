@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
@@ -6,6 +6,7 @@ import { cn } from "@/src/lib/utils";
 import { convertToBase64 } from "@/src/lib/s3/convertToBase64";
 import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { Typography } from "../../ui/typography";
+import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
 
 export function RecipeImage() {
   const hiddenInputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +35,16 @@ export function RecipeImage() {
   const image = preview || recipeImage;
 
   return (
-    <div className="relative h-full w-full">
+    <Card
+      className={cn(
+        "relative h-full w-full flex-col items-center justify-end overflow-hidden rounded-none xs:rounded-lg",
+        {
+          "hover:cursor-pointer": edit,
+        },
+      )}
+      onClick={edit ? handleOnClick : undefined}
+      variant={edit ? "edit" : "default"}
+    >
       <input
         type="file"
         accept="image/*"
@@ -42,29 +52,24 @@ export function RecipeImage() {
         ref={hiddenInputRef}
         onChange={handleFileChange}
       />
-      <button
-        type="button"
-        onClick={handleOnClick}
-        disabled={!edit}
-        className="group relative h-full w-full rounded-lg !bg-transparent bg-cover bg-center p-0 shadow-md"
+      <CardContent
+        className="group absolute h-full w-full !bg-transparent bg-cover bg-center p-0 shadow-md xs:rounded-lg"
         style={image ? { backgroundImage: `url('${image}')` } : {}}
-      >
-        {edit && (
-          <div
-            className={cn(
-              "flex h-full w-full flex-col items-center justify-center gap-y-4 rounded-lg transition-all duration-300",
-              {
-                "text-edit group-hover:backdrop-blur-md": image,
-              },
-            )}
-          >
-            <Plus strokeWidth={4} />
-            <Typography variant="h3">
-              {image ? "Changer l'image" : "Ajouter une image"}
+      />
+      {edit && (
+        <div className="relative hidden h-full flex-col justify-between sm:flex">
+          <CardHeader>
+            <Typography className="text-primary">
+              <PlusCircle size={48} className="rounded-full backdrop-blur-md" />
             </Typography>
-          </div>
-        )}
-      </button>
-    </div>
+          </CardHeader>
+          <CardFooter className="border-t border-secondary-foreground/40 pt-6 backdrop-blur-md">
+            <Typography variant="h2" className="text-primary">
+              {image ? "Modifier cette image" : "Ajouter une image"}
+            </Typography>
+          </CardFooter>
+        </div>
+      )}
+    </Card>
   );
 }

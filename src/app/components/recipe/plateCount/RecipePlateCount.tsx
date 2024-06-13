@@ -26,7 +26,7 @@ export function RecipePlateCount() {
         const shouldDisplayResetButton = plateCount !== field.value;
 
         return (
-          <div className="flex items-center gap-2 font-bold">
+          <div className="flex items-center gap-2 pl-8 font-bold">
             <div className="flex flex-col gap-2">
               <div className="flex -translate-x-1 items-center gap-2">
                 <Typography>Pour</Typography>

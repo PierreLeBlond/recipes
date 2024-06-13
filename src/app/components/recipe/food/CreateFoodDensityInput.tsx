@@ -18,7 +18,7 @@ export function CreateFoodDensityInput({
     <>
       <Input
         label="Densité (g/cm³)"
-        placeholder="Densité, entre 0.00 et 23.00, laisser vide si inconnue"
+        placeholder="entre 0 et 23, laisser vide si inconnue"
         variant="edit"
         {...register("density", {
           min: {

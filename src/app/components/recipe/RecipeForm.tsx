@@ -49,18 +49,16 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
   return (
     <SessionProvider>
       <FormProvider {...methods}>
-        <div className="flex justify-center py-8">
-          <EditSwitch />
-        </div>
+        <EditSwitch />
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="grid gap-y-8 lg:grid-cols-3 lg:gap-x-4"
+          className="grid gap-y-8 pt-16 lg:grid-cols-3 lg:gap-x-4"
         >
-          <div className="order-0 aspect-square h-[310px]">
+          <div className="h-[310px] w-full xs:aspect-square xs:w-auto">
             <RecipeImage />
           </div>
 
-          <div className="order-first lg:order-none lg:col-span-2">
+          <div className="order-first px-4 xs:px-0 lg:order-none lg:col-span-2">
             <RecipeName />
           </div>
 
@@ -68,15 +66,15 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
             <RecipePlateCount />
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="px-4 xs:px-0 lg:col-span-3">
             <RecipeIngredients />
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="px-4 xs:px-0 lg:col-span-3">
             <RecipeSteps />
           </div>
 
-          <div className="lg:col-start-3">
+          <div className="flex justify-center lg:col-span-3">
             <RecipeSubmitButton />
           </div>
         </form>

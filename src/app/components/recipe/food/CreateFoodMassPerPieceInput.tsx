@@ -21,7 +21,7 @@ export function CreateFoodMassPerPieceInput({
     <>
       <Input
         label="Masse par unité (g)"
-        placeholder="Masse par unité, entre 0.00 et 1000.00, laisser vide si inconnue"
+        placeholder="entre 0 et 1000, laisser vide si inconnue"
         variant="edit"
         {...register("massPerPiece", {
           min: {

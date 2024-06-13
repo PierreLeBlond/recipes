@@ -16,33 +16,35 @@ export function EditSwitch() {
   }
 
   return (
-    <QueryParamsLink
-      className="flex gap-4"
-      props={{
-        partialQueryState: {
-          edit: !queryState.edit,
-        },
-      }}
-    >
-      <Typography
-        className={cn("text-primary-foreground transition-colors", {
-          "text-primary-foreground/20": queryState.edit,
-        })}
+    <div className="fixed top-16 z-40 flex h-16 w-full justify-center border-b px-16 py-4 backdrop-blur-md xs:top-20 xs:w-64 xs:rounded-lg xs:border">
+      <QueryParamsLink
+        className="flex gap-4"
+        props={{
+          partialQueryState: {
+            edit: !queryState.edit,
+          },
+        }}
       >
-        présentation
-      </Typography>
-      <Switch
-        checked={queryState.edit}
-        disabled
-        className="pointer-events-none"
-      />
-      <Typography
-        className={cn("text-edit transition-colors", {
-          "text-edit/20": !queryState.edit,
-        })}
-      >
-        édition
-      </Typography>
-    </QueryParamsLink>
+        <Typography
+          className={cn("text-primary-foreground transition-colors", {
+            "text-primary-foreground/20": queryState.edit,
+          })}
+        >
+          présentation
+        </Typography>
+        <Switch
+          checked={queryState.edit}
+          disabled
+          className="pointer-events-none"
+        />
+        <Typography
+          className={cn("text-edit transition-colors", {
+            "text-edit/20": !queryState.edit,
+          })}
+        >
+          édition
+        </Typography>
+      </QueryParamsLink>
+    </div>
   );
 }

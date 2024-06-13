@@ -77,22 +77,13 @@ export function CreateRecipeDialog({
         )}
         <div className="flex justify-end">
           {createMutation.isIdle ? (
-            <Button
-              type="submit"
-              disabled={!isDirty}
-              form="createRecipeForm"
-              className="w-full sm:w-1/2"
-            >
-              Créer
+            <Button type="submit" disabled={!isDirty} form="createRecipeForm">
+              CRÉER
             </Button>
           ) : (
-            <Button
-              disabled={!createMutation.isSuccess}
-              className="w-full sm:w-1/2"
-              variant="link"
-            >
+            <Button disabled={!createMutation.isSuccess} variant="link">
               <Link href={`/recipes/${createMutation.data?.id}?edit=true`}>
-                Éditer
+                ÉDITER
               </Link>
             </Button>
           )}

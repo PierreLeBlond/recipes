@@ -52,10 +52,8 @@ export function CreateFood({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <Typography variant="h2" className="text-xl">
-        Ajouter un aliment
-      </Typography>
+    <div className="flex w-80 flex-col gap-8 px-4 xs:p-0">
+      <Typography variant="h3">Ajouter un aliment</Typography>
       <form
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(handleFormSubmit)}
@@ -64,14 +62,9 @@ export function CreateFood({
         <CreateFoodUnitInput props={{ control, errors }} />
         <CreateFoodDensityInput props={{ register, errors }} />
         <CreateFoodMassPerPieceInput props={{ register, errors }} />
-        <div className="grid grid-cols-2 lg:grid-cols-4">
-          <Button
-            className="col-start-2 lg:col-start-4"
-            type="submit"
-            variant="edit"
-            disabled={!isDirty}
-          >
-            Ajouter
+        <div className="flex justify-end">
+          <Button type="submit" variant="edit" disabled={!isDirty}>
+            AJOUTER
           </Button>
         </div>
       </form>
