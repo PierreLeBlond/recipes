@@ -32,7 +32,7 @@ export function CreateFood({
 } & CreateFoodHandlers) {
   const [lastCreatedFood, setLastCreatedFood] = useState<Food | null>(null);
 
-  const edit = useEditState(session);
+  const canCreateFood = session?.user?.role === "ADMIN";
 
   const {
     handleSubmit,
@@ -60,7 +60,7 @@ export function CreateFood({
   return (
     <div className="flex w-80 flex-col gap-8 px-4 xs:p-0">
       <Typography variant="h3">Ajouter un aliment</Typography>
-      {edit ? (
+      {canCreateFood ? (
         <>
           <form
             className="flex flex-col gap-4"

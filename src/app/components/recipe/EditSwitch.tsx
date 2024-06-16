@@ -16,7 +16,7 @@ export function EditSwitch() {
   }
 
   return (
-    <div className="fixed top-16 z-40 flex h-16 w-full justify-center border-b px-16 py-4 backdrop-blur-md xs:top-20 xs:w-64 xs:rounded-lg xs:border">
+    <div className="fixed top-16 z-40 flex h-16 w-full items-center justify-center border-b backdrop-blur-md xs:left-8 xs:top-20 xs:w-64 xs:rounded-lg xs:border">
       <QueryParamsLink
         className="flex gap-4"
         props={{

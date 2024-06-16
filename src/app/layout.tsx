@@ -10,6 +10,8 @@ import { TRPCReactProvider } from "@/src/trpc/react";
 import { getServerAuthSession } from "@/src/server/auth";
 import { cn } from "@/src/lib/utils";
 import { Header } from "./components/Header";
+import { ToastProvider } from "./components/ui/toast";
+import { Toaster } from "./components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,10 +47,13 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <TRPCReactProvider cookies={cookieData.toString()}>
-            <Header props={{ session }} />
-            <main className="relative w-full pb-16 pt-16 xs:max-w-[310px] sm:max-w-lg lg:max-w-5xl">
-              {children}
-            </main>
+            <ToastProvider>
+              <Header props={{ session }} />
+              <main className="relative w-full pb-16 pt-16 xs:max-w-[310px] sm:max-w-lg lg:max-w-5xl">
+                {children}
+              </main>
+            </ToastProvider>
+            <Toaster />
           </TRPCReactProvider>
         </ThemeProvider>
       </body>

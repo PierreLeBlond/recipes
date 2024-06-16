@@ -48,62 +48,27 @@ export const recipeRouter = createTRPCRouter({
         id: z.string(),
       }),
     )
-    .query(({ ctx, input }) => ctx.db.recipe.findUniqueOrThrow({
+    .query(({ ctx, input }) =>
+      ctx.db.recipe.findUniqueOrThrow({
         where: { id: input.id },
         include: {
           ingredients: { include: { food: true }, orderBy: { index: "asc" } },
           steps: true,
         },
-      })),
+      }),
+    ),
   create: adminProcedure
     .input(
       z.object({
         name: z.string().min(3).max(33),
-        image: z.string().nullable().default(null),
-        plateCount: z.number().min(1).max(100).default(8),
-        ingredients: z
-          .array(
-            z.object({
-              foodName: z.string(),
-              quantity: z.number(),
-            }),
-          )
-          .default([]),
-        steps: z.array(z.object({ description: z.string() })).default([]),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
-      let image;
-      let uuid;
-      if (input.image) {
-        uuid = randomUUID();
-        image = `${process.env.NEXT_PUBLIC_AWS_ENDPOINT_URL_S3}/images/${uuid}`;
-        await uploadImage(uuid, input.image);
-      }
-
-      return ctx.db.recipe.create({
+    .mutation(async ({ ctx, input }) => ctx.db.recipe.create({
         data: {
           name: input.name,
-          image,
-          imageName: uuid,
-          plateCount: input.plateCount,
-          ingredients: {
-            create: input.ingredients.map((ingredient, index) => ({
-              quantity: ingredient.quantity,
-              index,
-              food: { connect: { name: ingredient.foodName } },
-            })),
-          },
-          steps: {
-            create: input.steps.map((step, index) => ({
-              description: step.description,
-              index,
-            })),
-          },
           createdBy: { connect: { id: ctx.session.user.id } },
         },
-      });
-    }),
+      })),
   update: adminProcedure
     .input(
       z.object({
@@ -126,7 +91,7 @@ export const recipeRouter = createTRPCRouter({
         include: { ingredients: { include: { food: true } }, steps: true },
       });
 
-      let {image} = recipe;
+      let { image } = recipe;
       let uuid = recipe.imageName;
       if (input.image) {
         uuid = recipe.imageName || randomUUID();
@@ -189,6 +154,10 @@ export const recipeRouter = createTRPCRouter({
               index,
             })),
           },
+        },
+        include: {
+          ingredients: { include: { food: true }, orderBy: { index: "asc" } },
+          steps: true,
         },
       });
     }),

@@ -11,14 +11,13 @@ export function RecipeSubmitButton() {
   }
 
   return (
-    <div className="fixed bottom-0 z-40 flex w-full justify-center border-t bg-primary/20 px-16 py-4 backdrop-blur-md xs:bottom-4 xs:w-64 xs:rounded-lg xs:border">
+    <div className="fixed bottom-0 z-40 flex h-16 w-full items-center justify-center border-t bg-primary/20 backdrop-blur-md xs:bottom-4 xs:right-8 xs:w-64 xs:rounded-lg xs:border lg:bottom-auto lg:top-20">
       <Button
         type="submit"
-        className="w-full"
-        disabled={!formState.isDirty}
+        disabled={!formState.isDirty || formState.isSubmitting}
         variant="edit"
       >
-        SAUVEGARDER
+        {formState.isSubmitting ? "..." : "SAUVEGARDER"}
       </Button>
     </div>
   );

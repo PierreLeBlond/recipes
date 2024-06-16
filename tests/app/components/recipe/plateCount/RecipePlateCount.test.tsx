@@ -1,7 +1,6 @@
 import { RecipePlateCount } from "@/src/app/components/recipe/plateCount/RecipePlateCount";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cleanup, render, renderHook } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { FormProvider, useForm } from "react-hook-form";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { SessionProvider } from "next-auth/react";
@@ -27,8 +26,6 @@ beforeAll(() => {
 afterEach(() => {
   cleanup();
 });
-
-const user = userEvent.setup();
 
 type ComponentInput = {
   plateCount?: number;

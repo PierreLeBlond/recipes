@@ -1,5 +1,5 @@
 import { CreateFood } from "@/src/app/components/recipe/food/CreateFood";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { createFoodLabels } from "./createFoodLabels";
@@ -38,7 +38,17 @@ const defaultInput = {
 const getComponent = (input?: ComponentInputType) => {
   return render(
     <CreateFood
-      props={{ ...defaultInput, ...input }}
+      props={{
+        ...defaultInput,
+        ...input,
+        session: {
+          expires: "",
+          user: {
+            role: "ADMIN",
+            id: "",
+          },
+        },
+      }}
       onSubmit={input?.onSubmit || defaultInput.onSubmit}
     />,
   );

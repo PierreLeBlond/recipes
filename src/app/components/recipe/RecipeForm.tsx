@@ -17,6 +17,7 @@ import { RecipeSteps } from "./steps/RecipeSteps";
 import { RecipeIngredients } from "./ingredients/RecipeIngredients";
 import { EditSwitch } from "./EditSwitch";
 import { RecipeSubmitButton } from "./RecipeSubmitButton";
+import { useToast } from "../ui/use-toast";
 
 type RecipeProps = {
   recipe: Recipe & {
@@ -26,10 +27,19 @@ type RecipeProps = {
 };
 
 export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
-  const updateMutation = api.recipe.update.useMutation();
-
   const methods = useForm<FormInputs>({
     defaultValues: recipe,
+  });
+
+  const { toast } = useToast();
+  const updateMutation = api.recipe.update.useMutation({
+    onSuccess: (data) => {
+      toast({
+        title: "C'est tout bon !",
+        description: "La recette a bien été modifiée.",
+      });
+      methods.reset(data);
+    },
   });
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {

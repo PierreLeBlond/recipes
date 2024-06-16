@@ -6,6 +6,7 @@ import { Button } from "@/src/app/components/ui/button";
 import { Input } from "../../ui/input";
 import { Dialog, DialogContent } from "../../ui/dialog";
 import { Typography } from "../../ui/typography";
+import { ErrorAlert } from "../../utils/alert/ErrorAlert";
 
 type CreateRecipeDialogProps = {
   open: boolean;
@@ -68,9 +69,13 @@ export function CreateRecipeDialog({
             />
           </form>
         )}
-        {createMutation.isPending && <div>Création de la recette...</div>}
+        {createMutation.isPending && (
+          <div className="flex h-10 items-center justify-center">
+            Création de la recette...
+          </div>
+        )}
         {createMutation.isError && (
-          <div>Erreur lors de la création de la recette</div>
+          <ErrorAlert>Erreur lors de la création de la recette</ErrorAlert>
         )}
         {createMutation.isSuccess && (
           <SuccessAlert>Recette créée !</SuccessAlert>
