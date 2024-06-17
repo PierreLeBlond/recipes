@@ -33,25 +33,24 @@ export function FoodPicker({
         className="group w-full"
       >
         <FoodCard props={{ food }}>
-          <X size={24} className="text-error invisible group-hover:visible" />
+          <X size={24} className="invisible text-error group-hover:visible" />
         </FoodCard>
       </button>
     </li>
   ));
 
   return (
-    <div className="relative flex h-full min-h-0 flex-col gap-y-4">
+    <div className="relative flex h-full min-h-0 grow flex-col gap-y-4">
       <form className="w-full">
         <Input
           onChange={(e) => setSearch(e.target.value)}
           type="search"
           label="Rechercher un ingredient"
-          className="max-w-xs md:max-w-full"
           variant="edit"
           icon={<Search className="-translate-x-1 -translate-y-0.5" />}
         />
       </form>
-      <div className="relative flex min-h-0 flex-col gap-y-4">
+      <div className="relative flex min-h-0 grow flex-col gap-y-4">
         <ArrowBigDown
           size={80}
           strokeWidth={0.5}

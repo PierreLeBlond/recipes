@@ -30,7 +30,7 @@ export function RecipeIngredients() {
     grabbedPosition,
     grabbedId,
   } = useGrab(
-    108,
+    66,
     move,
     fields.map((field) => field.id),
   );
@@ -58,7 +58,7 @@ export function RecipeIngredients() {
   };
 
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid max-w-full gap-4 px-4 xs:px-0 lg:grid-cols-3">
       <Typography variant="h2" className="text-2xl lg:col-span-3">
         INGRÉDIENTS
       </Typography>
@@ -68,9 +68,9 @@ export function RecipeIngredients() {
           onPointerMove={(event) => handlePointerMove(event)}
           onPointerUp={(event) => handlePointerUp(event)}
           onContextMenu={(event) => handleContextMenu(event)}
-          className="select-none overflow-y-auto lg:col-span-3"
+          className="select-none overflow-hidden lg:col-span-3"
         >
-          <ul className="relative flex list-inside flex-col gap-4">
+          <ul className="relative flex list-inside flex-col gap-4 pb-4">
             {fields.map((field, index) => (
               <li key={field.food.name}>
                 {queryState.edit ? (
@@ -116,6 +116,7 @@ export function RecipeIngredients() {
         onClick={() => setOpen(true)}
         disabled={!queryState.edit}
         variant="edit"
+        type="button"
         className={cn("transition-all duration-300 lg:col-start-3", {
           "pointer-events-none !h-0 translate-y-10 !opacity-0 lg:!h-8 lg:translate-x-40 lg:translate-y-0":
             !queryState.edit,

@@ -10,28 +10,45 @@ export const useGrab = (
   const [grabbedPosition, setGrabbedPosition] = useState(0);
   const [grabbedOffset, setGrabbedOffset] = useState(0);
 
+  const getRelativeTop = (event: PointerEvent) => {
+    if (!scrollAreaRef.current) {
+      return event.clientY;
+    }
+
+    return event.clientY - scrollAreaRef.current.offsetTop + window.scrollY;
+  };
+
+  const getRelativeScrolledTop = (relativeTop: number) => {
+    if (!scrollAreaRef.current) {
+      return relativeTop;
+    }
+
+    return relativeTop + scrollAreaRef.current.scrollTop;
+  };
+
   const computeGrabbedPosition = (event: PointerEvent) => {
     if (!scrollAreaRef.current) {
       return grabbedPosition;
     }
 
-    const positionY =
-      event.clientY - scrollAreaRef.current.offsetTop + window.scrollY;
+    const relativeTop = getRelativeTop(event);
 
-    if (
-      positionY < grabbedOffset ||
-      positionY > scrollAreaRef.current.offsetHeight - (height - grabbedOffset)
-    ) {
+    const isOutOfBoundaries =
+      relativeTop < grabbedOffset ||
+      relativeTop >
+        scrollAreaRef.current.offsetHeight - (height - grabbedOffset);
+
+    if (isOutOfBoundaries) {
       return grabbedPosition + grabbedOffset;
     }
 
-    const scrolledPosition = positionY + scrollAreaRef.current.scrollTop;
-    return scrolledPosition;
+    const relativeScrolledTop = getRelativeScrolledTop(relativeTop);
+    return relativeScrolledTop;
   };
 
   const handleGrab = (event: PointerEvent, id: string) => {
     setGrabbedId(id);
-    const newGrabbedPosition = computeGrabbedPosition(event);
+    const newGrabbedPosition = getRelativeScrolledTop(getRelativeTop(event));
     const newGrabbedOffset =
       newGrabbedPosition - Math.floor(newGrabbedPosition / height) * height;
     setGrabbedOffset(newGrabbedOffset);

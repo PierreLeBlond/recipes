@@ -63,12 +63,14 @@ export const recipeRouter = createTRPCRouter({
         name: z.string().min(3).max(33),
       }),
     )
-    .mutation(async ({ ctx, input }) => ctx.db.recipe.create({
+    .mutation(async ({ ctx, input }) =>
+      ctx.db.recipe.create({
         data: {
           name: input.name,
           createdBy: { connect: { id: ctx.session.user.id } },
         },
-      })),
+      }),
+    ),
   update: adminProcedure
     .input(
       z.object({
@@ -99,34 +101,6 @@ export const recipeRouter = createTRPCRouter({
         await uploadImage(uuid, input.image);
       }
 
-      const deletedIngredients = recipe.ingredients
-        .filter((ingredient) =>
-          input.ingredients.every(
-            (inputIngredient) =>
-              inputIngredient.foodName !== ingredient.food.name,
-          ),
-        )
-        .map((i) => ({ id: i.id }));
-
-      const newIngredients = input.ingredients.filter((inputIngredient) =>
-        recipe.ingredients.every(
-          (ingredient) => inputIngredient.foodName !== ingredient.food.name,
-        ),
-      );
-
-      const updatedIngredients = recipe.ingredients
-        .filter((ingredient) =>
-          input.ingredients.some(
-            (inputIngredient) =>
-              inputIngredient.foodName === ingredient.food.name &&
-              inputIngredient.quantity !== ingredient.quantity,
-          ),
-        )
-        .map((inputIngredient) => ({
-          where: { id: inputIngredient.id },
-          data: { quantity: inputIngredient.quantity },
-        }));
-
       return ctx.db.recipe.update({
         where: {
           id: input.id,
@@ -137,9 +111,10 @@ export const recipeRouter = createTRPCRouter({
           imageName: uuid,
           plateCount: input.plateCount,
           ingredients: {
-            deleteMany: deletedIngredients,
-            updateMany: updatedIngredients,
-            create: newIngredients.map((ingredient, index) => ({
+            deleteMany: {
+              recipeId: recipe.id,
+            },
+            create: input.ingredients.map((ingredient, index) => ({
               quantity: ingredient.quantity,
               index,
               food: { connect: { name: ingredient.foodName } },

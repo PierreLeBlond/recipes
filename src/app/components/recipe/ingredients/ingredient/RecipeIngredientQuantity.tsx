@@ -81,8 +81,8 @@ export function RecipeIngredientQuantity({
 
   if (!hasAlternatives) {
     return (
-      <div className="flex min-w-40 justify-end gap-4 justify-self-end">
-        <span className="font-bold">
+      <div className="flex justify-end gap-4 justify-self-end">
+        <span className="text-nowrap font-bold">
           {getFormatedQuantity(
             unit,
             getQuantityFromPlateAndUnit({
@@ -110,7 +110,7 @@ export function RecipeIngredientQuantity({
   return (
     <Popover modal={false}>
       <PopoverTrigger>
-        <div className="flex min-w-40 cursor-pointer justify-end gap-4 justify-self-end">
+        <div className="flex cursor-pointer justify-end gap-4 justify-self-end">
           <span className="font-bold">
             {getFormatedQuantity(
               unit,
@@ -140,11 +140,14 @@ export function RecipeIngredientQuantity({
                 },
               }}
             >
-              <span className="font-bold">
+              <span className="text-nowrap font-bold">
                 {getFormatedQuantity(
                   alternativeUnit,
                   getQuantityFromPlateAndUnit({
-                    ingredient,
+                    ingredient: {
+                      ...ingredient,
+                      unit: alternativeUnit,
+                    },
                     plateRatio,
                   }),
                 )}

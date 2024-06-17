@@ -23,7 +23,7 @@ export function FoodPickerDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
-      <DialogContent className="h-5/6">
+      <DialogContent className="flex h-5/6 flex-col">
         <Typography variant="h3">Ajout d&apos;ingrédients</Typography>
         <FoodPicker props={{ pickedFoods, setPickedFoods, disabledFoods }} />
         <div className="flex justify-end">

@@ -5,10 +5,8 @@ const formatedUnitMap: { [unit in Unit]: (quantity: number) => string } = {
   [Units.GRAM]: () => "g",
   [Units.LITER]: () => "l",
   [Units.PINCH]: (quantity: number) => `${quantity > 1 ? "pincées" : "pincée"}`,
-  [Units.TABLESPOON]: (quantity: number) =>
-    `${quantity > 1 ? "cuillères" : "cuillère"} à soupe`,
-  [Units.TEASPOON]: (quantity: number) =>
-    `${quantity > 1 ? "cuillères" : "cuillère"} à café`,
+  [Units.TABLESPOON]: () => "c. à s.",
+  [Units.TEASPOON]: () => "c. à c.",
   [Units.DROP]: (quantity: number) => `${quantity > 1 ? "gouttes" : "goutte"}`,
 };
 

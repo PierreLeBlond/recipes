@@ -41,13 +41,13 @@ test("Should exists", () => {
 
 test("Should have an input", () => {
   const component = getComponent();
-  const input = component.queryByLabelText("Quantité");
+  const input = component.queryByLabelText("farine");
   expect(input).not.toBeNull();
 });
 
 test("Should not loose focus when updating the input", async () => {
   const component = getComponent();
-  const input = component.getByLabelText("Quantité");
+  const input = component.getByLabelText("farine");
   await user.click(input);
   await user.keyboard("1");
   expect(input).toHaveFocus();

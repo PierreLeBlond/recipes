@@ -96,6 +96,7 @@ export function RecipeSteps() {
         onClick={() => handleAddStep()}
         disabled={!queryState.edit}
         variant="edit"
+        type="button"
         className={cn("transition-all duration-300 lg:col-start-3", {
           "pointer-events-none !h-0 translate-y-10 !opacity-0 lg:!h-8 lg:translate-x-40 lg:translate-y-0":
             !queryState.edit,

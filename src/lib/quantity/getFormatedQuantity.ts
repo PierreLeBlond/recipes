@@ -1,4 +1,5 @@
 import { Unit, Units } from "../types/Units";
+import { getFormatedUnit } from "./getFormatedUnit";
 
 const getRoundedQuantity = (quantity: number, nbChiffres: number) => {
   if (Number.isInteger(quantity)) {
@@ -27,13 +28,13 @@ const formatedQuantityMap: { [unit in Unit]: (quantity: number) => string } = {
   [Units.GRAM]: (quantity: number) => getFormatedMass(quantity),
   [Units.LITER]: (quantity: number) => getFormatedVolume(quantity),
   [Units.PINCH]: (quantity: number) =>
-    `${getRoundedQuantity(quantity, 1)} ${quantity > 1 ? "pincées" : "pincée"}`,
+    `${getRoundedQuantity(quantity, 1)} ${getFormatedUnit(Units.PINCH, quantity)}`,
   [Units.TABLESPOON]: (quantity: number) =>
-    `${getRoundedQuantity(quantity, 1)} ${quantity > 1 ? "cuillères" : "cuillère"} à soupe`,
+    `${getRoundedQuantity(quantity, 1)} ${getFormatedUnit(Units.TABLESPOON, quantity)}`,
   [Units.TEASPOON]: (quantity: number) =>
-    `${getRoundedQuantity(quantity, 1)} ${quantity > 1 ? "cuillères" : "cuillère"} à café`,
+    `${getRoundedQuantity(quantity, 1)} ${getFormatedUnit(Units.TEASPOON, quantity)}`,
   [Units.DROP]: (quantity: number) =>
-    `${getRoundedQuantity(quantity, 1)} ${quantity > 1 ? "gouttes" : "goutte"}`,
+    `${getRoundedQuantity(quantity, 1)} ${getFormatedUnit(Units.DROP, quantity)}`,
 };
 
 export const getFormatedQuantity = (unit: Unit, quantity: number) =>

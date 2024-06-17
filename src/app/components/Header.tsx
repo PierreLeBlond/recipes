@@ -77,16 +77,12 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </Link>
         </Button>
         <Button
-          className="flex h-10 w-10 items-center justify-center rounded-full md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-primary md:hidden"
           variant="link"
           size="sm"
         >
           <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-            {session ? (
-              <DoorOpen size={14} className="fill-primary" />
-            ) : (
-              <LogIn size={14} />
-            )}
+            {session ? <DoorOpen size={14} /> : <LogIn size={14} />}
           </Link>
         </Button>
       </div>
