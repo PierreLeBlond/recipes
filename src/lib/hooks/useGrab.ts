@@ -1,5 +1,8 @@
 import { useRef, useState, PointerEvent, MouseEvent } from "react";
 
+/*
+ * Make sure to use `touch-action: none;` on the element where the grab originate to prevent pointer cancel on mobile, i.e. scrolling
+ */
 export const useGrab = (
   height: number,
   move: (from: number, to: number) => void,
@@ -47,6 +50,9 @@ export const useGrab = (
   };
 
   const handleGrab = (event: PointerEvent, id: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     setGrabbedId(id);
     const newGrabbedPosition = getRelativeScrolledTop(getRelativeTop(event));
     const newGrabbedOffset =
@@ -62,6 +68,7 @@ export const useGrab = (
     }
 
     event.preventDefault();
+    event.stopPropagation();
 
     const newGrabbedPosition = computeGrabbedPosition(event);
     setGrabbedPosition(newGrabbedPosition - grabbedOffset);

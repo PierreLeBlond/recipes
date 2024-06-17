@@ -40,9 +40,12 @@ export function RecipeIngredientEdit({
         <button
           aria-label="Déplacer l'ingrédient"
           type="button"
-          className={cn("group flex cursor-grab items-center border-r p-2", {
-            "cursor-grabbing": grabbed,
-          })}
+          className={cn(
+            "group flex cursor-grab touch-none items-center border-r p-2",
+            {
+              "cursor-grabbing": grabbed,
+            },
+          )}
           onPointerDown={(event: PointerEvent) => onGrab(event)}
         >
           <Grip size={16} strokeWidth={5} className="text-edit" />
