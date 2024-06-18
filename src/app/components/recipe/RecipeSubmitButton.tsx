@@ -1,12 +1,14 @@
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/app/components/ui/button";
+import { useSession } from "next-auth/react";
+import { useEditQuery } from "@/src/lib/hooks/useEditQuery";
 
 export function RecipeSubmitButton() {
-  const queryState = useQueryState();
+  const session = useSession();
+  const edit = useEditQuery(session.data);
   const { formState } = useFormContext();
 
-  if (!queryState.edit) {
+  if (!edit) {
     return null;
   }
 

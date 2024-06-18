@@ -36,6 +36,7 @@ export function FoodPickerDialog({
             }}
             className="w-full sm:w-1/2"
             variant="edit"
+            type="button"
           >
             AJOUTER CES INGRÉDIENTS
           </Button>

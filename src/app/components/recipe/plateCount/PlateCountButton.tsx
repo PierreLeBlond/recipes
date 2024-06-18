@@ -23,9 +23,8 @@ export function PlateCountButton({
     <QueryParamsLink
       className="flex h-full w-full items-center justify-center"
       props={{
-        partialQueryState: {
-          plateCount: plateCount + value,
-        },
+        name: "plateCount",
+        value: (plateCount + value).toString(),
       }}
     >
       {children}

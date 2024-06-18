@@ -22,8 +22,12 @@ export function DescriptionEdit({
 }) {
   const [caretPosition, setCaretPosition] = useState<number>(0);
 
+  // Using this kind of proxy should improve performance,
+  // by not rerendering the full form when the description changes
+  const [currentDescription, setCurrentDescription] =
+    useState<string>(description);
   const formatedDescription = getFormatedDescription(
-    description,
+    currentDescription,
     ingredients.map((ingredient) => ingredient.food.name),
     "text-edit font-bold",
   );
@@ -33,6 +37,7 @@ export function DescriptionEdit({
     caretPosition: number | null;
   }) => {
     setCaretPosition(input.caretPosition || 0);
+    setCurrentDescription(input.description);
     if (!onChangedDescription) {
       return;
     }
@@ -47,7 +52,11 @@ export function DescriptionEdit({
       </TabsList>
       <TabsContent value="edit">
         <References
-          props={{ description, caretPosition, ingredients }}
+          props={{
+            description: currentDescription,
+            caretPosition,
+            ingredients,
+          }}
           onChangedDescription={handleChangedDescription}
         >
           <ContentEditable
@@ -62,7 +71,9 @@ export function DescriptionEdit({
         </References>
       </TabsContent>
       <TabsContent value="view">
-        <Description props={{ description, ingredients, plateRatio }} />
+        <Description
+          props={{ description: currentDescription, ingredients, plateRatio }}
+        />
       </TabsContent>
     </Tabs>
   );

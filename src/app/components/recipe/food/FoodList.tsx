@@ -77,7 +77,7 @@ export function FoodList({
                 ) : (
                   <Plus
                     size={24}
-                    className="text-success invisible group-hover:visible"
+                    className="invisible text-success group-hover:visible"
                   />
                 )}
               </FoodCard>
@@ -95,6 +95,7 @@ export function FoodList({
           disabled={isFetchingNextPage || !hasNextPage}
           className="w-full"
           variant="edit"
+          type="button"
         >
           {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS D'ALIMENTS"}
         </Button>

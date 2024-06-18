@@ -1,25 +1,33 @@
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { useState } from "react";
 import { useGrab } from "@/src/lib/hooks/useGrab";
 import { cn } from "@/src/lib/utils";
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { Food } from "@/src/lib/types/Food";
+import { useUnitsQuery } from "@/src/lib/hooks/useUnitsQuery";
+import { useSession } from "next-auth/react";
+import { useEditQuery } from "@/src/lib/hooks/useEditQuery";
 import { RecipeIngredient } from "./ingredient/RecipeIngredient";
 import { FoodPickerDialog } from "../food/FoodPickerDialog";
 import { RecipeIngredientEdit } from "./ingredient/RecipeIngredientEdit";
 import { Button } from "../../ui/button";
 import { Typography } from "../../ui/typography";
 
+/*
+ * This should used unucontrolled inputs to avoid rerendering the whole form
+ */
 export function RecipeIngredients() {
-  const { fields, append, update, remove, move } = useFieldArray<
+  const { fields, append, remove, move } = useFieldArray<
     FormInputs,
     "ingredients"
   >({
     name: "ingredients",
   });
+  const { setValue } = useFormContext<FormInputs>();
   const [open, setOpen] = useState(false);
-  const queryState = useQueryState();
+  const session = useSession();
+  const edit = useEditQuery(session.data);
+  const unitsQuery = useUnitsQuery();
 
   const {
     scrollAreaRef,
@@ -40,7 +48,7 @@ export function RecipeIngredients() {
       pickedFoods.map((pickedFood) => ({
         quantity: 0,
         food: pickedFood,
-        unit: queryState.units[pickedFood.name] || pickedFood.unit,
+        unit: unitsQuery[pickedFood.name] || pickedFood.unit,
       })),
     );
   };
@@ -54,7 +62,8 @@ export function RecipeIngredients() {
     if (!field) {
       return;
     }
-    update(index, { ...field, quantity });
+
+    setValue(`ingredients.${index}.quantity`, quantity, { shouldDirty: true });
   };
 
   return (
@@ -73,7 +82,7 @@ export function RecipeIngredients() {
           <ul className="relative flex list-inside flex-col gap-4 pb-4">
             {fields.map((field, index) => (
               <li key={field.food.name}>
-                {queryState.edit ? (
+                {edit ? (
                   <RecipeIngredientEdit
                     props={{
                       ingredient: field,
@@ -91,8 +100,7 @@ export function RecipeIngredients() {
                     props={{
                       ingredient: {
                         ...field,
-                        unit:
-                          queryState.units[field.food.name] || field.food.unit,
+                        unit: unitsQuery[field.food.name] || field.food.unit,
                       },
                     }}
                   />
@@ -104,22 +112,22 @@ export function RecipeIngredients() {
       ) : (
         <Typography
           className={cn("text-center lg:col-span-3", {
-            "text-edit": queryState.edit,
+            "text-edit": edit,
           })}
         >
-          {queryState.edit
+          {edit
             ? "Ajoutez des ingrédients à votre recette"
             : "Pas d'ingrédients"}
         </Typography>
       )}
       <Button
         onClick={() => setOpen(true)}
-        disabled={!queryState.edit}
+        disabled={!edit}
         variant="edit"
         type="button"
         className={cn("transition-all duration-300 lg:col-start-3", {
           "pointer-events-none !h-0 translate-y-10 !opacity-0 lg:!h-8 lg:translate-x-40 lg:translate-y-0":
-            !queryState.edit,
+            !edit,
         })}
       >
         AJOUTER DES INGRÉDIENTS

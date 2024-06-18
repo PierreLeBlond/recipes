@@ -4,14 +4,18 @@ import { Minus, Plus, RotateCcw } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
+import { useSession } from "next-auth/react";
+import { useEditQuery } from "@/src/lib/hooks/useEditQuery";
+import { usePlateCountQuery } from "@/src/lib/hooks/usePlateCountQuery";
 import { PlateCountButton } from "./PlateCountButton";
 import { ResetButton } from "./ResetButton";
 import { Typography } from "../../ui/typography";
 
 export function RecipePlateCount() {
   const { control } = useFormContext<FormInputs>();
-  const queryState = useQueryState();
+  const session = useSession();
+  const edit = useEditQuery(session.data);
+  const plateCountQuery = usePlateCountQuery();
 
   return (
     <Controller
@@ -19,9 +23,7 @@ export function RecipePlateCount() {
       control={control}
       rules={{ required: true, min: 1, max: 100 }}
       render={({ field }) => {
-        const plateCount = queryState.edit
-          ? field.value
-          : queryState.plateCount;
+        const plateCount = edit ? field.value : plateCountQuery;
 
         const shouldDisplayResetButton = plateCount !== field.value;
 
@@ -31,7 +33,7 @@ export function RecipePlateCount() {
               <div className="flex -translate-x-1 items-center gap-2">
                 <Typography>Pour</Typography>
                 <PlateCountButton
-                  props={{ value: 1, field, plateCount, edit: queryState.edit }}
+                  props={{ value: 1, field, plateCount, edit }}
                 >
                   <Plus strokeWidth={6} size={16} />
                 </PlateCountButton>
@@ -39,7 +41,7 @@ export function RecipePlateCount() {
               <div className="flex translate-x-14 items-end gap-2">
                 <Typography
                   className={cn("font-bold transition-colors duration-300", {
-                    "text-edit": queryState.edit,
+                    "text-edit": edit,
                   })}
                 >
                   {plateCount}
@@ -51,7 +53,7 @@ export function RecipePlateCount() {
                     value: -1,
                     field,
                     plateCount,
-                    edit: queryState.edit,
+                    edit,
                   }}
                 >
                   <Minus strokeWidth={6} size={16} />

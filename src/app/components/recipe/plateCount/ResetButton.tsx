@@ -25,9 +25,8 @@ export function ResetButton({
         <QueryParamsLink
           className="flex h-full w-full items-center justify-center p-2"
           props={{
-            partialQueryState: {
-              plateCount,
-            },
+            name: "plateCount",
+            value: plateCount.toString(),
           }}
         >
           {children}

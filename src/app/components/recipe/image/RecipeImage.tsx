@@ -4,7 +4,8 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
 import { convertToBase64 } from "@/src/lib/s3/convertToBase64";
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
+import { useEditQuery } from "@/src/lib/hooks/useEditQuery";
+import { useSession } from "next-auth/react";
 import { Typography } from "../../ui/typography";
 import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
 
@@ -15,7 +16,8 @@ export function RecipeImage() {
 
   const { setValue } = useFormContext<FormInputs>();
   const recipeImage = useWatch<FormInputs, "image">({ name: "image" });
-  const { edit } = useQueryState();
+  const session = useSession();
+  const edit = useEditQuery(session.data);
 
   const handleOnClick = () => {
     hiddenInputRef.current?.click();

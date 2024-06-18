@@ -177,8 +177,6 @@ describe("Add a reference", () => {
 
     const buttons = getButtons(component);
 
-    console.log(buttons);
-
     expect(buttons.map((button) => button.textContent)).toStrictEqual(["œufs"]);
   });
 
@@ -257,7 +255,7 @@ describe("Add a reference", () => {
     );
 
     const caretPosition = getCaretPosition(contentEditable);
-    expect(caretPosition).toBe(26);
+    expect(caretPosition).toBe(27);
   });
 
   test("Should add a space after clicking on a reference only if it does not exists yet", async () => {

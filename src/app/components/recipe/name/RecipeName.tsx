@@ -2,12 +2,14 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { Title } from "@/src/app/components/utils/Title";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { cn } from "@/src/lib/utils";
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
+import { useSession } from "next-auth/react";
+import { useEditQuery } from "@/src/lib/hooks/useEditQuery";
 import { Input } from "../../ui/input";
 
 export function RecipeName() {
-  const { edit } = useQueryState();
-  const name = useWatch({
+  const session = useSession();
+  const edit = useEditQuery(session.data);
+  const name = useWatch<FormInputs, "name">({
     name: "name",
   });
   const { register } = useFormContext<FormInputs>();

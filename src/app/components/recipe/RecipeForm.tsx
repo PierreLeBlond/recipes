@@ -11,7 +11,6 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { api } from "@/src/trpc/react";
 import { SessionProvider } from "next-auth/react";
-import { revalidatePath } from "next/cache";
 import { RecipeImage } from "./image/RecipeImage";
 import { RecipeName } from "./name/RecipeName";
 import { RecipeSteps } from "./steps/RecipeSteps";
@@ -39,7 +38,6 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
         title: "C'est tout bon !",
         description: "La recette a bien été modifiée.",
       });
-      revalidatePath(`/recipes/${recipe.id}`);
       methods.reset(data);
     },
   });

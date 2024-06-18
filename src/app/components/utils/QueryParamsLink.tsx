@@ -1,15 +1,15 @@
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
-import { QueryState } from "@/src/lib/queryState/QueryState";
-import { serializeQueryState } from "@/src/lib/queryState/serializeQueryState";
+"use client";
+
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 type QueryParamsLinkProps = {
-  partialQueryState: Partial<QueryState>;
+  name: string;
+  value: string;
 };
 
 export function QueryParamsLink({
-  props: { partialQueryState },
+  props: { name, value },
   children,
   className,
 }: {
@@ -18,17 +18,18 @@ export function QueryParamsLink({
   className: string;
 }) {
   const pathname = usePathname();
-  const queryState = useQueryState();
+  const searchParams = useSearchParams();
+
+  const params = new URLSearchParams(searchParams.toString());
+
+  params.set(name, value);
 
   return (
     <Link
       className={className}
       href={{
         pathname,
-        query: serializeQueryState({
-          ...queryState,
-          ...partialQueryState,
-        }),
+        query: params.toString(),
       }}
       replace
       scroll={false}

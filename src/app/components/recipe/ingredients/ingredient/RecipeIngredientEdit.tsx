@@ -53,7 +53,7 @@ export function RecipeIngredientEdit({
         <div className="flex grow items-center justify-center px-2 pt-2">
           <Input
             className="peer h-8 cursor-pointer rounded-md pr-1 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-            value={ingredient.quantity}
+            defaultValue={ingredient.quantity}
             type="number"
             label={ingredient.food.name}
             step="0.1"

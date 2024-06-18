@@ -12,6 +12,7 @@ vi.mock("next/navigation", async (importOriginal) => {
     ...mod,
     useSearchParams: () => ({
       get: vi.fn(() => "true"),
+      entries: vi.fn(() => []),
     }),
   };
 });

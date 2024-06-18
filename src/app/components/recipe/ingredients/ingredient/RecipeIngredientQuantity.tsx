@@ -3,11 +3,12 @@
 import { getFormatedQuantity } from "@/src/lib/quantity/getFormatedQuantity";
 import { ArrowDownUp, ChevronDown } from "lucide-react";
 import { getQuantityFromPlateAndUnit } from "@/src/lib/quantity/getQuantityFromPlateAndUnit";
-import { useQueryState } from "@/src/lib/hooks/useQueryState";
 import { useWatch } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 import { Unit, Units } from "@/src/lib/types/Units";
+import { useUnitsQuery } from "@/src/lib/hooks/useUnitsQuery";
+import { usePlateCountQuery } from "@/src/lib/hooks/usePlateCountQuery";
 import { QueryParamsLink } from "../../../utils/QueryParamsLink";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover";
 
@@ -65,7 +66,8 @@ export function RecipeIngredientQuantity({
 }: {
   props: RecipeIngredientQuantityProps;
 }) {
-  const queryState = useQueryState();
+  const unitsQuery = useUnitsQuery();
+  const plateCountQuery = usePlateCountQuery();
   const plateCount = useWatch<FormInputs, "plateCount">({ name: "plateCount" });
 
   const alternativeUnits = alternativeUnitsMap[ingredient.food.unit]({
@@ -75,9 +77,9 @@ export function RecipeIngredientQuantity({
 
   const hasAlternatives = alternativeUnits.length !== 0;
 
-  const unit = queryState.units[ingredient.food.name] || ingredient.food.unit;
+  const unit = unitsQuery[ingredient.food.name] || ingredient.food.unit;
 
-  const plateRatio = queryState.plateCount / plateCount;
+  const plateRatio = plateCountQuery / plateCount;
 
   if (!hasAlternatives) {
     return (
@@ -132,12 +134,8 @@ export function RecipeIngredientQuantity({
             <QueryParamsLink
               className="group flex w-full justify-between gap-4 text-center text-base"
               props={{
-                partialQueryState: {
-                  units: {
-                    ...queryState.units,
-                    [ingredient.food.name]: alternativeUnit,
-                  },
-                },
+                name: `${ingredient.food.name}Unit`,
+                value: alternativeUnit,
               }}
             >
               <span className="text-nowrap font-bold">
