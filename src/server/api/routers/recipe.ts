@@ -95,7 +95,7 @@ export const recipeRouter = createTRPCRouter({
 
       let { image } = recipe;
       let uuid = recipe.imageName;
-      if (input.image) {
+      if (input.image && input.image !== image) {
         uuid = recipe.imageName || randomUUID();
         image = `${process.env.NEXT_PUBLIC_AWS_ENDPOINT_URL_S3}/images/${uuid}`;
         await uploadImage(uuid, input.image);
