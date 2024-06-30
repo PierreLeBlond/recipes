@@ -1,5 +1,4 @@
 import { Button } from "@/src/app/components/ui/button";
-import { Hash } from "lucide-react";
 
 type ReferencesButtonProps = {
   description: string;
@@ -35,10 +34,10 @@ export function ReferencesButton({
     <Button
       onPointerDown={(e) => e.preventDefault()}
       onPointerUp={handleClickedButton}
-      className="flex h-8 items-center justify-center gap-2 p-1 px-2"
+      className="flex h-8 items-center justify-center gap-2 p-1 px-2 text-xl font-bold"
       variant="edit"
     >
-      <Hash size={16} /> AJOUTER UN INGRÉDIENT
+      #
     </Button>
   );
 }

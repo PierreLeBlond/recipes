@@ -426,17 +426,21 @@ describe("Add a reference", () => {
   });
 
   describe("The # button", () => {
+    const getButton = (component: RenderResult) => {
+      const button = component
+        .getAllByRole("button")
+        .find((button) =>
+          button.textContent?.includes("#"),
+        );
+      return button;
+    }
     test("Should have a # button", async () => {
       const component = getComponent({ ingredients });
       const contentEditable = component.getByRole("textbox");
 
       await user.click(contentEditable);
 
-      const button = component
-        .getAllByRole("button")
-        .find((button) =>
-          button.textContent?.includes("AJOUTER UN INGRÉDIENT"),
-        );
+      const button = getButton(component);
 
       expect(button).toBeDefined();
     });
@@ -450,11 +454,7 @@ describe("Add a reference", () => {
 
       await user.click(contentEditable);
 
-      const button = component
-        .getAllByRole("button")
-        .find((button) =>
-          button.textContent?.includes("Ajouter un ingrédient"),
-        );
+      const button = getButton(component);
 
       expect(button).not.toBeDefined();
     });
@@ -465,11 +465,7 @@ describe("Add a reference", () => {
 
       await user.click(contentEditable);
 
-      const button = component
-        .getAllByRole("button")
-        .find((button) =>
-          button.textContent?.includes("Ajouter un ingrédient"),
-        );
+      const button = getButton(component);
 
       if (!button) {
         return;
