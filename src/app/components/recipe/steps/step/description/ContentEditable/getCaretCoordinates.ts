@@ -18,7 +18,7 @@ export const getCaretCoordinates = (element: HTMLElement) => {
   const preCaretRange = range.cloneRange();
   preCaretRange.collapse(true);
 
-  const rect = preCaretRange.getClientRects()[0];
+  const rect = preCaretRange.getBoundingClientRect();
 
   if (!rect) {
     return null;

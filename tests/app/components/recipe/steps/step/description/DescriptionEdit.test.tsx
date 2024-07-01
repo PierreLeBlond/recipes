@@ -5,6 +5,20 @@ import { RenderResult, cleanup, render } from "@testing-library/react";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 
+Range.prototype.getBoundingClientRect = () => {
+    return {
+        left: 0,
+        top: 0,
+        height: 0,
+        width: 0,
+        x: 0,
+        y: 0,
+        bottom: 0,
+        right: 0,
+        toJSON: () => ""
+    };
+  };
+
 afterEach(() => {
   cleanup();
 });
