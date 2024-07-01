@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 import { Tabs, TabsList, TabsTrigger } from "@/src/app/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
@@ -21,6 +21,7 @@ export function DescriptionEdit({
   onChangedDescription: (description: string) => void;
 }) {
   const [caretPosition, setCaretPosition] = useState<number>(0);
+  const contentEditableRef = useRef<HTMLDivElement>(null);
 
   // Using this kind of proxy should improve performance,
   // by not rerendering the full form when the description changes
@@ -56,6 +57,7 @@ export function DescriptionEdit({
             description: currentDescription,
             caretPosition,
             ingredients,
+            contentEditableRef
           }}
           onChangedDescription={handleChangedDescription}
         >
@@ -66,7 +68,7 @@ export function DescriptionEdit({
                 caretPosition: content.caretPosition,
               })
             }
-            props={{ formatedContent: formatedDescription, caretPosition }}
+            props={{ formatedContent: formatedDescription, caretPosition, ref: contentEditableRef }}
           />
         </References>
       </TabsContent>

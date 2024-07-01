@@ -34,7 +34,7 @@ const getComponent = ({
   return render(
     <ContentEditable
       onChangedContent={onChangedDescriptionMock || (() => {})}
-      props={{ formatedContent: formatedDescription, caretPosition }}
+      props={{ formatedContent: formatedDescription, caretPosition, ref: { current: null } }}
     />,
   );
 };
@@ -111,7 +111,7 @@ test("Component should display given formated content and override previous user
 
   component.rerender(
     <ContentEditable
-      props={{ formatedContent: "<span>Hello</span>", caretPosition: null }}
+      props={{ formatedContent: "<span>Hello</span>", caretPosition: null, ref:{ current: null} }}
       onChangedContent={() => {}}
     />,
   );
@@ -133,6 +133,7 @@ test("Component should keep focus when given formated content is updated", async
       props={{
         formatedContent: "<span>Hello World</span>",
         caretPosition: null,
+        ref: { current: null}
       }}
       onChangedContent={() => {}}
     />,
@@ -152,7 +153,7 @@ test("Should keep caret position when updating formated content", async () => {
 
   component.rerender(
     <ContentEditable
-      props={{ formatedContent: "Hello World", caretPosition: null }}
+      props={{ formatedContent: "Hello World", caretPosition: null, ref: { current: null} }}
       onChangedContent={() => {}}
     />,
   );

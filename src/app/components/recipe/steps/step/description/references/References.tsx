@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { RefObject, useRef, useState } from "react";
 import { Ingredient } from "@/src/lib/types/Ingredient";
 import { getTypedReference } from "../getTypedReference";
 import { ReferencesList } from "./ReferencesList";
 import { ReferencesButton } from "./ReferencesButton";
+import { getCaretCoordinates } from "../ContentEditable/getCaretCoordinates";
 
 type ReferencesProps = {
   description: string;
   caretPosition: number;
   ingredients: Ingredient[];
+  contentEditableRef: RefObject<HTMLDivElement>;
 };
 
 const removeLigature = (text: string) => text.replace(/œ/g, "oe").replace(/æ/g, "ae");
@@ -32,7 +34,7 @@ const getReferencedIngredients = (
 };
 
 export function References({
-  props: { description, caretPosition, ingredients },
+  props: { description, caretPosition, ingredients, contentEditableRef },
   onChangedDescription,
   children,
 }: {
@@ -46,6 +48,14 @@ export function References({
   const [selectedReference, setSelectedReference] = useState<string>(
     ingredients[0] ? ingredients[0].food.name : "",
   );
+  const ref = useRef<HTMLDivElement>(null);
+  const caretCoordinates = contentEditableRef.current ? getCaretCoordinates(contentEditableRef.current) : null;
+  const referencesListCoordinates = ref.current && caretCoordinates ?
+  {
+    x: caretCoordinates.x,
+    y: caretCoordinates.y,
+  } : null;
+  console.log(referencesListCoordinates)
 
   const typedReference = getTypedReference(description, caretPosition);
 
@@ -130,12 +140,16 @@ export function References({
 
   return (
     <div
-      className="flex w-full flex-col"
+      className="flex w-full flex-col relative"
       onKeyDown={handleKeyDown}
       role="presentation"
+      ref={ref}
     >
-      <div className="flex h-12 items-center">
-        {typedReference !== null ? (
+        {typedReference !== null && referencesListCoordinates !== null && (
+      <div className={`z-50 fixed flex h-12 items-center`}
+      style={{top: `${referencesListCoordinates.y}px`, left: `${referencesListCoordinates.x}px`}}
+      >
+
           <ReferencesList
             props={{
               ingredients: referencedIngredients,
@@ -143,13 +157,12 @@ export function References({
             }}
             onIngredientReferenceSelected={handleSelectedFoodReference}
           />
-        ) : (
+          </div>
+        )}
           <ReferencesButton
             props={{ description, caretPosition }}
             onChangedDescription={handleChangedDescription}
           />
-        )}
-      </div>
       {children}
     </div>
   );

@@ -4,9 +4,6 @@ import { getCaretCoordinates } from "@/src/app/components/recipe/steps/step/desc
 
 Range.prototype.getBoundingClientRect = () => {
     return {
-      item: () => null,
-      length: 1,
-      [0]: {
         left: 0,
         top: 0,
         height: 0,

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect } from "react";
 import { getCaretPosition } from "./getCaretPosition";
 import { setCaretPosition } from "./setCaretPosition";
 import { getOnCaretMoveEvents } from "./getCaretMoveEvents";
@@ -6,6 +6,7 @@ import { getOnCaretMoveEvents } from "./getCaretMoveEvents";
 type ContentEditableProps = {
   formatedContent: string;
   caretPosition: number | null;
+  ref: RefObject<HTMLDivElement>;
 };
 
 type ContentEditableInput = {
@@ -17,10 +18,9 @@ type ContentEditableInput = {
 };
 
 export function ContentEditable({
-  props: { formatedContent, caretPosition },
+  props: { formatedContent, caretPosition, ref },
   onChangedContent,
 }: ContentEditableInput) {
-  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current) {

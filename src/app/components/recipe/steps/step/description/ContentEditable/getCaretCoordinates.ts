@@ -15,10 +15,9 @@ export const getCaretCoordinates = (element: HTMLElement) => {
   }
 
   const range = selection.getRangeAt(0);
-  const preCaretRange = range.cloneRange();
-  preCaretRange.collapse(true);
+  //preCaretRange.collapse(true);
 
-  const rect = preCaretRange.getBoundingClientRect();
+  const rect = range.getBoundingClientRect();
 
   if (!rect) {
     return null;
