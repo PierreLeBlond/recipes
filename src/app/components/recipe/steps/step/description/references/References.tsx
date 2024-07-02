@@ -62,11 +62,12 @@ export function References({
   const caretCoordinates = contentEditableRef.current
     ? getCaretCoordinates(contentEditableRef.current)
     : null;
+  const clientRect = ref.current?.getBoundingClientRect();
   const referencesListCoordinates =
-    ref.current && caretCoordinates
+    clientRect && caretCoordinates
       ? {
-          x: caretCoordinates.x,
-          y: caretCoordinates.y,
+          x: caretCoordinates.x - clientRect.left,
+          y: caretCoordinates.y - clientRect.top,
         }
       : null;
 
@@ -150,7 +151,7 @@ export function References({
     >
       {typedReference !== null && referencesListCoordinates !== null && (
         <div
-          className={`fixed z-50 flex -translate-y-[100%] items-center`}
+          className={`absolute z-50 flex -translate-y-[100%] items-center`}
           style={{
             top: `${referencesListCoordinates.y}px`,
             left: `${referencesListCoordinates.x}px`,
