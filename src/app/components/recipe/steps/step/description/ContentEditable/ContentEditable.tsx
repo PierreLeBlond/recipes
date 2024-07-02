@@ -53,7 +53,7 @@ export function ContentEditable({
       className="min-h-24 w-full overflow-hidden text-ellipsis whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-none"
       ref={ref}
       onClick={onclick}
-      onInput={oninput}
+      onInput={({ nativeEvent }) => oninput(nativeEvent)}
       onKeyDown={onkeydown}
       onBlur={handleChangedContent}
       aria-label="Zone d'édition"

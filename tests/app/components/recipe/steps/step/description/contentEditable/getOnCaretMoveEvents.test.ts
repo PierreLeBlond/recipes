@@ -1,5 +1,6 @@
 import { getOnCaretMoveEvents } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretMoveEvents";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
+import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { test, expect, vi, Mock } from "vitest";
 
@@ -15,6 +16,7 @@ const getElement = (onCaretMove: Mock) => {
   document.body.appendChild(element);
 
   const { onclick, oninput, onkeydown } = getOnCaretMoveEvents(onCaretMove);
+
   element.onclick = onclick;
   element.oninput = oninput;
   element.onkeydown = onkeydown;
