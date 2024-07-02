@@ -1,4 +1,3 @@
-import { Typography } from "@/src/app/components/ui/typography";
 import { cn } from "@/src/lib/utils";
 
 type Ingredient = {
@@ -20,11 +19,7 @@ export function ReferencesList({
   onIngredientReferenceSelected: (ingredientName: string) => void;
 }) {
   if (ingredients.length === 0) {
-    return (
-      <Typography className="relative min-w-0 lg:w-1/3">
-        Pas d&apos;ingrédients correspondants
-      </Typography>
-    );
+    return null;
   }
 
   const handleIngredientReferenceSelected = (
@@ -40,12 +35,12 @@ export function ReferencesList({
   };
 
   return (
-    <ul className="min-w-auto relative flex gap-2 overflow-x-scroll">
+    <ul className="min-w-auto relative flex flex-col gap-2 rounded-t-md rounded-br-md bg-primary p-2 shadow-md">
       {ingredients.map((ingredient) => (
         <li key={ingredient.food.name}>
           <button
             className={cn(
-              "flex items-center justify-center text-nowrap rounded-md border border-edit p-1 px-2 text-edit hover:font-bold",
+              "flex w-full items-center text-nowrap rounded-md p-1 px-2 text-edit hover:bg-primary-foreground/10",
               {
                 selected: selectedReference === ingredient.food.name,
               },

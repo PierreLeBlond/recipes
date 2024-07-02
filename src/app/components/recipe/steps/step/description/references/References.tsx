@@ -12,7 +12,8 @@ type ReferencesProps = {
   contentEditableRef: RefObject<HTMLDivElement>;
 };
 
-const removeLigature = (text: string) => text.replace(/œ/g, "oe").replace(/æ/g, "ae");
+const removeLigature = (text: string) =>
+  text.replace(/œ/g, "oe").replace(/æ/g, "ae");
 
 const getReferencedIngredients = (
   partialReference: string | null,
@@ -26,9 +27,21 @@ const getReferencedIngredients = (
     return ingredients;
   }
 
-  const referencedIngredients = ingredients.filter((ingredient) => removeLigature(ingredient.food.name.toLowerCase()).startsWith(
+  const referencedIngredients = ingredients.filter((ingredient) => {
+    const normalizedIngredientName = removeLigature(
+      ingredient.food.name.toLowerCase(),
+    );
+
+    const normalizedPartialReference = removeLigature(
       partialReference.toLowerCase(),
-    ));
+    );
+
+    if (normalizedIngredientName === normalizedPartialReference) {
+      return false;
+    }
+
+    return normalizedIngredientName.startsWith(normalizedPartialReference);
+  });
 
   return referencedIngredients;
 };
@@ -49,13 +62,16 @@ export function References({
     ingredients[0] ? ingredients[0].food.name : "",
   );
   const ref = useRef<HTMLDivElement>(null);
-  const caretCoordinates = contentEditableRef.current ? getCaretCoordinates(contentEditableRef.current) : null;
-  const referencesListCoordinates = ref.current && caretCoordinates ?
-  {
-    x: caretCoordinates.x,
-    y: caretCoordinates.y,
-  } : null;
-  console.log(referencesListCoordinates)
+  const caretCoordinates = contentEditableRef.current
+    ? getCaretCoordinates(contentEditableRef.current)
+    : null;
+  const referencesListCoordinates =
+    ref.current && caretCoordinates
+      ? {
+          x: caretCoordinates.x,
+          y: caretCoordinates.y,
+        }
+      : null;
 
   const typedReference = getTypedReference(description, caretPosition);
 
@@ -140,16 +156,19 @@ export function References({
 
   return (
     <div
-      className="flex w-full flex-col relative"
+      className="relative flex w-full flex-col"
       onKeyDown={handleKeyDown}
       role="presentation"
       ref={ref}
     >
-        {typedReference !== null && referencesListCoordinates !== null && (
-      <div className={`z-50 fixed flex h-12 items-center`}
-      style={{top: `${referencesListCoordinates.y}px`, left: `${referencesListCoordinates.x}px`}}
-      >
-
+      {typedReference !== null && referencesListCoordinates !== null && (
+        <div
+          className={`fixed z-50 flex -translate-y-[100%] items-center`}
+          style={{
+            top: `${referencesListCoordinates.y}px`,
+            left: `${referencesListCoordinates.x}px`,
+          }}
+        >
           <ReferencesList
             props={{
               ingredients: referencedIngredients,
@@ -157,12 +176,12 @@ export function References({
             }}
             onIngredientReferenceSelected={handleSelectedFoodReference}
           />
-          </div>
-        )}
-          <ReferencesButton
-            props={{ description, caretPosition }}
-            onChangedDescription={handleChangedDescription}
-          />
+        </div>
+      )}
+      <ReferencesButton
+        props={{ description, caretPosition }}
+        onChangedDescription={handleChangedDescription}
+      />
       {children}
     </div>
   );
