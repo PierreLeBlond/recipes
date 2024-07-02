@@ -1,4 +1,5 @@
 const arrowKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+const accentKeys = ["´", "`"];
 
 export const getOnCaretMoveEvents = (onCaretMove: () => void) => ({
   onclick: onCaretMove,
@@ -9,5 +10,10 @@ export const getOnCaretMoveEvents = (onCaretMove: () => void) => ({
     }
     setTimeout(onCaretMove, 0);
   },
-  oninput: onCaretMove,
+  oninput: ({ nativeEvent: { data } }: { nativeEvent: InputEvent }) => {
+    if (data && accentKeys.includes(data)) {
+      return;
+    }
+    onCaretMove();
+  },
 });
