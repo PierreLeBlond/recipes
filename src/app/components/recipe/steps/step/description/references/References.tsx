@@ -80,8 +80,11 @@ export function References({
   const [highlightedCursor, setHighlightedCursor] = useState<number>(0);
 
   const highlightedName =
-    referencedIngredients[highlightedCursor % referencedIngredients.length]
-      ?.food.name || null;
+    referencedIngredients[
+      ((highlightedCursor % referencedIngredients.length) +
+        referencedIngredients.length) %
+        referencedIngredients.length
+    ]?.food.name || null;
 
   const handleSelectedFoodReference = (foodName: string | null) => {
     if (!foodName) {
