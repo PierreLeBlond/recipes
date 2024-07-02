@@ -21,7 +21,6 @@ export function ContentEditable({
   props: { formatedContent, caretPosition, ref },
   onChangedContent,
 }: ContentEditableInput) {
-
   useEffect(() => {
     if (ref.current) {
       const newCaretPosition = caretPosition || getCaretPosition(ref.current);
@@ -51,7 +50,7 @@ export function ContentEditable({
       role="textbox"
       tabIndex={0}
       contentEditable="true"
-      className="min-h-24 w-full whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-none"
+      className="min-h-24 w-full overflow-hidden text-ellipsis whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-none"
       ref={ref}
       onClick={onclick}
       onInput={oninput}
