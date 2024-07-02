@@ -156,7 +156,7 @@ export function References({
 
   return (
     <div
-      className="relative flex w-full flex-col"
+      className="relative flex w-full flex-col items-start gap-2 py-2"
       onKeyDown={handleKeyDown}
       role="presentation"
       ref={ref}
