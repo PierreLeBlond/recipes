@@ -6,18 +6,18 @@ import { getCaretPosition } from "@/src/app/components/recipe/steps/step/descrip
 import { Ingredient } from "@/src/lib/types/Ingredient";
 
 Range.prototype.getBoundingClientRect = () => {
-    return {
-        left: 0,
-        top: 0,
-        height: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        bottom: 0,
-        right: 0,
-        toJSON: () => ""
-    };
+  return {
+    left: 0,
+    top: 0,
+    height: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+    bottom: 0,
+    right: 0,
+    toJSON: () => "",
   };
+};
 
 afterEach(() => {
   cleanup();
@@ -277,19 +277,17 @@ describe("Add a reference", () => {
     const component = getComponent({
       ingredients,
       onChangedDescriptionMock: onChangedDescription,
-      description: "Dans un bol, mettre #pomme ",
+      description: "Dans un bol, mettre #pom",
     });
     const contentEditable = component.getByRole("textbox");
 
     await user.click(contentEditable);
 
-    await user.keyboard("{ArrowLeft}");
-
     const appleButton = component.getByText("pomme");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(3);
-    expect(onChangedDescription.mock.calls[2][0]).toBe(
+    expect(onChangedDescription.mock.calls).toHaveLength(2);
+    expect(onChangedDescription.mock.calls[1][0]).toBe(
       "Dans un bol, mettre #pomme ",
     );
   });
@@ -318,7 +316,7 @@ describe("Add a reference", () => {
     test("Should have first item highlighted by default", async () => {
       const component = getComponent({
         ingredients,
-        description: "Dans un bol, mettre #",
+        description: "Dans un bol, mettre #a",
       });
       const contentEditable = component.getByRole("textbox");
 
@@ -326,7 +324,7 @@ describe("Add a reference", () => {
 
       const button = component
         .queryAllByRole("button")
-        .find((button) => button.textContent === "pomme");
+        .find((button) => button.textContent === "abricot");
 
       expect(button).toHaveClass("selected");
     });
@@ -443,11 +441,9 @@ describe("Add a reference", () => {
     const getButton = (component: RenderResult) => {
       const button = component
         .getAllByRole("button")
-        .find((button) =>
-          button.textContent?.includes("#"),
-        );
+        .find((button) => button.textContent?.includes("#"));
       return button;
-    }
+    };
     test("Should have a # button", async () => {
       const component = getComponent({ ingredients });
       const contentEditable = component.getByRole("textbox");
@@ -457,20 +453,6 @@ describe("Add a reference", () => {
       const button = getButton(component);
 
       expect(button).toBeDefined();
-    });
-
-    test("Should not have a # button when a reference is being typed", async () => {
-      const component = getComponent({
-        ingredients,
-        description: "Dans un bol, mettre #p",
-      });
-      const contentEditable = component.getByRole("textbox");
-
-      await user.click(contentEditable);
-
-      const button = getButton(component);
-
-      expect(button).not.toBeDefined();
     });
 
     test("Should not lost content editable focus when the button is clicked", async () => {

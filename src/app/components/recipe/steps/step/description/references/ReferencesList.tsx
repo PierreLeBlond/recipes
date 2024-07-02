@@ -8,11 +8,11 @@ type Ingredient = {
 
 type ReferencesListProps = {
   ingredients: Ingredient[];
-  selectedReference: string;
+  highlightedName: string | null;
 };
 
 export function ReferencesList({
-  props: { ingredients, selectedReference },
+  props: { ingredients, highlightedName },
   onIngredientReferenceSelected,
 }: {
   props: ReferencesListProps;
@@ -42,7 +42,8 @@ export function ReferencesList({
             className={cn(
               "flex w-full items-center text-nowrap rounded-md p-1 px-2 text-edit hover:bg-primary-foreground/10",
               {
-                selected: selectedReference === ingredient.food.name,
+                "selected bg-primary-foreground/10":
+                  highlightedName === ingredient.food.name,
               },
             )}
             type="button"

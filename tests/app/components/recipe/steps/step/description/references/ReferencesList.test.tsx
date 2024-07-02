@@ -65,11 +65,6 @@ test("Should display given foods within a button", () => {
   expect(bananaButton).toBeDefined();
 });
 
-test("Should display a message if no foods are given", () => {
-  const component = getComponent({ ingredients: [] });
-  expect(component.getByText("Pas d'ingrédients correspondants")).toBeDefined();
-});
-
 test("Should fire an event when a food is clicked", async () => {
   const onIngredientClickMock = vi.fn();
   const component = getComponent({

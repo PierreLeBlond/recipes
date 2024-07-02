@@ -58,9 +58,6 @@ export function References({
   }) => void;
   children: React.ReactNode;
 }) {
-  const [selectedReference, setSelectedReference] = useState<string>(
-    ingredients[0] ? ingredients[0].food.name : "",
-  );
   const ref = useRef<HTMLDivElement>(null);
   const caretCoordinates = contentEditableRef.current
     ? getCaretCoordinates(contentEditableRef.current)
@@ -79,8 +76,16 @@ export function References({
     typedReference,
     ingredients,
   );
+  const [highlightedCursor, setHighlightedCursor] = useState<number>(0);
 
-  const handleSelectedFoodReference = (foodName: string) => {
+  const highlightedName =
+    referencedIngredients[highlightedCursor % referencedIngredients.length]
+      ?.food.name || null;
+
+  const handleSelectedFoodReference = (foodName: string | null) => {
+    if (!foodName) {
+      return;
+    }
     const descriptionStart = description
       .substring(0, caretPosition)
       .replace(new RegExp(`${typedReference}$`, "g"), `${foodName}`);
@@ -110,37 +115,18 @@ export function References({
   };
 
   const inputActionMap = new Map<string, () => void>([
-    [
-      "ArrowDown",
-      () =>
-        setSelectedReference(
-          ingredients[
-            (ingredients.findIndex(
-              (ingredient) => ingredient.food.name === selectedReference,
-            ) +
-              1) %
-              ingredients.length
-          ]?.food.name || "",
-        ),
-    ],
-    [
-      "ArrowUp",
-      () =>
-        setSelectedReference(
-          ingredients[
-            (ingredients.findIndex(
-              (ingredient) => ingredient.food.name === selectedReference,
-            ) +
-              ingredients.length -
-              1) %
-              ingredients.length
-          ]?.food.name || "",
-        ),
-    ],
+    ["ArrowDown", () => setHighlightedCursor((value) => value + 1)],
+    ["ArrowUp", () => setHighlightedCursor((value) => value - 1)],
     [
       "Tab",
       () => {
-        handleSelectedFoodReference(selectedReference);
+        handleSelectedFoodReference(highlightedName);
+      },
+    ],
+    [
+      "Enter",
+      () => {
+        handleSelectedFoodReference(highlightedName);
       },
     ],
   ]);
@@ -150,6 +136,7 @@ export function References({
     if (!action) {
       return;
     }
+    // Keep focus on the contenteditable
     e.preventDefault();
     action();
   };
@@ -172,7 +159,7 @@ export function References({
           <ReferencesList
             props={{
               ingredients: referencedIngredients,
-              selectedReference,
+              highlightedName,
             }}
             onIngredientReferenceSelected={handleSelectedFoodReference}
           />
