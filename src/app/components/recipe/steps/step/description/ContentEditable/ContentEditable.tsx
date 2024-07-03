@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { getCaretPosition } from "./getCaretPosition";
 import { setCaretPosition } from "./setCaretPosition";
 import { getOnCaretMoveEvents } from "./getCaretMoveEvents";
@@ -6,7 +6,6 @@ import { getOnCaretMoveEvents } from "./getCaretMoveEvents";
 type ContentEditableProps = {
   formatedContent: string;
   caretPosition: number | null;
-  ref: RefObject<HTMLDivElement>;
 };
 
 type ContentEditableInput = {
@@ -17,46 +16,58 @@ type ContentEditableInput = {
   props: ContentEditableProps;
 };
 
-export function ContentEditable({
-  props: { formatedContent, caretPosition, ref },
-  onChangedContent,
-}: ContentEditableInput) {
-  useEffect(() => {
-    if (ref.current) {
-      const newCaretPosition = caretPosition || getCaretPosition(ref.current);
-      ref.current.innerHTML = formatedContent;
-      if (ref.current === document.activeElement && newCaretPosition !== null) {
-        setCaretPosition(ref.current, newCaretPosition);
+export const ContentEditable = forwardRef(
+  (
+    {
+      props: { formatedContent, caretPosition },
+      onChangedContent,
+    }: ContentEditableInput,
+    ref,
+  ) => {
+    const contentEditableRef = useRef<HTMLDivElement>(null);
+
+    useImperativeHandle(ref, () => contentEditableRef.current);
+    useEffect(() => {
+      if (contentEditableRef.current) {
+        const newCaretPosition =
+          caretPosition || getCaretPosition(contentEditableRef.current);
+        contentEditableRef.current.innerHTML = formatedContent;
+        if (
+          contentEditableRef.current === document.activeElement &&
+          newCaretPosition !== null
+        ) {
+          setCaretPosition(contentEditableRef.current, newCaretPosition);
+        }
       }
-    }
-  }, [formatedContent, caretPosition]);
+    }, [formatedContent, caretPosition, ref]);
 
-  const handleChangedContent = () => {
-    if (!onChangedContent || !ref.current) {
-      return;
-    }
-    const newCaretPosition = getCaretPosition(ref.current);
-    onChangedContent({
-      content: ref.current.textContent || "",
-      caretPosition: newCaretPosition,
-    });
-  };
+    const handleChangedContent = () => {
+      if (!onChangedContent || !contentEditableRef.current) {
+        return;
+      }
+      const newCaretPosition = getCaretPosition(contentEditableRef.current);
+      onChangedContent({
+        content: contentEditableRef.current.textContent || "",
+        caretPosition: newCaretPosition,
+      });
+    };
 
-  const { onclick, oninput, onkeydown } =
-    getOnCaretMoveEvents(handleChangedContent);
+    const { onclick, oninput, onkeydown } =
+      getOnCaretMoveEvents(handleChangedContent);
 
-  return (
-    <div
-      role="textbox"
-      tabIndex={0}
-      contentEditable="true"
-      className="min-h-24 w-full overflow-hidden text-ellipsis whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-none"
-      ref={ref}
-      onClick={onclick}
-      onInput={({ nativeEvent }) => oninput(nativeEvent)}
-      onKeyDown={onkeydown}
-      onBlur={handleChangedContent}
-      aria-label="Zone d'édition"
-    />
-  );
-}
+    return (
+      <div
+        role="textbox"
+        tabIndex={0}
+        contentEditable="true"
+        className="min-h-24 w-full overflow-hidden text-ellipsis whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-none"
+        ref={contentEditableRef}
+        onClick={onclick}
+        onInput={({ nativeEvent }) => oninput(nativeEvent)}
+        onKeyDown={onkeydown}
+        onBlur={handleChangedContent}
+        aria-label="Zone d'édition"
+      />
+    );
+  },
+);

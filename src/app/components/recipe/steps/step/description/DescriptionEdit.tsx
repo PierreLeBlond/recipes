@@ -57,7 +57,7 @@ export function DescriptionEdit({
             description: currentDescription,
             caretPosition,
             ingredients,
-            contentEditableRef
+            contentEditableRef,
           }}
           onChangedDescription={handleChangedDescription}
         >
@@ -68,7 +68,8 @@ export function DescriptionEdit({
                 caretPosition: content.caretPosition,
               })
             }
-            props={{ formatedContent: formatedDescription, caretPosition, ref: contentEditableRef }}
+            props={{ formatedContent: formatedDescription, caretPosition }}
+            ref={contentEditableRef}
           />
         </References>
       </TabsContent>

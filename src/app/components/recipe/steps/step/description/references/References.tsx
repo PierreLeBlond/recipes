@@ -154,7 +154,7 @@ export function References({
     >
       {typedReference !== null && referencesListCoordinates !== null && (
         <div
-          className={`absolute z-50 flex -translate-y-[100%] items-center`}
+          className="absolute z-50 flex -translate-y-[100%] items-center"
           style={{
             top: `${referencesListCoordinates.y}px`,
             left: `${referencesListCoordinates.x}px`,
