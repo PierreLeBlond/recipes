@@ -1,4 +1,4 @@
-import { CreateFood } from "@/src/app/components/recipe/food/CreateFood";
+import { CreateFood } from "@/src/app/components/food/create/CreateFood";
 import { cleanup, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";

@@ -6,13 +6,13 @@ import { useState } from "react";
 import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
 import { Button } from "@/src/app/components/ui/button";
 import { Session } from "next-auth";
+import { Typography } from "@/src/app/components/ui/typography";
+import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
 import { FormFood } from "./FormFood";
 import { CreateFoodUnitInput } from "./CreateFoodUnitInput";
-import { Typography } from "../../ui/typography";
-import { ErrorAlert } from "../../utils/alert/ErrorAlert";
 
 type CreateFoodHandlers = {
   onSubmit: (food: Food) => Promise<Food>;

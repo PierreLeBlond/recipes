@@ -20,6 +20,7 @@ const foods = [
 
 mockDb.food.findMany.mockResolvedValue(foods);
 mockDb.food.create.mockResolvedValue(foods[0]);
+mockDb.food.delete.mockResolvedValue(foods[0]);
 
 const createCaller = t.createCallerFactory(foodRouter);
 const caller = createCaller({
@@ -72,6 +73,29 @@ describe("create food", () => {
       image: null,
     };
     const result = await caller.create(input);
+
+    expect(result).toEqual(foods[0]);
+  });
+});
+
+describe("delete food", () => {
+  it("Should throw if a non-admin user tries to delete a food", async () => {
+    const caller = createCaller({
+      db: mockDb,
+      session: { user: { role: "USER", id: "" }, expires: "" },
+      headers: new Headers(),
+    });
+
+    await expect(caller.delete({ id: "1" })).rejects.toThrowError();
+  });
+
+  it("Should delete food if user is admin", async () => {
+    const caller = createCaller({
+      db: mockDb,
+      session: { user: { role: "ADMIN", id: "" }, expires: "" },
+      headers: new Headers(),
+    });
+    const result = await caller.delete({ id: "1" });
 
     expect(result).toEqual(foods[0]);
   });

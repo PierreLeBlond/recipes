@@ -55,4 +55,13 @@ export const foodRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => ctx.db.food.create({ data: input })),
+  delete: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) =>
+      ctx.db.food.delete({ where: { id: input.id } }),
+    ),
 });

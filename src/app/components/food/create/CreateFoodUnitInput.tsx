@@ -1,14 +1,14 @@
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { ChevronDown } from "lucide-react";
-import { FormFood } from "./FormFood";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../ui/select";
+} from "@/src/app/components/ui/select";
+import { FormFood } from "./FormFood";
 
 type CreateFoodUnitInputProps = {
   control: Control<FormFood>;
