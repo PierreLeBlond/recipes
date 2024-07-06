@@ -1,8 +1,13 @@
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";
+import { Typography } from "@/src/app/components/ui/typography";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/src/app/components/ui/card";
 import { CreateRecipeDialog } from "./CreateRecipeDialog";
-import { Typography } from "../../ui/typography";
-import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
 
 export function CreateRecipeCard() {
   const [open, setOpen] = useState(false);
