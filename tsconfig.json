@@ -27,7 +27,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+
+    "types": ["vitest/globals"]
   },
   "include": [
     ".eslintrc.cjs",

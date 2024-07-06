@@ -27,9 +27,9 @@ export function CreateFoodUnitInput({
       rules={{
         required: "Une unité doit être sélectionnée.",
       }}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange } }) => (
         <>
-          <Select onValueChange={onChange} defaultValue={value}>
+          <Select onValueChange={onChange} defaultValue="">
             <SelectTrigger
               variant="edit"
               label="Unité de mesure"

@@ -1,17 +1,31 @@
 import { api } from "@/src/trpc/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
 import { Trash2 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/src/app/components/ui/use-toast";
 
 type DeleteFoodButtonProps = {
   id: string;
+  name: string;
 };
 
 export function DeleteFoodButton({
-  props: { id },
+  props: { id, name },
 }: {
   props: DeleteFoodButtonProps;
 }) {
-  const deleteMutation = api.food.delete.useMutation();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const deleteMutation = api.food.delete.useMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: getQueryKey(api.food.list) });
+      toast({
+        title: "Bye bye 👋",
+        description: `'${name}' supprimé.`,
+      });
+    },
+  });
 
   const { handleSubmit } = useForm();
 

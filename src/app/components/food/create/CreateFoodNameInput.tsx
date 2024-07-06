@@ -1,5 +1,4 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { Food } from "@/src/lib/types/Food";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
 import { Input } from "@/src/app/components/ui/input";
 import { FormFood } from "./FormFood";
@@ -7,11 +6,10 @@ import { FormFood } from "./FormFood";
 type CreateFoodInputProps = {
   register: UseFormRegister<FormFood>;
   errors: FieldErrors<FormFood>;
-  foods: Food[];
 };
 
 export function CreateFoodNameInput({
-  props: { register, errors, foods },
+  props: { register, errors },
 }: {
   props: CreateFoodInputProps;
 }) {
@@ -36,9 +34,6 @@ export function CreateFoodNameInput({
             message:
               "Le nom ne doit comporter que des lettres, des espaces, et des apostrophes.",
           },
-          validate: (name: string) =>
-            !foods.some((food) => food.name === name) ||
-            "Cet aliment existe déjà.",
         })}
       />
       {errors.name && <ErrorAlert>{errors.name.message}</ErrorAlert>}

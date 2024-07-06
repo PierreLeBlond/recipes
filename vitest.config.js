@@ -7,7 +7,8 @@ export default defineConfig({
   test: {
     include: ["./tests/**/*.test.ts?(x)"],
     environment: "jsdom",
-    setupFiles: "./setupTest.ts",
+    globals: true,
+    setupFiles: ["./setupTests.ts"],
     poolOptions: {
       threads: {
         maxThreads: 4,

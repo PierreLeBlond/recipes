@@ -6,20 +6,19 @@ import { FormInputs } from "@/src/lib/types/FormInputs";
 import { SessionProvider } from "next-auth/react";
 import userEvent from "@testing-library/user-event";
 
-
 Range.prototype.getBoundingClientRect = () => {
-    return {
-        left: 0,
-        top: 0,
-        height: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        bottom: 0,
-        right: 0,
-        toJSON: () => ""
-    };
+  return {
+    left: 0,
+    top: 0,
+    height: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+    bottom: 0,
+    right: 0,
+    toJSON: () => "",
   };
+};
 
 vi.mock("next/navigation", async (importOriginal) => {
   const mod = await importOriginal<typeof import("next/navigation")>();

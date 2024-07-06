@@ -2,13 +2,13 @@
 
 import { api } from "@/src/trpc/react";
 import { LoaderCircle, ServerCrash } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { FoodItem } from "./FoodItem";
 
-type FoodListProps = {
-  search: string;
-};
+export function FoodList() {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") || "";
 
-export function FoodList({ props: { search } }: { props: FoodListProps }) {
   const { status, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     api.food.list.useInfiniteQuery(
       { search, limit: 50 },

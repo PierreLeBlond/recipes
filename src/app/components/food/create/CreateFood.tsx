@@ -1,42 +1,29 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { Food } from "@/src/lib/types/Food";
-import { useState } from "react";
-import { SuccessAlert } from "@/src/app/components/utils/alert/SuccessAlert";
 import { Button } from "@/src/app/components/ui/button";
-import { Session } from "next-auth";
 import { Typography } from "@/src/app/components/ui/typography";
 import { ErrorAlert } from "@/src/app/components/utils/alert/ErrorAlert";
+import { api } from "@/src/trpc/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/src/app/components/ui/use-toast";
+import { getQueryKey } from "@trpc/react-query";
+import { useSession } from "next-auth/react";
 import { CreateFoodNameInput } from "./CreateFoodNameInput";
 import { CreateFoodDensityInput } from "./CreateFoodDensityInput";
 import { CreateFoodMassPerPieceInput } from "./CreateFoodMassPerPieceInput";
 import { FormFood } from "./FormFood";
 import { CreateFoodUnitInput } from "./CreateFoodUnitInput";
 
-type CreateFoodHandlers = {
-  onSubmit: (food: Food) => Promise<Food>;
-};
-
-type CreateFoodPropsType = {
-  foods: Food[];
-  session: Session | null;
-};
-
-export function CreateFood({
-  props: { foods, session },
-  onSubmit,
-}: {
-  props: CreateFoodPropsType;
-} & CreateFoodHandlers) {
-  const [lastCreatedFood, setLastCreatedFood] = useState<Food | null>(null);
-
-  const canCreateFood = session?.user?.role === "ADMIN";
+export function CreateFood() {
+  const session = useSession();
+  const canCreateFood = session.data?.user.role === "ADMIN";
 
   const {
     handleSubmit,
     register,
     control,
+    resetField,
     formState: { isDirty, errors },
   } = useForm<FormFood>({
     defaultValues: {
@@ -46,39 +33,57 @@ export function CreateFood({
     },
   });
 
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const queryKey = getQueryKey(api.food.list);
+  const createMutation = api.food.create.useMutation({
+    onError: (_, { name }) => {
+      toast({
+        title: "Oh no...",
+        description: `Impossible de créer '${name}'`,
+      });
+    },
+    onSuccess: ({ name }) => {
+      resetField("name");
+      resetField("density");
+      resetField("massPerPiece");
+      toast({
+        title: "Un de plus !",
+        description: `'${name}' créé.`,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
   const handleFormSubmit = async (food: FormFood) => {
-    const result = await onSubmit({
+    createMutation.mutate({
       name: food.name,
       density: food.density ? parseFloat(food.density) : null,
       massPerPiece: food.massPerPiece ? parseFloat(food.massPerPiece) : null,
       unit: food.unit,
     });
-    setLastCreatedFood(result);
   };
 
   return (
     <div className="flex w-80 flex-col gap-8 px-4 xs:p-0">
       <Typography variant="h3">Ajouter un aliment</Typography>
       {canCreateFood ? (
-        <>
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={handleSubmit(handleFormSubmit)}
-          >
-            <CreateFoodNameInput props={{ register, errors, foods }} />
-            <CreateFoodUnitInput props={{ control, errors }} />
-            <CreateFoodDensityInput props={{ register, errors }} />
-            <CreateFoodMassPerPieceInput props={{ register, errors }} />
-            <div className="flex justify-end">
-              <Button type="submit" variant="edit" disabled={!isDirty}>
-                AJOUTER
-              </Button>
-            </div>
-          </form>
-          {lastCreatedFood && (
-            <SuccessAlert>{`L'aliment '${lastCreatedFood.name}' a bien été ajouté.`}</SuccessAlert>
-          )}{" "}
-        </>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmit(handleFormSubmit)}
+        >
+          <CreateFoodNameInput props={{ register, errors }} />
+          <CreateFoodUnitInput props={{ control, errors }} />
+          <CreateFoodDensityInput props={{ register, errors }} />
+          <CreateFoodMassPerPieceInput props={{ register, errors }} />
+          <div className="flex justify-end">
+            <Button type="submit" variant="edit" disabled={!isDirty}>
+              AJOUTER
+            </Button>
+          </div>
+        </form>
       ) : (
         <ErrorAlert>Fonctionnalité réservé aux administrateurs</ErrorAlert>
       )}

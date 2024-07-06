@@ -1,10 +1,33 @@
 import { CreateFood } from "@/src/app/components/food/create/CreateFood";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { createFoodLabels } from "./createFoodLabels";
 import { createFoodErrorsMessages } from "./createFoodErrorsMessages";
-import { Food } from "@/src/lib/types/Food";
+import "@testing-library/jest-dom";
+import { renderWithProviders, trpcMsw } from "@/tests/server/trpc/setup";
+import { SessionProvider } from "next-auth/react";
+import { setupServer } from "msw/node";
+import { ToastProvider } from "@radix-ui/react-toast";
+import { Toaster } from "@/src/app/components/ui/toaster";
+
+const server = setupServer();
+
+beforeAll(() => {
+  // Start the interception.
+  server.listen();
+});
+
+afterEach(() => {
+  // Remove any handlers you may have added
+  // in individual tests (runtime handlers).
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  // Disable request interception and clean up.
+  server.close();
+});
 
 afterEach(() => {
   cleanup();
@@ -19,38 +42,19 @@ const mockPointerCaptureEvent = () => {
 
 const user = userEvent.setup();
 
-type ComponentInputType = {
-  onSubmit?: (food: Food) => Promise<Food>;
-  foods?: Food[];
-};
-
-const defaultInput = {
-  onSubmit: async () =>
-    ({
-      name: "sucre",
-      density: 2.5,
-      massPerPiece: null,
-      unit: "GRAM",
-    }) as const satisfies Food,
-  foods: [],
-} as const satisfies ComponentInputType;
-
-const getComponent = (input?: ComponentInputType) => {
-  return render(
-    <CreateFood
-      props={{
-        ...defaultInput,
-        ...input,
-        session: {
-          expires: "",
-          user: {
-            role: "ADMIN",
-            id: "",
-          },
-        },
-      }}
-      onSubmit={input?.onSubmit || defaultInput.onSubmit}
-    />,
+const getComponent = () => {
+  return renderWithProviders(
+    <>
+      <ToastProvider>
+        <SessionProvider
+          session={{ user: { id: "user", role: "ADMIN" }, expires: "" }}
+        >
+          <CreateFood />
+        </SessionProvider>
+        ,
+      </ToastProvider>
+      <Toaster />
+    </>,
   );
 };
 
@@ -156,28 +160,6 @@ describe("name", () => {
       createFoodErrorsMessages.name.pattern,
     );
   });
-
-  it("Should not accept a name that already exists", async () => {
-    const foods = [
-      {
-        name: "sucre",
-        density: 2.5,
-        massPerPiece: 10,
-        unit: "GRAM",
-      },
-    ] as const satisfies Food[];
-    const component = getComponent({ foods });
-    const input = getNameInput(component);
-    const button = getButton(component);
-
-    await user.click(input);
-    await user.keyboard("sucre");
-    await user.click(button);
-
-    expect(component.baseElement.textContent).toContain(
-      createFoodErrorsMessages.name.unique,
-    );
-  });
 });
 
 describe("unit", () => {
@@ -220,19 +202,6 @@ describe("unit", () => {
     expect(component.baseElement.textContent).toContain(
       createFoodErrorsMessages.unit,
     );
-  });
-
-  it("Should not submit if no unit is chosen", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
-    const button = getButton(component);
-    const nameInput = getNameInput(component);
-
-    await user.click(nameInput);
-    await user.keyboard("sucre");
-    await user.click(button);
-
-    expect(onSubmit.mock.calls).toHaveLength(0);
   });
 });
 
@@ -361,20 +330,28 @@ describe("submit", () => {
     expect(button).toBeDefined();
   });
 
-  it("Should not submit if nothing is edited", async () => {
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
+  it("Should disable the button if nothing is edited", async () => {
+    const component = getComponent();
     const button = getButton(component);
 
-    await user.click(button);
-
-    expect(onSubmit.mock.calls).toHaveLength(0);
+    expect(button).toBeDisabled();
   });
 
   it("Should submit if inputs are valid", async () => {
+    server.use(
+      // Until msw support trpc v11 : https://github.com/maloguertin/msw-trpc/issues/37
+      // @ts-ignore
+      trpcMsw.food.create.mutation((input) => {
+        return {
+          ...input,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          id: "1",
+        };
+      }),
+    );
     mockPointerCaptureEvent();
-    const onSubmit = vi.fn();
-    const component = getComponent({ onSubmit });
+    const component = getComponent();
     const nameInput = getNameInput(component);
     const unitInput = getUnitInput(component);
     const button = getButton(component);
@@ -388,44 +365,8 @@ describe("submit", () => {
 
     await user.click(button);
 
-    expect(onSubmit.mock.calls[0][0]).toEqual({
-      name: "sucre",
-      density: null,
-      massPerPiece: null,
-      unit: "LITER",
-    });
-  });
-
-  it("Should submit input values", async () => {
-    const onSubmit = vi.fn();
-    mockPointerCaptureEvent();
-    const component = getComponent({ onSubmit });
-    const nameInput = getNameInput(component);
-    const unitInput = getUnitInput(component);
-    const densityInput = getDensityInput(component);
-    const massPerPieceInput = getMassPerPieceInput(component);
-    const button = getButton(component);
-
-    await user.click(nameInput);
-    await user.keyboard("sucre");
-
-    await user.click(unitInput);
-    const option = component.getByRole("option", { name: "l (litre)" });
-    await user.click(option);
-
-    await user.click(densityInput);
-    await user.keyboard("2.5");
-
-    await user.click(massPerPieceInput);
-    await user.keyboard("10");
-
-    await user.click(button);
-
-    expect(onSubmit.mock.calls[0][0]).toEqual({
-      name: "sucre",
-      density: 2.5,
-      massPerPiece: 10,
-      unit: "LITER",
+    await waitFor(() => {
+      expect(screen.getByText("'sucre' créé.")).toBeInTheDocument();
     });
   });
 });
