@@ -2,15 +2,15 @@ import { api } from "@/src/trpc/react";
 import { useSession } from "next-auth/react";
 import { LoaderCircle, ServerCrash } from "lucide-react";
 import { Button } from "@/src/app/components/ui/button";
+import { useSearchParams } from "next/navigation";
 import { RecipeCard } from "./RecipeCard";
 import { CreateRecipeCard } from "./create/CreateRecipeCard";
 
-type RecipeListProps = {
-  search: string;
-};
-
-export function RecipeList({ props: { search } }: { props: RecipeListProps }) {
+export function RecipeList() {
   const session = useSession();
+
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") || "";
 
   const { status, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     api.recipe.list.useInfiniteQuery(
