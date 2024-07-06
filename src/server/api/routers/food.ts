@@ -22,7 +22,7 @@ export const foodRouter = createTRPCRouter({
         take: limit + 1,
         skip: cursor ? 1 : 0,
         cursor: cursor ? { id: cursor } : undefined,
-        where: { name: { contains: input.search } },
+        where: { name: { contains: input.search, mode: "insensitive" } },
         orderBy: { name: "asc" },
       });
 
