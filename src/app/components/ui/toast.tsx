@@ -16,7 +16,7 @@ const ToastViewport = React.forwardRef<
   <ToastPrimitives.Viewport
     ref={ref}
     className={cn(
-      "fixed bottom-16 left-1/2 z-30 flex max-h-screen w-full -translate-x-1/2 flex-col-reverse items-center justify-center xs:bottom-24 xs:left-auto xs:right-8 xs:w-64 xs:-translate-x-0 lg:bottom-auto lg:left-1/2 lg:right-auto lg:top-20 lg:-translate-x-1/2",
+      "fixed left-1/2 top-16 z-50 flex max-h-screen w-full -translate-x-1/2 flex-col-reverse items-center justify-center xs:bottom-24 xs:left-auto xs:right-8 xs:w-64 xs:-translate-x-0 lg:bottom-auto lg:left-1/2 lg:right-auto lg:top-20 lg:-translate-x-1/2",
       className,
     )}
     {...props}
@@ -45,12 +45,12 @@ const Toast = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
     VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => (
-    <ToastPrimitives.Root
-      ref={ref}
-      className={cn(toastVariants({ variant }), className)}
-      {...props}
-    />
-  ));
+  <ToastPrimitives.Root
+    ref={ref}
+    className={cn(toastVariants({ variant }), className)}
+    {...props}
+  />
+));
 Toast.displayName = ToastPrimitives.Root.displayName;
 
 const ToastAction = React.forwardRef<
