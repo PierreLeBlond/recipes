@@ -22,6 +22,7 @@ export function EditFood({ props: { food } }: { props: EditFoodProps }) {
   const {
     handleSubmit,
     register,
+    reset,
     control,
     formState: { isDirty, errors },
   } = useForm<FormFood>({
@@ -43,10 +44,16 @@ export function EditFood({ props: { food } }: { props: EditFoodProps }) {
         description: `Impossible de modifier '${name}'`,
       });
     },
-    onSuccess: ({ name }) => {
+    onSuccess: (newFood) => {
+      reset({
+        name: newFood.name,
+        unit: newFood.unit,
+        density: newFood.density?.toString() || "",
+        massPerPiece: newFood.massPerPiece?.toString() || "",
+      });
       toast({
         title: "Compris chef !",
-        description: `'${name}' modifié.`,
+        description: `'${newFood.name}' modifié.`,
       });
     },
     onSettled: () => {
