@@ -4,6 +4,7 @@ import { api } from "@/src/trpc/react";
 import { LoaderCircle, ServerCrash } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { FoodItem } from "./FoodItem";
+import { Button } from "@/src/app/components/ui/button";
 
 export function FoodList() {
   const searchParams = useSearchParams();
@@ -11,7 +12,7 @@ export function FoodList() {
 
   const { status, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     api.food.list.useInfiniteQuery(
-      { search, limit: 50 },
+      { search, limit: 10 },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       },
@@ -46,15 +47,15 @@ export function FoodList() {
     <>
       <ul className="flex flex-col gap-2 shadow-lg">{foodList}</ul>
       {hasNextPage && (
-        <button
+        <Button
+          className="w-full rounded-none xs:rounded-b-xl xs:rounded-t-none"
           type="button"
           onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
         >
           {isFetchingNextPage && "Chargement..."}
-          {!isFetchingNextPage && hasNextPage && "Charger plus"}
-          {!isFetchingNextPage && !hasNextPage && "C'est tout !"}
-        </button>
+          {!isFetchingNextPage && "Charger plus"}
+        </Button>
       )}
     </>
   );
