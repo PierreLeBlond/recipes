@@ -14,8 +14,8 @@ export default function FoodPage() {
       <div className="flex flex-col gap-2 lg:col-span-2 lg:col-start-2">
         <SessionProvider>
           <CreateFoodButton />
+          <FoodList />
         </SessionProvider>
-        <FoodList />
       </div>
     </div>
   );

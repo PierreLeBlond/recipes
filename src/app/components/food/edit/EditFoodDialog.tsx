@@ -1,15 +1,17 @@
 import { Dialog, DialogContent } from "@/src/app/components/ui/dialog";
-import { CreateFood } from "./CreateFood";
+import { Food } from "@/prisma/generated/client";
+import { EditFood } from "./EditFood";
 
-type CreateFoodDialogProps = {
+type EditFoodDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  food: Food;
 };
 
-export function CreateFoodDialog({
-  props: { open, setOpen },
+export function EditFoodDialog({
+  props: { open, setOpen, food },
 }: {
-  props: CreateFoodDialogProps;
+  props: EditFoodDialogProps;
 }) {
   const handleOpen = () => {
     setOpen(!open);
@@ -18,7 +20,7 @@ export function CreateFoodDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
       <DialogContent className="p-4 sm:p-8">
-        <CreateFood />
+        <EditFood props={{ food }} />
       </DialogContent>
     </Dialog>
   );

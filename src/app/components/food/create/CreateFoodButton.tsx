@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { Button } from "@/src/app/components/ui/button";
+import { useSession } from "next-auth/react";
 import { CreateFoodDialog } from "./CreateFoodDialog";
 
 export function CreateFoodButton() {
   const [open, setOpen] = useState(false);
+  const session = useSession();
+  const canEditFood = session.data?.user.role === "ADMIN";
+
+  if (!canEditFood) {
+    return null;
+  }
+
   return (
     <>
       <Button
