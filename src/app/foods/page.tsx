@@ -8,7 +8,7 @@ import { SessionProvider } from "next-auth/react";
 export default function FoodPage() {
   return (
     <div className="grid w-full gap-8 pt-8 xs:gap-16 xs:pt-16 lg:grid-cols-4">
-      <div className="px-4 xs:p-0 lg:col-span-3">
+      <div className="w-full justify-self-center px-4 xs:p-0 lg:col-span-4 lg:w-2/3">
         <SearchInput props={{ label: "Recherche un aliment" }} />
       </div>
       <div className="flex flex-col gap-2 lg:col-span-2 lg:col-start-2">

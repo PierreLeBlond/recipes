@@ -58,9 +58,9 @@ export function RecipeDelete({
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
-      className="flex w-full items-center gap-4 rounded-md border border-error p-4 text-error"
+      className="flex w-full flex-col items-center justify-center gap-4 border-y border-error p-4 text-center text-error xs:rounded-md xs:border-x sm:flex-row lg:justify-start"
     >
-      <Button type="submit" variant="error">
+      <Button type="submit" variant="error" className="w-full sm:w-auto">
         Supprimer ma recette
       </Button>
       Attention ! Cette action est irréversible.
