@@ -11,13 +11,14 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { api } from "@/src/trpc/react";
 import { SessionProvider } from "next-auth/react";
+import { useToast } from "@/src/app/components/ui/use-toast";
 import { RecipeImage } from "./image/RecipeImage";
 import { RecipeName } from "./name/RecipeName";
 import { RecipeSteps } from "./steps/RecipeSteps";
 import { RecipeIngredients } from "./ingredients/RecipeIngredients";
 import { EditSwitch } from "./EditSwitch";
 import { RecipeSubmitButton } from "./RecipeSubmitButton";
-import { useToast } from "../ui/use-toast";
+import { RecipeDelete } from "./RecipeDelete";
 
 type RecipeProps = {
   recipe: Recipe & {
@@ -88,6 +89,9 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
             <RecipeSubmitButton />
           </div>
         </form>
+        <RecipeDelete
+          props={{ id: recipe.id, name: recipe.name }}
+         />
       </FormProvider>
     </SessionProvider>
   );

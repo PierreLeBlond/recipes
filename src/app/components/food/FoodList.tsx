@@ -3,8 +3,8 @@
 import { api } from "@/src/trpc/react";
 import { LoaderCircle, ServerCrash } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { FoodItem } from "./FoodItem";
 import { Button } from "@/src/app/components/ui/button";
+import { FoodItem } from "./FoodItem";
 
 export function FoodList() {
   const searchParams = useSearchParams();

@@ -136,4 +136,13 @@ export const recipeRouter = createTRPCRouter({
         },
       });
     }),
+  delete: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) =>
+      ctx.db.recipe.delete({ where: { id: input.id } }),
+    ),
 });
