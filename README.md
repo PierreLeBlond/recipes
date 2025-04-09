@@ -16,6 +16,10 @@ To seed the db with testing values :
 
 `pnpm run db:seed`
 
+Each time you update the schema :
+
+`npx prisma migrate dev --name <update-name>`
+
 ### run
 
 `pnpm run dev`
