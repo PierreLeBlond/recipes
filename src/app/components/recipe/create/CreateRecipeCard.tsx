@@ -19,7 +19,7 @@ export function CreateRecipeCard() {
         variant="edit"
       >
         <CardContent className="absolute inset-0 h-full w-full">
-          <div className="absolute inset-0 h-full w-full from-primary/10 to-primary/30 sm:bg-gradient-to-t" />
+          <div className="absolute inset-0 h-full w-full from-primary/10 to-primary/30 sm:bg-linear-to-t" />
         </CardContent>
         <div className="relative hidden h-full flex-col justify-between sm:flex">
           <CardHeader>

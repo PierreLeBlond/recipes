@@ -6,13 +6,20 @@ async function seedRecipes() {
   try {
     await prisma.recipe.deleteMany();
     await prisma.food.deleteMany();
-    await prisma.user.delete({
+    let user = await prisma.user.findUnique({
       where: {
         email: "john.doe@gmail.com",
       },
     });
+    if (user) {
+      await prisma.user.delete({
+        where: {
+          email: "john.doe@gmail.com",
+        },
+      });
+    }
 
-    const user = await prisma.user.create({
+    user = await prisma.user.create({
       data: {
         email: "john.doe@gmail.com",
       },

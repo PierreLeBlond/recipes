@@ -23,7 +23,7 @@ export function RecipeCard({
         >
           <div
             className={cn("absolute inset-0 h-full w-full", {
-              "bg-gradient-to-t from-primary-foreground/90 via-primary-foreground/60 to-primary-foreground/0":
+              "bg-linear-to-t from-primary-foreground/90 via-primary-foreground/60 to-primary-foreground/0":
                 image,
               "bg-primary-foreground/90": !image,
             })}

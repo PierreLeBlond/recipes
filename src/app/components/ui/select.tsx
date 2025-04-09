@@ -14,7 +14,7 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const selectTriggerVariants = cva(
-  "text-start peer h-full w-full rounded-[7px] border bg-transparent px-3 py-2 !pr-9 font-sans text-sm font-normal outline outline-0 transition-all data-[state=open]:border-2 focus:border-2 focus:outline-0 disabled:cursor-not-allowed disabled:border-0",
+  "text-start peer h-full w-full rounded-[7px] border bg-transparent px-3 py-2 pr-9! font-sans text-sm font-normal outline outline-0 transition-all data-[state=open]:border-2 focus:border-2 focus:outline-0 disabled:cursor-not-allowed disabled:border-0",
   {
     variants: {
       variant: {
@@ -30,7 +30,7 @@ const selectTriggerVariants = cva(
 );
 
 const labelVariants = cva(
-  "before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t  before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:transition-all peer-has-[span:empty]:text-sm peer-has-[span:empty]:leading-[3.75]  peer-focus:text-[11px] peer-focus:leading-tight peer-data-[state=open]:before:border-l-2 peer-focus:before:border-l-2 peer-data-[state=open]:before:border-t-2 peer-focus:before:border-t-2   peer-data-[state=open]:after:border-t-2 peer-focus:after:border-t-2 peer-data-[state=open]:after:border-r-2 peer-focus:after:border-r-2 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent",
+  "before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none overflow-visible! truncate text-[11px] font-normal leading-tight transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t  before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:grow after:rounded-tr-md after:border-r after:border-t after:transition-all peer-has-[span:empty]:text-sm peer-has-[span:empty]:leading-[3.75]  peer-focus:text-[11px] peer-focus:leading-tight peer-data-[state=open]:before:border-l-2 peer-focus:before:border-l-2 peer-data-[state=open]:before:border-t-2 peer-focus:before:border-t-2   peer-data-[state=open]:after:border-t-2 peer-focus:after:border-t-2 peer-data-[state=open]:after:border-r-2 peer-focus:after:border-r-2 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent",
   {
     variants: {
       variant: {
@@ -72,7 +72,7 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
 >(({ className, children, variant, label, icon, ...props }, ref) => (
-  <div className="!min-w-auto relative h-10 w-full min-w-[200px]">
+  <div className="min-w-auto! relative h-10 w-full min-w-[200px]">
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(selectTriggerVariants({ variant, className }))}
@@ -175,7 +175,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "focus:bg-accent focus:text-accent-foreground relative flex w-full select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:cursor-pointer hover:font-bold data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "focus:bg-accent focus:text-accent-foreground relative flex w-full select-none items-center rounded-xs py-1.5 pl-8 pr-2 text-sm outline-hidden hover:cursor-pointer hover:font-bold data-disabled:pointer-events-none data-disabled:opacity-50",
       className,
     )}
     {...props}

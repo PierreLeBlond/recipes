@@ -4,7 +4,7 @@ import { cn } from "@/src/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 
 const inputVariants = cva(
-  "peer h-full w-full rounded-[7px] border bg-transparent pl-3 py-2.5 !pr-2 font-sans text-sm font-normal outline outline-0 transition-all placeholder:opacity-0 placeholder-shown:border focus:border-2 focus:outline-0 focus:placeholder:opacity-100 disabled:cursor-not-allowed disabled:border-0 ",
+  "peer h-full w-full rounded-[7px] border bg-transparent pl-3 py-2.5 pr-2! font-sans text-sm font-normal outline outline-0 transition-all placeholder:opacity-0 placeholder-shown:border focus:border-2 focus:outline-0 focus:placeholder:opacity-100 disabled:cursor-not-allowed disabled:border-0 ",
   {
     variants: {
       variant: {
@@ -20,13 +20,13 @@ const inputVariants = cva(
 );
 
 const labelVariants = cva(
-  "before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t  before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:before:border-l-2 peer-focus:before:border-t-2  peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent",
+  "before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none overflow-visible! truncate text-[11px] font-normal leading-tight transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t  before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:grow after:rounded-tr-md after:border-r after:border-t after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:before:border-l-2 peer-focus:before:border-t-2  peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent",
   {
     variants: {
       variant: {
         default:
-          "text-secondary before:border-secondary peer-disabled:peer-placeholder-shown:text-secondary peer-focus:after:!border-secondary after:border-secondary peer-placeholder-shown:text-secondary peer-focus:text-secondary peer-focus:before:!border-secondary",
-        edit: "text-edit before:border-edit-border peer-disabled:peer-placeholder-shown:text-edit peer-focus:after:!border-edit after:border-edit-border peer-placeholder-shown:text-edit peer-focus:text-edit peer-focus:before:!border-edit",
+          "text-secondary before:border-secondary peer-placeholder-shown:peer-disabled:text-secondary peer-focus:after:border-secondary! after:border-secondary peer-placeholder-shown:text-secondary peer-focus:text-secondary peer-focus:before:border-secondary!",
+        edit: "text-edit before:border-edit-border peer-placeholder-shown:peer-disabled:text-edit peer-focus:after:border-edit! after:border-edit-border peer-placeholder-shown:text-edit peer-focus:text-edit peer-focus:before:border-edit!",
       },
     },
     defaultVariants: {
@@ -61,7 +61,7 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, placeholder, icon, variant, ...props }, ref) => (
-    <div className="!min-w-auto relative h-10 w-full">
+    <div className="min-w-auto! relative h-10 w-full">
       {icon && <div className={cn(iconVariants({ variant }))}>{icon}</div>}
       <input
         id={label}

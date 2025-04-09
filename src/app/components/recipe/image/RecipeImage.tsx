@@ -55,7 +55,7 @@ export function RecipeImage() {
         onChange={handleFileChange}
       />
       <CardContent
-        className="group absolute h-full w-full !bg-transparent bg-cover bg-center p-0 shadow-md xs:rounded-lg"
+        className="group absolute h-full w-full bg-transparent! bg-cover bg-center p-0 shadow-md xs:rounded-lg"
         style={image ? { backgroundImage: `url('${image}')` } : {}}
       />
       {edit && (

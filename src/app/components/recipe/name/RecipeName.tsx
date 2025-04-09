@@ -20,7 +20,7 @@ export function RecipeName() {
 
       <div
         className={cn("transition-all duration-300", {
-          "pointer-events-none !h-0 translate-y-10 opacity-0 lg:!h-10 lg:translate-x-40 lg:translate-y-0":
+          "pointer-events-none h-0! translate-y-10 opacity-0 lg:h-10! lg:translate-x-40 lg:translate-y-0":
             !edit,
         })}
       >
