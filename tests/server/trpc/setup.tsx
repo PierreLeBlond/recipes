@@ -6,7 +6,6 @@ import { type ReactElement } from "react";
 import superjson from "superjson";
 import "@testing-library/jest-dom";
 import { type AppRouter } from "@/src/server/api/root";
-import fetch from "cross-fetch";
 
 const mockedApi = createTRPCReact<AppRouter>({
   overrides: {
@@ -54,7 +53,7 @@ export const renderWithProviders = (
 };
 
 export const trpcMsw = createTRPCMsw<AppRouter>({
-  baseUrl: "/api/trpc",
+  baseUrl: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/trpc`,
   transformer: {
     input: superjson,
     output: superjson,

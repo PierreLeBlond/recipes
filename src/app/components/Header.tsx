@@ -22,7 +22,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
   const pathname = usePathname();
 
   return (
-    <header className="fixed z-40 grid h-16 w-full grid-cols-5 items-center justify-between border-b border-border bg-primary/20 px-2 text-center text-sm font-bold backdrop-blur-md xs:grid-cols-7 xs:px-4">
+    <header className="border-border bg-primary/20 xs:grid-cols-7 xs:px-4 fixed z-40 grid h-16 w-full grid-cols-5 items-center justify-between border-b px-2 text-center text-sm font-bold backdrop-blur-md">
       {session && (
         <div className="flex items-center gap-x-4">
           {session?.user.image ? (
@@ -30,7 +30,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
               src={session?.user.image}
               alt={session?.user.name || "image utilisateur"}
               className={cn("h-10 w-10 rounded-full", {
-                "border-2 border-edit md:border-0":
+                "border-edit border-2 md:border-0":
                   session?.user.role === "ADMIN",
               })}
               width={40}
@@ -45,13 +45,14 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </span>
         </div>
       )}
-      <div className="col-span-3 col-start-2 flex items-center justify-center gap-x-4 text-xs xs:col-span-5 xs:col-start-2 xs:text-sm">
+      <div className="xs:col-span-5 xs:col-start-2 xs:text-sm col-span-3 col-start-2 flex items-center justify-center gap-x-4 text-xs">
         <Link
           href="/recipes"
           className={cn(
-            "rounded-md border-primary-foreground p-2 transition-colors hover:bg-primary-foreground/10",
+            "border-primary-foreground hover:bg-primary-foreground/10 rounded-md p-2 transition-colors",
             {
-              "bg-primary-foreground/10": pathname === "/recipes",
+              "bg-primary-foreground/10":
+                pathname === `${process.env.NEXT_PUBLIC_BASE_PATH}/recipes`,
             },
           )}
         >
@@ -61,9 +62,10 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
         <Link
           href="/foods"
           className={cn(
-            "rounded-md border-primary-foreground p-2 transition-colors hover:bg-primary-foreground/10",
+            "border-primary-foreground hover:bg-primary-foreground/10 rounded-md p-2 transition-colors",
             {
-              "bg-primary-foreground/10": pathname === "/foods",
+              "bg-primary-foreground/10":
+                pathname === `${process.env.NEXT_PUBLIC_BASE_PATH}/foods`,
             },
           )}
         >
@@ -77,7 +79,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           </Link>
         </Button>
         <Button
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-primary md:hidden"
+          className="bg-primary flex h-10 w-10 items-center justify-center rounded-full md:hidden"
           variant="link"
           size="sm"
         >

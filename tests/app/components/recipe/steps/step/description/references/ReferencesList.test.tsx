@@ -39,7 +39,7 @@ const defaultInput = {
 const getComponent = (input: GetComponentInput) => {
   return render(
     <ReferencesList
-      props={{ ...defaultInput, ...input }}
+      props={{ ...defaultInput, ...input, highlightedName: null }}
       onIngredientReferenceSelected={
         input.onIngredientReferenceSelected ||
         defaultInput.onIngredientReferenceSelected
@@ -74,5 +74,5 @@ test("Should fire an event when a food is clicked", async () => {
   await user.click(component.getByText("pomme"));
 
   expect(onIngredientClickMock.mock.calls).toHaveLength(1);
-  expect(onIngredientClickMock.mock.calls[0][0]).toEqual("pomme");
+  expect(onIngredientClickMock.mock.calls?.[0]?.[0]).toEqual("pomme");
 });

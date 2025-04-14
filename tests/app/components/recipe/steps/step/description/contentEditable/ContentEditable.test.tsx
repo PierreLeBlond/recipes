@@ -5,18 +5,18 @@ import { ContentEditable } from "@/src/app/components/recipe/steps/step/descript
 import { setCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/setCaretPosition";
 
 Range.prototype.getBoundingClientRect = () => {
-    return {
-        left: 0,
-        top: 0,
-        height: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        bottom: 0,
-        right: 0,
-        toJSON: () => ""
-    };
+  return {
+    left: 0,
+    top: 0,
+    height: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+    bottom: 0,
+    right: 0,
+    toJSON: () => "",
   };
+};
 
 afterEach(() => {
   cleanup();
@@ -34,7 +34,10 @@ const getComponent = ({
   return render(
     <ContentEditable
       onChangedContent={onChangedDescriptionMock || (() => {})}
-      props={{ formatedContent: formatedDescription, caretPosition, ref: { current: null } }}
+      props={{
+        formatedContent: formatedDescription,
+        caretPosition,
+      }}
     />,
   );
 };
@@ -70,10 +73,12 @@ test("Component fire an event when content is changed", async () => {
   expect(contentEditable).toHaveFocus();
   expect(contentEditable).toHaveTextContent("Hello World");
   expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
-  expect(onChangedDescriptionMock.mock.calls[11][0].content).toEqual(
+  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].content).toEqual(
     "Hello World",
   );
-  expect(onChangedDescriptionMock.mock.calls[11][0].caretPosition).toEqual(11);
+  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].caretPosition).toEqual(
+    11,
+  );
 });
 
 test("Component should handled multiple lines", async () => {
@@ -88,7 +93,7 @@ test("Component should handled multiple lines", async () => {
 
   expect(contentEditable).toHaveFocus();
   expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
-  expect(onChangedDescriptionMock.mock.calls[11][0].content).toEqual(
+  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].content).toEqual(
     "Hello\nWorld",
   );
 });
@@ -111,7 +116,10 @@ test("Component should display given formated content and override previous user
 
   component.rerender(
     <ContentEditable
-      props={{ formatedContent: "<span>Hello</span>", caretPosition: null, ref:{ current: null} }}
+      props={{
+        formatedContent: "<span>Hello</span>",
+        caretPosition: null,
+      }}
       onChangedContent={() => {}}
     />,
   );
@@ -133,7 +141,6 @@ test("Component should keep focus when given formated content is updated", async
       props={{
         formatedContent: "<span>Hello World</span>",
         caretPosition: null,
-        ref: { current: null}
       }}
       onChangedContent={() => {}}
     />,
@@ -153,7 +160,10 @@ test("Should keep caret position when updating formated content", async () => {
 
   component.rerender(
     <ContentEditable
-      props={{ formatedContent: "Hello World", caretPosition: null, ref: { current: null} }}
+      props={{
+        formatedContent: "Hello World",
+        caretPosition: null,
+      }}
       onChangedContent={() => {}}
     />,
   );
@@ -171,9 +181,9 @@ test("Should fire an event when caret position is changed with arrows", async ()
   await user.click(contentEditable);
   await user.keyboard("Hello World");
   expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
-  expect(onChangedDescriptionMock.mock.calls[11][0].caretPosition).toBe(11);
+  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].caretPosition).toBe(11);
   await user.keyboard("{ArrowLeft}");
 
   expect(onChangedDescriptionMock.mock.calls).toHaveLength(13);
-  expect(onChangedDescriptionMock.mock.calls[12][0].caretPosition).toBe(10);
+  expect(onChangedDescriptionMock.mock.calls?.[12]?.[0].caretPosition).toBe(10);
 });

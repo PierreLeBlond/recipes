@@ -5,18 +5,18 @@ import userEvent from "@testing-library/user-event";
 import { test, expect, describe, vi, afterEach } from "vitest";
 
 Range.prototype.getBoundingClientRect = () => {
-    return {
-        left: 0,
-        top: 0,
-        height: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        bottom: 0,
-        right: 0,
-        toJSON: () => ""
-    };
+  return {
+    left: 0,
+    top: 0,
+    height: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+    bottom: 0,
+    right: 0,
+    toJSON: () => "",
   };
+};
 
 afterEach(() => {
   cleanup();
@@ -139,7 +139,7 @@ describe("Update description", () => {
     await user.keyboard("!");
 
     expect(onDescriptionChangeMock.mock.calls).toHaveLength(2);
-    expect(onDescriptionChangeMock.mock.calls[1][0]).toBe(
+    expect(onDescriptionChangeMock.mock.calls?.[1]?.[0]).toBe(
       `${defaultInput.props.step.description}!`,
     );
   });

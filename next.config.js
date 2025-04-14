@@ -1,6 +1,7 @@
 /** @type {import("next").NextConfig} */
 const config = {
-  distDir: "build",
+  output: "standalone",
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH,
   images: {
     remotePatterns: [
       {
@@ -11,7 +12,7 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "fly.storage.tigris.dev",
+        hostname: "ht2-storage.n0c.com",
         port: "",
         pathname: "/*/**",
       },
@@ -29,3 +30,5 @@ const config = {
 };
 
 export default config;
+
+// http://localhost:3000/api/trpc/recipe.list?batch=1&input={"0":{"json":{"search":"","limit":5,"direction":"forward"}}}

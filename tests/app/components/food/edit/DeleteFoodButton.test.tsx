@@ -10,7 +10,7 @@ afterEach(() => {
 const getComponent = () => {
   return render(
     <TRPCReactProvider cookies={""}>
-      <DeleteFoodButton props={{ id: "1" }}></DeleteFoodButton>
+      <DeleteFoodButton props={{ id: "1", name: "test" }}></DeleteFoodButton>
     </TRPCReactProvider>,
   );
 };

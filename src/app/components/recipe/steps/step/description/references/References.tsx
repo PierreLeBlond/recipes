@@ -9,7 +9,7 @@ type ReferencesProps = {
   description: string;
   caretPosition: number;
   ingredients: Ingredient[];
-  contentEditableRef: RefObject<HTMLDivElement>;
+  contentEditableRef: RefObject<HTMLDivElement | null>;
 };
 
 const removeLigature = (text: string) =>

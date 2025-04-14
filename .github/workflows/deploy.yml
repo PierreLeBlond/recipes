@@ -8,12 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - if: ${{ env.ACT }}
-        run: flyctl deploy --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-only --remote-only .
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      - if: ${{ !env.ACT }}
-        run: flyctl deploy --remote-only .
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: build
+        run: NEXT_PUBLIC_BASE_PATH=/recipes npm run standalone
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          local-dir: .next/standalone/
+          server-dir: ./app/recipes/
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          dry-run: ${{ env.ACT }}

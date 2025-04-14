@@ -2,10 +2,11 @@ import { api } from "@/src/trpc/server";
 import { RecipeForm } from "@/src/app/components/recipe/RecipeForm";
 
 export default async function RecipePage({
-  params: { recipeId },
+  params,
 }: {
-  params: { recipeId: string };
+  params: Promise<{ recipeId: string }>;
 }) {
+  const { recipeId } = await params;
   const recipe = await api.recipe.read.query({ id: recipeId });
 
   return (

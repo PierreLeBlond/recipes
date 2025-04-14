@@ -12,7 +12,7 @@ function getBaseUrl() {
 }
 
 export function getUrl() {
-  return `${getBaseUrl()  }/api/trpc`;
+  return `${getBaseUrl()}${process.env.NEXT_PUBLIC_BASE_PATH}/api/trpc`;
 }
 
 /**

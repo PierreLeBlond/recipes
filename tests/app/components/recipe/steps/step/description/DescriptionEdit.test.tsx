@@ -79,7 +79,7 @@ test("Should fire an event when description is changed", async () => {
   await user.keyboard("u");
 
   expect(onChangedDescriptionMock.mock.calls).toHaveLength(2);
-  expect(onChangedDescriptionMock.mock.calls[1][0]).toEqual(
+  expect(onChangedDescriptionMock.mock.calls?.[1]?.[0]).toEqual(
     "Dans un bol, mettre u",
   );
 });
@@ -240,7 +240,7 @@ describe("Add a reference", () => {
     await user.click(appleButton);
 
     expect(onChangedDescription.mock.calls).toHaveLength(2);
-    expect(onChangedDescription.mock.calls[1][0]).toBe(
+    expect(onChangedDescription.mock.calls?.[1]?.[0]).toBe(
       "Dans un bol, mettre #pomme ",
     );
   });
@@ -264,7 +264,7 @@ describe("Add a reference", () => {
     await user.click(appleButton);
 
     expect(onChangedDescription.mock.calls).toHaveLength(6);
-    expect(onChangedDescription.mock.calls[5][0]).toBe(
+    expect(onChangedDescription.mock.calls?.[5]?.[0]).toBe(
       "Dans un bol, mettre #pomme omme",
     );
 
@@ -287,7 +287,7 @@ describe("Add a reference", () => {
     await user.click(appleButton);
 
     expect(onChangedDescription.mock.calls).toHaveLength(2);
-    expect(onChangedDescription.mock.calls[1][0]).toBe(
+    expect(onChangedDescription.mock.calls?.[1]?.[0]).toBe(
       "Dans un bol, mettre #pomme ",
     );
   });
@@ -307,7 +307,7 @@ describe("Add a reference", () => {
     await user.click(appleButton);
 
     expect(onChangedDescription.mock.calls).toHaveLength(2);
-    expect(onChangedDescription.mock.calls[1][0]).toBe(
+    expect(onChangedDescription.mock.calls?.[1]?.[0]).toBe(
       "Dans un bol, mettre #p #pomme ",
     );
   });
@@ -431,7 +431,7 @@ describe("Add a reference", () => {
       await user.keyboard("[Tab]");
 
       expect(onChangedDescription.mock.calls).toHaveLength(3);
-      expect(onChangedDescription.mock.calls[2][0]).toBe(
+      expect(onChangedDescription.mock.calls?.[2]?.[0]).toBe(
         "Dans un bol, mettre #poire ",
       );
     });

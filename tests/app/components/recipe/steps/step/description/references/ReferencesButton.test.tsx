@@ -57,7 +57,7 @@ test("Should add a # when the # button is clicked", async () => {
   await user.click(button);
 
   expect(onChangedDescription.mock.calls).toHaveLength(1);
-  expect(onChangedDescription.mock.calls[0][0]).toMatchObject({
+  expect(onChangedDescription.mock.calls?.[0]?.[0]).toMatchObject({
     description: "Dans un bol, mettre #",
   });
 });
@@ -76,7 +76,7 @@ test("Should add a # at the caret position when the # button is clicked", async 
   await user.click(button);
 
   expect(onChangedDescription.mock.calls).toHaveLength(1);
-  expect(onChangedDescription.mock.calls[0][0]).toMatchObject({
+  expect(onChangedDescription.mock.calls?.[0]?.[0]).toMatchObject({
     description: "Dans un bol, #mettre ",
     caretPosition: 14,
   });
@@ -92,7 +92,7 @@ test("Should move the caret after the inserted # when the button is clicked", as
   await user.click(button);
 
   expect(onChangedDescription.mock.calls).toHaveLength(1);
-  expect(onChangedDescription.mock.calls[0][0]).toMatchObject({
+  expect(onChangedDescription.mock.calls?.[0]?.[0]).toMatchObject({
     caretPosition: 21,
   });
 });

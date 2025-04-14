@@ -21,7 +21,9 @@ const inter = Inter({
 export const metadata = {
   title: "R-CP",
   description: "Site de recettes",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [
+    { rel: "icon", url: `${process.env.NEXT_PUBLIC_BASE_PATH}/favicon.ico` },
+  ],
 };
 
 export default async function RootLayout({
@@ -30,13 +32,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerAuthSession();
-  const cookieData = cookies();
+  const cookieData = await cookies();
 
   return (
     <html lang="en" className="relative" suppressHydrationWarning>
       <body
         className={cn(
-          `flex h-full justify-center border-primary-foreground bg-primary font-sans text-primary-foreground`,
+          `border-primary-foreground bg-primary text-primary-foreground flex h-full justify-center font-sans`,
           inter.variable,
         )}
       >
@@ -49,7 +51,7 @@ export default async function RootLayout({
           <TRPCReactProvider cookies={cookieData.toString()}>
             <ToastProvider>
               <Header props={{ session }} />
-              <main className="relative w-full pb-16 pt-16 xs:max-w-[310px] sm:max-w-lg lg:max-w-5xl">
+              <main className="xs:max-w-[310px] relative w-full pt-16 pb-16 sm:max-w-lg lg:max-w-5xl">
                 {children}
               </main>
             </ToastProvider>

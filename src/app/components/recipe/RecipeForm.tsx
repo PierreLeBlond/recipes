@@ -58,18 +58,18 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
   };
 
   return (
-    <SessionProvider>
+    <SessionProvider basePath={`${process.env.NEXT_PUBLIC_BASE_PATH}/api/auth`}>
       <FormProvider {...methods}>
         <EditSwitch />
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
           className="grid gap-y-8 pt-16 lg:grid-cols-3 lg:gap-x-4"
         >
-          <div className="h-[310px] w-full xs:aspect-square xs:w-auto">
+          <div className="xs:aspect-square xs:w-auto h-[310px] w-full">
             <RecipeImage />
           </div>
 
-          <div className="order-first px-4 xs:px-0 lg:order-none lg:col-span-2">
+          <div className="xs:px-0 order-first px-4 lg:order-none lg:col-span-2">
             <RecipeName />
           </div>
 
@@ -81,7 +81,7 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
             <RecipeIngredients />
           </div>
 
-          <div className="px-4 xs:px-0 lg:col-span-3">
+          <div className="xs:px-0 px-4 lg:col-span-3">
             <RecipeSteps />
           </div>
 
@@ -89,9 +89,7 @@ export function RecipeForm({ props: { recipe } }: { props: RecipeProps }) {
             <RecipeSubmitButton />
           </div>
         </form>
-        <RecipeDelete
-          props={{ id: recipe.id, name: recipe.name }}
-         />
+        <RecipeDelete props={{ id: recipe.id, name: recipe.name }} />
       </FormProvider>
     </SessionProvider>
   );
