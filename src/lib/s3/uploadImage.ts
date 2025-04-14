@@ -14,7 +14,7 @@ export const uploadImage = async (name: string, base64: string) => {
 
     const command = new PutObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
-      Key: `images/${name}`,
+      Key: `${process.env.S3_PUBLIC_REPOSITORY}/images/${name}`,
       Body: Buffer.from(
         base64.replace(/^data:image\/\w+;base64,/, ""),
         "base64",
