@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormInputs } from "@/src/lib/types/FormInputs";
 import { SessionProvider } from "next-auth/react";
 import userEvent from "@testing-library/user-event";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 
 Range.prototype.getBoundingClientRect = () => {
   return {
@@ -140,7 +141,7 @@ test("Should complete a reference", async () => {
     return;
   }
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard(" Hello #A");
 
   const appleButton = component.getByText("Apple");

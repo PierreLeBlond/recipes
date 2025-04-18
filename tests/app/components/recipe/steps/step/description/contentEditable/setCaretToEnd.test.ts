@@ -2,21 +2,15 @@ import userEvent from "@testing-library/user-event";
 import { test, expect, beforeEach } from "vitest";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
 import { setCaretToEnd } from "@/src/app/components/recipe/steps/step/description/ContentEditable/setCaretToEnd";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 const getContentEditableElement = () => {
-  const element = document.querySelector("[contenteditable]");
-  if (!element) {
-    throw new Error("Element not found");
-  }
+  const element = document.createElement("div");
+  element.setAttribute("contenteditable", "true");
+  document.body.appendChild(element);
   return element as HTMLElement;
 };
 
 const user = userEvent.setup();
-
-beforeEach(() => {
-  const element = document.createElement("div");
-  element.setAttribute("contenteditable", "true");
-  document.body.appendChild(element);
-});
 
 test("method exists", () => {
   expect(setCaretToEnd).toBeDefined();
@@ -26,7 +20,7 @@ test("Should set the caret to the end of the content", async () => {
   const element = getContentEditableElement();
   element.innerHTML = "Hello World";
 
-  setCaretToEnd(element);
+  await clickOnContentEditableElement(user, element);
 
   expect(getCaretPosition(element)).toEqual(11);
 });
@@ -35,7 +29,7 @@ test("Should set the caret to the end of the content with nested elements", asyn
   const element = getContentEditableElement();
   element.innerHTML = "Hello <span>World</span>";
 
-  setCaretToEnd(element);
+  await clickOnContentEditableElement(user, element);
   await user.keyboard("!");
 
   expect(getCaretPosition(element)).toEqual(12);

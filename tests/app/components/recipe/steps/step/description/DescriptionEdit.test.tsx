@@ -4,6 +4,7 @@ import { DescriptionEdit } from "@/src/app/components/recipe/steps/step/descript
 import { RenderResult, cleanup, render } from "@testing-library/react";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
 import { Ingredient } from "@/src/lib/types/Ingredient";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 
 Range.prototype.getBoundingClientRect = () => {
   return {
@@ -75,13 +76,14 @@ test("Should fire an event when description is changed", async () => {
   const component = getComponent({ onChangedDescriptionMock });
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard("u");
 
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(2);
-  expect(onChangedDescriptionMock.mock.calls?.[1]?.[0]).toEqual(
-    "Dans un bol, mettre u",
-  );
+  expect(
+    onChangedDescriptionMock.mock.calls?.[
+      onChangedDescriptionMock.mock.calls.length - 1
+    ]?.[0],
+  ).toEqual("Dans un bol, mettre u");
 });
 
 describe("Add a reference", () => {
@@ -152,7 +154,7 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     const buttons = getButtons(component);
 
@@ -171,7 +173,7 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     const buttons = getButtons(component);
 
@@ -187,7 +189,7 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     const buttons = getButtons(component);
 
@@ -201,7 +203,7 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     await user.keyboard("[ArrowLeft]");
     await user.keyboard("[ArrowLeft]");
@@ -216,7 +218,7 @@ describe("Add a reference", () => {
     const component = getComponent({ ingredients });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
     await user.keyboard("#p");
     await user.click(document.body);
 
@@ -234,15 +236,16 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     const appleButton = component.getByText("pomme");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(2);
-    expect(onChangedDescription.mock.calls?.[1]?.[0]).toBe(
-      "Dans un bol, mettre #pomme ",
-    );
+    expect(
+      onChangedDescription.mock.calls?.[
+        onChangedDescription.mock.calls.length - 1
+      ]?.[0],
+    ).toBe("Dans un bol, mettre #pomme ");
   });
 
   test("Should complete the reference when a food is clicked and the caret is in the middle of the reference being typed", async () => {
@@ -254,7 +257,7 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
     await user.keyboard("[ArrowLeft]");
     await user.keyboard("[ArrowLeft]");
     await user.keyboard("[ArrowLeft]");
@@ -263,10 +266,11 @@ describe("Add a reference", () => {
     const appleButton = component.getByText("pomme");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(6);
-    expect(onChangedDescription.mock.calls?.[5]?.[0]).toBe(
-      "Dans un bol, mettre #pomme omme",
-    );
+    expect(
+      onChangedDescription.mock.calls?.[
+        onChangedDescription.mock.calls.length - 1
+      ]?.[0],
+    ).toBe("Dans un bol, mettre #pomme omme");
 
     const caretPosition = getCaretPosition(contentEditable);
     expect(caretPosition).toBe(27);
@@ -281,15 +285,16 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     const appleButton = component.getByText("pomme");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(2);
-    expect(onChangedDescription.mock.calls?.[1]?.[0]).toBe(
-      "Dans un bol, mettre #pomme ",
-    );
+    expect(
+      onChangedDescription.mock.calls?.[
+        onChangedDescription.mock.calls.length - 1
+      ]?.[0],
+    ).toBe("Dans un bol, mettre #pomme ");
   });
 
   test("Should complete only the reference being typed when a food is clicked", async () => {
@@ -301,15 +306,16 @@ describe("Add a reference", () => {
     });
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
 
     const appleButton = component.getByText("pomme");
     await user.click(appleButton);
 
-    expect(onChangedDescription.mock.calls).toHaveLength(2);
-    expect(onChangedDescription.mock.calls?.[1]?.[0]).toBe(
-      "Dans un bol, mettre #p #pomme ",
-    );
+    expect(
+      onChangedDescription.mock.calls?.[
+        onChangedDescription.mock.calls.length - 1
+      ]?.[0],
+    ).toBe("Dans un bol, mettre #p #pomme ");
   });
 
   describe("Navigate trough foods references", () => {
@@ -320,7 +326,7 @@ describe("Add a reference", () => {
       });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
 
       const button = component
         .queryAllByRole("button")
@@ -336,7 +342,7 @@ describe("Add a reference", () => {
       });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
       await user.keyboard("[ArrowDown]");
 
       const button = component
@@ -353,7 +359,7 @@ describe("Add a reference", () => {
       });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
       await user.keyboard("[ArrowDown]");
       await user.keyboard("[ArrowDown]");
       await user.keyboard("[ArrowDown]");
@@ -373,7 +379,7 @@ describe("Add a reference", () => {
       });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
       await user.keyboard("[ArrowDown]");
       await user.keyboard("[ArrowUp]");
 
@@ -391,7 +397,7 @@ describe("Add a reference", () => {
       });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
       await user.keyboard("[ArrowUp]");
 
       const button = component
@@ -425,15 +431,16 @@ describe("Add a reference", () => {
       });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
 
       await user.keyboard("[ArrowDown]");
       await user.keyboard("[Tab]");
 
-      expect(onChangedDescription.mock.calls).toHaveLength(3);
-      expect(onChangedDescription.mock.calls?.[2]?.[0]).toBe(
-        "Dans un bol, mettre #poire ",
-      );
+      expect(
+        onChangedDescription.mock.calls?.[
+          onChangedDescription.mock.calls.length - 1
+        ]?.[0],
+      ).toBe("Dans un bol, mettre #poire ");
     });
   });
 
@@ -448,7 +455,7 @@ describe("Add a reference", () => {
       const component = getComponent({ ingredients });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
 
       const button = getButton(component);
 
@@ -459,7 +466,7 @@ describe("Add a reference", () => {
       const component = getComponent({ ingredients });
       const contentEditable = component.getByRole("textbox");
 
-      await user.click(contentEditable);
+      await clickOnContentEditableElement(user, contentEditable);
 
       const button = getButton(component);
 

@@ -1,22 +1,17 @@
 import userEvent from "@testing-library/user-event";
-import { test, expect, beforeEach } from "vitest";
+import { test, expect } from "vitest";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 
 const getContentEditableElement = () => {
-  const element = document.querySelector("[contenteditable]");
-  if (!element) {
-    throw new Error("Element not found");
-  }
+  const element = document.createElement("div");
+  element.setAttribute("contenteditable", "true");
+  document.body.appendChild(element);
+
   return element as HTMLElement;
 };
 
 const user = userEvent.setup();
-
-beforeEach(() => {
-  const element = document.createElement("div");
-  element.setAttribute("contenteditable", "true");
-  document.body.appendChild(element);
-});
 
 test("Should exists", () => {
   expect(getCaretPosition).toBeDefined();
@@ -49,16 +44,16 @@ test("Should return the caret position within nested content if focused", async 
   const element = getContentEditableElement();
   element.innerHTML = "test <span>nested</span>";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
 
   expect(getCaretPosition(element)).toEqual(11);
 });
 
-test("Should return the caret position when moving woth arrow keys", async () => {
+test("Should return the caret position when moving with arrow keys", async () => {
   const element = getContentEditableElement();
   element.innerHTML = "test";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
   await user.keyboard("{ArrowLeft}");
 
   expect(getCaretPosition(element)).toEqual(3);

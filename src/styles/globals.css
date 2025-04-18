@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 :root {
   --primary: 45 100% 96.86%;
   --primary-foreground: 0 0% 20%;

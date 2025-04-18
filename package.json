@@ -13,9 +13,7 @@
     "check": "tsc",
     "lint": "next lint",
     "start": "next start",
-    "start-test": "sudo docker compose -f start-compose.yaml up --build --exit-code-from test",
-    "test": "vitest",
-    "dev-test": "sudo docker compose -f dev-compose.yaml up --watch"
+    "test": "vitest"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.782.0",

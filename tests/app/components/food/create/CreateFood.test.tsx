@@ -337,6 +337,7 @@ describe("submit", () => {
     expect(button).toBeDisabled();
   });
 
+  // Does not work since trpc updates
   it("Should submit if inputs are valid", async () => {
     server.use(
       // Until msw support trpc v11 : https://github.com/maloguertin/msw-trpc/issues/37

@@ -2,6 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { getCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/getCaretPosition";
 import { setCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/setCaretPosition";
 import { test, expect, beforeEach } from "vitest";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 
 const getContentEditableElement = () => {
   const element = document.querySelector("[contenteditable]");
@@ -27,7 +28,7 @@ test("Should set the caret to the beginning of the content with position 0", asy
   const element = getContentEditableElement();
   element.innerHTML = "Hello World";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
   setCaretPosition(element, 0);
 
   expect(getCaretPosition(element)).toEqual(0);
@@ -37,7 +38,7 @@ test("Should set the caret to the beginning of the content with negative positio
   const element = getContentEditableElement();
   element.innerHTML = "Hello World";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
   setCaretPosition(element, -2);
 
   expect(getCaretPosition(element)).toEqual(0);
@@ -47,7 +48,7 @@ test("Should set the caret to given position", async () => {
   const element = getContentEditableElement();
   element.innerHTML = "Hello World";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
   setCaretPosition(element, 5);
   await user.keyboard("!");
 
@@ -59,7 +60,7 @@ test("Should set the caret with line breaks", async () => {
   const element = getContentEditableElement();
   element.innerHTML = "Hello\nWorld";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
   setCaretPosition(element, 7);
   await user.keyboard("!");
 
@@ -71,7 +72,7 @@ test("Should set the caret within nested element", async () => {
   const element = getContentEditableElement();
   element.innerHTML = "<div>Hello <span>Wor<em>ld</em></span></div>";
 
-  await user.click(element);
+  await clickOnContentEditableElement(user, element);
   setCaretPosition(element, 10);
   await user.keyboard("!");
 

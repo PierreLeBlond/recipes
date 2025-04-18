@@ -53,7 +53,7 @@ export const renderWithProviders = (
 };
 
 export const trpcMsw = createTRPCMsw<AppRouter>({
-  baseUrl: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/trpc`,
+  baseUrl: `/api/trpc`,
   transformer: {
     input: superjson,
     output: superjson,

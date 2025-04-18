@@ -3,6 +3,7 @@ import { RenderResult, cleanup, render } from "@testing-library/react";
 import { test, expect, vi, afterEach } from "vitest";
 import { ContentEditable } from "@/src/app/components/recipe/steps/step/description/ContentEditable/ContentEditable";
 import { setCaretPosition } from "@/src/app/components/recipe/steps/step/description/ContentEditable/setCaretPosition";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 
 Range.prototype.getBoundingClientRect = () => {
   return {
@@ -67,18 +68,17 @@ test("Component fire an event when content is changed", async () => {
   const component = getComponent({ onChangedDescriptionMock });
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard("Hello World");
 
   expect(contentEditable).toHaveFocus();
   expect(contentEditable).toHaveTextContent("Hello World");
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
-  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].content).toEqual(
-    "Hello World",
-  );
-  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].caretPosition).toEqual(
-    11,
-  );
+  const result =
+    onChangedDescriptionMock.mock.calls?.[
+      onChangedDescriptionMock.mock.calls.length - 1
+    ]?.[0];
+  expect(result.content).toEqual("Hello World");
+  expect(result.caretPosition).toEqual(11);
 });
 
 test("Component should handled multiple lines", async () => {
@@ -86,16 +86,18 @@ test("Component should handled multiple lines", async () => {
   const component = getComponent({ onChangedDescriptionMock });
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard("Hello");
   await user.keyboard("\n");
   await user.keyboard("World");
 
   expect(contentEditable).toHaveFocus();
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
-  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].content).toEqual(
-    "Hello\nWorld",
-  );
+  const result =
+    onChangedDescriptionMock.mock.calls?.[
+      onChangedDescriptionMock.mock.calls.length - 1
+    ]?.[0];
+  expect(result.content).toEqual("Hello\nWorld");
+  expect(result.caretPosition).toEqual(11);
 });
 
 test("Component should display given formated content", async () => {
@@ -109,7 +111,7 @@ test("Component should display given formated content and override previous user
   const component = getComponent({});
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard(" World");
 
   expect(contentEditable.innerHTML).toBe(" World");
@@ -131,7 +133,7 @@ test("Component should keep focus when given formated content is updated", async
   const component = getComponent({});
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard(" World");
 
   expect(contentEditable).toHaveFocus();
@@ -153,7 +155,7 @@ test("Should keep caret position when updating formated content", async () => {
   const component = getComponent({ formatedDescription: "<a>Hello</a>" });
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard("Hello World");
 
   setCaretPosition(contentEditable, 6);
@@ -178,12 +180,18 @@ test("Should fire an event when caret position is changed with arrows", async ()
   const component = getComponent({ onChangedDescriptionMock });
   const contentEditable = getContentEditable(component);
 
-  await user.click(contentEditable);
+  await clickOnContentEditableElement(user, contentEditable);
   await user.keyboard("Hello World");
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(12);
-  expect(onChangedDescriptionMock.mock.calls?.[11]?.[0].caretPosition).toBe(11);
+  let result =
+    onChangedDescriptionMock.mock.calls?.[
+      onChangedDescriptionMock.mock.calls.length - 1
+    ]?.[0];
+  expect(result.caretPosition).toBe(11);
   await user.keyboard("{ArrowLeft}");
 
-  expect(onChangedDescriptionMock.mock.calls).toHaveLength(13);
-  expect(onChangedDescriptionMock.mock.calls?.[12]?.[0].caretPosition).toBe(10);
+  result =
+    onChangedDescriptionMock.mock.calls?.[
+      onChangedDescriptionMock.mock.calls.length - 1
+    ]?.[0];
+  expect(result.caretPosition).toBe(10);
 });

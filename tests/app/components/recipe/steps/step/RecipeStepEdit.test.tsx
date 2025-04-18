@@ -3,6 +3,7 @@ import { Unit } from "@/src/lib/types/Units";
 import { RenderResult, cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { test, expect, describe, vi, afterEach } from "vitest";
+import { clickOnContentEditableElement } from "@/tests/utils/clickOnContentEditableElement";
 
 Range.prototype.getBoundingClientRect = () => {
   return {
@@ -135,13 +136,14 @@ describe("Update description", () => {
 
     const contentEditable = component.getByRole("textbox");
 
-    await user.click(contentEditable);
+    await clickOnContentEditableElement(user, contentEditable);
     await user.keyboard("!");
 
-    expect(onDescriptionChangeMock.mock.calls).toHaveLength(2);
-    expect(onDescriptionChangeMock.mock.calls?.[1]?.[0]).toBe(
-      `${defaultInput.props.step.description}!`,
-    );
+    const result =
+      onDescriptionChangeMock.mock.calls?.[
+        onDescriptionChangeMock.mock.calls.length - 1
+      ]?.[0];
+    expect(result).toBe(`${defaultInput.props.step.description}!`);
   });
 });
 

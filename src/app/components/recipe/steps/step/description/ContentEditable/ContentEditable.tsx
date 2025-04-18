@@ -60,7 +60,7 @@ export const ContentEditable = forwardRef(
         role="textbox"
         tabIndex={0}
         contentEditable="true"
-        className="min-h-24 w-full overflow-hidden text-ellipsis whitespace-pre-wrap rounded-md border border-edit p-2 shadow-md focus:border-2 focus:outline-hidden"
+        className="border-edit min-h-24 w-full overflow-hidden rounded-md border p-2 text-ellipsis whitespace-pre-wrap shadow-md focus:border-2 focus:outline-hidden"
         ref={contentEditableRef}
         onClick={onclick}
         onInput={({ nativeEvent }) => oninput(nativeEvent)}
