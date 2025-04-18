@@ -84,7 +84,7 @@ export function RecipeIngredientQuantity({
   if (!hasAlternatives) {
     return (
       <div className="flex justify-end gap-4 justify-self-end">
-        <span className="text-nowrap font-bold">
+        <span className="font-bold text-nowrap">
           {getFormatedQuantity(
             unit,
             getQuantityFromPlateAndUnit({
@@ -93,6 +93,7 @@ export function RecipeIngredientQuantity({
                 unit,
               },
               plateRatio,
+              quantityPercentage: 100,
             }),
           )}
         </span>
@@ -119,6 +120,7 @@ export function RecipeIngredientQuantity({
               getQuantityFromPlateAndUnit({
                 ingredient,
                 plateRatio,
+                quantityPercentage: 100,
               }),
             )}
           </span>
@@ -127,7 +129,7 @@ export function RecipeIngredientQuantity({
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="border-secondary shadow-lg shadow-secondary/80"
+        className="border-secondary shadow-secondary/80 shadow-lg"
       >
         {alternativeUnits.map((alternativeUnit) => (
           <div key={alternativeUnit}>
@@ -138,7 +140,7 @@ export function RecipeIngredientQuantity({
                 value: alternativeUnit,
               }}
             >
-              <span className="text-nowrap font-bold">
+              <span className="font-bold text-nowrap">
                 {getFormatedQuantity(
                   alternativeUnit,
                   getQuantityFromPlateAndUnit({
@@ -147,10 +149,11 @@ export function RecipeIngredientQuantity({
                       unit: alternativeUnit,
                     },
                     plateRatio,
+                    quantityPercentage: 100,
                   }),
                 )}
               </span>
-              <div className="invisible flex size-6 items-center justify-center text-secondary group-hover:visible">
+              <div className="text-secondary invisible flex size-6 items-center justify-center group-hover:visible">
                 <ArrowDownUp strokeWidth={3} size={18} />
               </div>
             </QueryParamsLink>

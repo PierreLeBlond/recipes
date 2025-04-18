@@ -11,6 +11,7 @@ type ConvertInput = {
     unit: Unit;
   };
   plateRatio: number;
+  quantityPercentage: number;
 };
 
 const convertMap: {
@@ -121,13 +122,17 @@ const convertMap: {
 export const getQuantityFromPlateAndUnit = ({
   ingredient,
   plateRatio,
+  quantityPercentage,
 }: ConvertInput) => {
+  const quantity =
+    (ingredient.quantity * plateRatio * quantityPercentage) / 100;
+
   if (ingredient.food.unit === ingredient.unit) {
-    return ingredient.quantity * plateRatio;
+    return quantity;
   }
 
   return convertMap[ingredient.food.unit]({
-    quantity: ingredient.quantity * plateRatio,
+    quantity,
     density: ingredient.food.density,
     massPerPiece: ingredient.food.massPerPiece,
   })(ingredient.unit);

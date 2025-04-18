@@ -524,3 +524,32 @@ describe("Preview", () => {
     );
   });
 });
+
+describe("Partial quantity", () => {
+  const ingredients = [
+    {
+      food: {
+        name: "pomme",
+        density: null,
+        massPerPiece: null,
+        unit: "PIECE",
+      },
+      quantity: 2,
+      unit: "PIECE",
+    },
+  ] as const satisfies Ingredient[];
+
+  test("Should show partial quantity when the user is typing a quantity", async () => {
+    const component = getComponent({
+      ingredients,
+      description: "Dans un bol, mettre #pomme/50",
+    });
+
+    const button = component.getByText("Prévisualisation");
+    await user.click(button);
+
+    expect(component.baseElement.textContent).toContain(
+      "Dans un bol, mettre 1 pomme",
+    );
+  });
+});

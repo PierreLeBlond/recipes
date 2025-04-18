@@ -32,14 +32,38 @@ export function Description({
 }) {
   const formatedDescription = ingredients
     .sort((a, b) => b.food.name.length - a.food.name.length)
-    .reduce(
-      (acc, ingredient) =>
-        acc.replace(
-          new RegExp(`(#${ingredient.food.name})`, "g"),
-          `<b>${getFormatedQuantity(ingredient.unit, getQuantityFromPlateAndUnit({ ingredient, plateRatio }))} ${getAdjectif(ingredient.unit, ingredient.food.name)}${ingredient.food.name}</b>`,
+    .reduce((acc, ingredient) => {
+      let formatedDescription = acc;
+      const matches = [
+        ...acc.matchAll(
+          new RegExp(`(#${ingredient.food.name})(?:\/([0-9]+))?`, "g"),
         ),
-      description,
-    );
+      ];
+
+      if (!matches) {
+        return formatedDescription;
+      }
+
+      for (const match of matches) {
+        const quantityPercentage = match[2] ? parseInt(match[2]) : 100;
+        const formatedQuantity = getFormatedQuantity(
+          ingredient.unit,
+          getQuantityFromPlateAndUnit({
+            ingredient,
+            plateRatio,
+            quantityPercentage,
+          }),
+        );
+        const adjectif = getAdjectif(ingredient.unit, ingredient.food.name);
+
+        formatedDescription = formatedDescription.replace(
+          match[0],
+          `<b>${formatedQuantity} ${adjectif}${ingredient.food.name}</b>`,
+        );
+      }
+
+      return formatedDescription;
+    }, description);
 
   return <div className="p-4">{parse(formatedDescription)}</div>;
 }
