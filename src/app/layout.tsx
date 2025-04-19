@@ -7,11 +7,11 @@ import { ThemeProvider } from "@/src/app/components/ThemeProvider";
 
 import { TRPCReactProvider } from "@/src/trpc/react";
 
-import { getServerAuthSession } from "@/src/server/auth";
 import { cn } from "@/src/lib/utils";
 import { Header } from "./components/Header";
 import { ToastProvider } from "./components/ui/toast";
 import { Toaster } from "./components/ui/toaster";
+import { auth } from "@/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,7 +31,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerAuthSession();
+  const session = await auth();
   const cookieData = await cookies();
 
   return (

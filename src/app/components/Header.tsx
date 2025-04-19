@@ -13,6 +13,8 @@ import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 import { Badge } from "./utils/Badge";
 import { Button } from "./ui/button";
+import SignIn from "./SignIn";
+import Logout from "./Logout";
 
 type HeaderProps = {
   session: Session | null;
@@ -73,20 +75,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
         </Link>
       </div>
       <div className="flex items-center justify-end gap-x-4">
-        <Button className="hidden md:block" variant="link" size="sm">
-          <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-            {session ? "LOGOUT" : "LOGIN"}
-          </Link>
-        </Button>
-        <Button
-          className="bg-primary flex h-10 w-10 items-center justify-center rounded-full md:hidden"
-          variant="link"
-          size="sm"
-        >
-          <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-            {session ? <DoorOpen size={14} /> : <LogIn size={14} />}
-          </Link>
-        </Button>
+        {session ? <Logout /> : <SignIn />}
       </div>
     </header>
   );
