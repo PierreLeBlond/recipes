@@ -13,7 +13,7 @@ export function RecipeSubmitButton() {
   }
 
   return (
-    <div className="fixed bottom-0 z-40 flex h-16 w-full items-center justify-center border-t bg-primary/20 backdrop-blur-md xs:bottom-4 xs:right-8 xs:w-64 xs:rounded-lg xs:border lg:bottom-auto lg:top-20">
+    <div className="bg-primary/20 xs:bottom-4 xs:right-8 xs:w-64 xs:rounded-lg xs:border fixed bottom-0 z-40 flex h-16 w-full items-center justify-center border-t backdrop-blur-md lg:top-20 lg:bottom-auto">
       <Button
         type="submit"
         disabled={!formState.isDirty || formState.isSubmitting}

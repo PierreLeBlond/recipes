@@ -64,7 +64,7 @@ export function RecipeList() {
           <Button
             onClick={() => !isFetchingNextPage && fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="w-full rounded-none xs:rounded-lg sm:w-2/3"
+            className="xs:rounded-lg w-full rounded-none sm:w-2/3"
           >
             {isFetchingNextPage ? "CHARGEMENT..." : "AFFICHER PLUS DE RECETTES"}
           </Button>

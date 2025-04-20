@@ -18,6 +18,8 @@ declare module "next-auth" {
   }
 }
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     session({ session, user }) {
@@ -36,4 +38,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   // https://github.com/nextauthjs/next-auth/issues/9493
   adapter: PrismaAdapter(db) as Adapter,
   providers: [GitHub],
+  basePath: `${basePath}/api/auth`,
 });

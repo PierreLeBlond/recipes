@@ -67,7 +67,7 @@ export function CreateFood() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-8 px-4 xs:p-0">
+    <div className="xs:p-0 flex w-full flex-col gap-8 px-4">
       <Typography variant="h3">Ajouter un aliment</Typography>
       {canCreateFood ? (
         <form

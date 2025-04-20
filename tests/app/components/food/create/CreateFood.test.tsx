@@ -46,12 +46,7 @@ const getComponent = () => {
   return renderWithProviders(
     <>
       <ToastProvider>
-        <SessionProvider
-          session={{ user: { id: "user", role: "ADMIN" }, expires: "" }}
-        >
-          <CreateFood />
-        </SessionProvider>
-        ,
+        <CreateFood />
       </ToastProvider>
       <Toaster />
     </>,

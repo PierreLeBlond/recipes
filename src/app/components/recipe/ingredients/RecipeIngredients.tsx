@@ -67,7 +67,7 @@ export function RecipeIngredients() {
   };
 
   return (
-    <div className="grid max-w-full gap-4 px-4 xs:px-0 lg:grid-cols-3">
+    <div className="xs:px-0 grid max-w-full gap-4 px-4 lg:grid-cols-3">
       <Typography variant="h2" className="text-2xl lg:col-span-3">
         INGRÉDIENTS
       </Typography>
@@ -77,7 +77,7 @@ export function RecipeIngredients() {
           onPointerMove={(event) => handlePointerMove(event)}
           onPointerUp={(event) => handlePointerUp(event)}
           onContextMenu={(event) => handleContextMenu(event)}
-          className="select-none overflow-hidden lg:col-span-3"
+          className="overflow-hidden select-none lg:col-span-3"
         >
           <ul className="relative flex list-inside flex-col gap-4 pb-4">
             {fields.map((field, index) => (

@@ -39,7 +39,7 @@ export function RecipeImage() {
   return (
     <Card
       className={cn(
-        "relative h-full w-full flex-col items-center justify-end overflow-hidden rounded-none xs:rounded-lg",
+        "xs:rounded-lg relative h-full w-full flex-col items-center justify-end overflow-hidden rounded-none",
         {
           "hover:cursor-pointer": edit,
         },
@@ -55,7 +55,7 @@ export function RecipeImage() {
         onChange={handleFileChange}
       />
       <CardContent
-        className="group absolute h-full w-full bg-transparent! bg-cover bg-center p-0 shadow-md xs:rounded-lg"
+        className="group xs:rounded-lg absolute h-full w-full bg-transparent! bg-cover bg-center p-0 shadow-md"
         style={image ? { backgroundImage: `url('${image}')` } : {}}
       />
       {edit && (

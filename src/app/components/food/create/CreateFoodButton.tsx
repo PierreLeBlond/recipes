@@ -15,7 +15,7 @@ export function CreateFoodButton() {
   return (
     <>
       <Button
-        className="w-full rounded-none xs:rounded-b-none xs:rounded-t-xl"
+        className="xs:rounded-b-none xs:rounded-t-xl w-full rounded-none"
         onClick={() => setOpen(true)}
         variant="edit"
         type="button"

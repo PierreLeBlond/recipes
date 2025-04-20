@@ -2,17 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  CircleUserRound,
-  DoorOpen,
-  LogIn,
-  UtensilsCrossed,
-} from "lucide-react";
+import { CircleUserRound, UtensilsCrossed } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 import { Badge } from "./utils/Badge";
-import { Button } from "./ui/button";
 import SignIn from "./SignIn";
 import Logout from "./Logout";
 
@@ -49,7 +43,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
       )}
       <div className="xs:col-span-5 xs:col-start-2 xs:text-sm col-span-3 col-start-2 flex items-center justify-center gap-x-4 text-xs">
         <Link
-          href="/recipes"
+          href="/"
           className={cn(
             "border-primary-foreground hover:bg-primary-foreground/10 rounded-md p-2 transition-colors",
             {
