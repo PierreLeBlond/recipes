@@ -30,5 +30,3 @@ const config = {
 };
 
 export default config;
-
-// http://localhost:3000/api/trpc/recipe.list?batch=1&input={"0":{"json":{"search":"","limit":5,"direction":"forward"}}}

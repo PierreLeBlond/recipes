@@ -12,9 +12,17 @@ function rewriteRequest(request: NextRequest) {
   // Host rewrite adopted from next-auth/packages/core/src/lib/utils/env.ts:createActionURL
   const detectedHost = headers.get("x-forwarded-host") ?? host;
   const detectedProtocol = headers.get("x-forwarded-proto") ?? protocol;
+
+  console.log(detectedHost, detectedProtocol, basePath, pathname);
+
   const _protocol = detectedProtocol.endsWith(":")
     ? detectedProtocol
     : detectedProtocol + ":";
+
+  console.log(
+    `${_protocol}//${detectedHost}${basePath}${pathname}${request.nextUrl.search}`,
+  );
+
   const url = new URL(
     `${_protocol}//${detectedHost}${basePath}${pathname}${request.nextUrl.search}`,
   );
