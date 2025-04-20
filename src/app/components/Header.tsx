@@ -47,8 +47,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           className={cn(
             "border-primary-foreground hover:bg-primary-foreground/10 rounded-md p-2 transition-colors",
             {
-              "bg-primary-foreground/10":
-                pathname === `${process.env.NEXT_PUBLIC_BASE_PATH}/recipes`,
+              "bg-primary-foreground/10": pathname === "/",
             },
           )}
         >
@@ -60,8 +59,7 @@ export function Header({ props: { session } }: { props: HeaderProps }) {
           className={cn(
             "border-primary-foreground hover:bg-primary-foreground/10 rounded-md p-2 transition-colors",
             {
-              "bg-primary-foreground/10":
-                pathname === `${process.env.NEXT_PUBLIC_BASE_PATH}/foods`,
+              "bg-primary-foreground/10": pathname === `/foods`,
             },
           )}
         >
