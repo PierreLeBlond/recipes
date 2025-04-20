@@ -13,11 +13,16 @@ function rewriteRequest(request: NextRequest) {
   const detectedHost = headers.get("x-forwarded-host") ?? host;
   const detectedProtocol = headers.get("x-forwarded-proto") ?? protocol;
 
-  console.log(detectedHost, detectedProtocol, basePath, pathname);
+  console.log(
+    detectedHost,
+    detectedProtocol,
+    protocol,
+    basePath,
+    pathname,
+    request.nextUrl.search,
+  );
 
-  const _protocol = detectedProtocol.endsWith(":")
-    ? detectedProtocol
-    : detectedProtocol + ":";
+  const _protocol = detectedProtocol.match(/^https?/) ? "https:" : "http:";
 
   console.log(
     `${_protocol}//${detectedHost}${basePath}${pathname}${request.nextUrl.search}`,
