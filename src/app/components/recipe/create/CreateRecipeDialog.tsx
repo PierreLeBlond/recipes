@@ -87,9 +87,7 @@ export function CreateRecipeDialog({
             </Button>
           ) : (
             <Button disabled={!createMutation.isSuccess} variant="link">
-              <Link href={`/recipes/${createMutation.data?.id}?edit=true`}>
-                ÉDITER
-              </Link>
+              <Link href={`/${createMutation.data?.id}?edit=true`}>ÉDITER</Link>
             </Button>
           )}
         </div>
