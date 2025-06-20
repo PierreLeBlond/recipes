@@ -38,7 +38,7 @@ export function RecipeDelete({
         title: "Bye bye 👋",
         description: `'${name}' supprimé.`,
       });
-      router.push("/recipes");
+      router.push("/");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: getQueryKey(api.recipe.list) });
